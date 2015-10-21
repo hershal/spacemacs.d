@@ -1,0 +1,4 @@
+* how to write
+- Do not put pure source code, write defuns instead.
+- This file is sourced by clients.
+- Let the client choose what to run.
