@@ -88,6 +88,54 @@ after a mode loads into emacs.
     (evil-leader/set-key "b D" 'kill-buffer-and-window))
 #+END_SRC
 * packages
+** org
+*** hooks
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-org-mode-hook ()
+    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+    (auto-fill-mode 1)
+    (writegood-mode 1)
+    (company-mode 0))
+#+END_SRC
+*** macros
+**** org-save
+Note: =org-babel-tangle= will automatically save the buffer.
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun org-save ()
+    (interactive)
+    (org-update-statistics-cookies t)
+    (org-babel-tangle))
+#+END_SRC
+*** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-org ()
+    (setq org-src-window-setup 'other-window
+          org-startup-indented t
+          org-hide-emphasis-markers t
+          org-startup-folded 'content
+          org-log-into-drawer "LOGBOOK"
+          org-use-sub-superscripts '{}
+          org-export-with-sub-superscripts nil
+          org-refile-targets '((nil :maxlevel . 3)
+                               (org-agenda-files :maxlevel . 3)))
+    (after 'org-indent
+      (diminish 'org-indent-mode ""))
+    (hb/bind-key "C-x C-s" 'org-save org-mode-map)
+    (add-to-list 'org-structure-template-alist
+                 '("st"
+                   "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
+                   "<src lang=\"?\">\n\n</src>"))
+    (hb/bind-key "C-c c" 'org-capture)
+    (setq org-capture-templates
+          '(("n" "Notes" entry (file "~/notes.org") "* %?\n")
+            ("s" "Stack" entry (file "~/stack.org") "\n* TODO %?\n")
+            ("w" "Weektree" entry (file+function "~/.emacs.d/test.org" org-capture-datetree)
+             "* %?\n")))
+    (hb/bind-key "C-c a" 'org-agenda)
+    (add-hook 'org-mode-hook 'hb/configure-org-mode-hook))
+#+END_SRC
 * how to write
 - Do not put pure source code, write defuns instead.
 - This file is sourced by clients.
