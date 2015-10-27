@@ -1,14 +1,6 @@
 * introduction
 I'm still experimenting with how this is organized!
 * macros
-** hb/configure-macros
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-macros ()
-    (bind-key "M-;" 'comment-line-dwim)
-    (bind-key "C-x c" 'capitalize-line-dwim)
-    (bind-key "C-x 2" 'vsplit-last-buffer)
-    (bind-key "C-x 3" 'hsplit-last-buffer))
-#+END_SRC
 ** hb/quotemeta
 #+BEGIN_SRC emacs-lisp :tangle yes
 (defun hb/quotemeta (str-val)
@@ -78,6 +70,14 @@ after a mode loads into emacs.
     (split-window-horizontally)
     (other-window 1 nil)
     (if (= prefix 1) (switch-to-next-buffer)))
+#+END_SRC
+** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-macros ()
+    (bind-key "M-;" 'comment-line-dwim)
+    (bind-key "C-x c" 'capitalize-line-dwim)
+    (bind-key "C-x 2" 'vsplit-last-buffer)
+    (bind-key "C-x 3" 'hsplit-last-buffer))
 #+END_SRC
 * general
 ** configuration
