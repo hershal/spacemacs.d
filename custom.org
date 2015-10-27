@@ -82,7 +82,6 @@ after a mode loads into emacs.
   (defun hb/configure-general ()
     (setq evil-move-beyond-eol t
           kill-whole-line t
-          org-src-fontify-natively nil
           shell-command-switch "-ci")
 
     (evil-leader/set-key "b D" 'kill-buffer-and-window))
@@ -118,6 +117,7 @@ Note: =org-babel-tangle= will automatically save the buffer.
           org-log-into-drawer "LOGBOOK"
           org-use-sub-superscripts '{}
           org-export-with-sub-superscripts nil
+          org-src-fontify-natively nil
           org-refile-targets '((nil :maxlevel . 3)
                                (org-agenda-files :maxlevel . 3)))
     (after 'org-indent
