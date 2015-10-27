@@ -78,6 +78,7 @@ after a mode loads into emacs.
     (if (= prefix 1) (switch-to-next-buffer)))
 #+END_SRC
 * general
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-general ()
     (setq evil-move-beyond-eol t
