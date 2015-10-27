@@ -1,3 +1,5 @@
+* introduction
+I'm still experimenting with how this is organized!
 * macros
 ** hb/configure-macros
 #+BEGIN_SRC emacs-lisp :tangle yes
