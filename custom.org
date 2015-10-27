@@ -136,6 +136,11 @@ Note: =org-babel-tangle= will automatically save the buffer.
     (hb/bind-key "C-c a" 'org-agenda)
     (add-hook 'org-mode-hook 'hb/configure-org-mode-hook))
 #+END_SRC
+** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-packages ()
+    (hb/configure-org))
+#+END_SRC
 * how to write
 - Do not put pure source code, write defuns instead.
 - This file is sourced by clients.
