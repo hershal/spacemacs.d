@@ -122,19 +122,20 @@ Note: =org-babel-tangle= will automatically save the buffer.
                                (org-agenda-files :maxlevel . 3)))
     (after 'org-indent
       (diminish 'org-indent-mode ""))
-    (hb/bind-key "C-x C-s" 'org-save org-mode-map)
+    (bind-key "C-x C-s" 'org-save org-mode-map)
     (add-to-list 'org-structure-template-alist
                  '("st"
                    "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
                    "<src lang=\"?\">\n\n</src>"))
-    (hb/bind-key "C-c c" 'org-capture)
+    (bind-key "C-c c" 'org-capture)
     (setq org-capture-templates
           '(("n" "Notes" entry (file "~/notes.org") "* %?\n")
             ("s" "Stack" entry (file "~/stack.org") "\n* TODO %?\n")
             ("w" "Weektree" entry (file+function "~/.emacs.d/test.org" org-capture-datetree)
              "* %?\n")))
-    (hb/bind-key "C-c a" 'org-agenda)
-    (add-hook 'org-mode-hook 'hb/configure-org-mode-hook))
+    (bind-key "C-c a" 'org-agenda)
+    (add-hook 'org-mode-hook 'hb/configure-org-mode-hook)
+    t)
 #+END_SRC
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
