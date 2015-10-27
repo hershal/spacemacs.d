@@ -202,9 +202,10 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (if (file-exists-p "custom.org")
-      (org-babel-load-file "custom.org"))
-)
+  (org-babel-load-file "~/.spacemacs.d/custom.org")
+  (hb/configure-macros)
+  (hb/configure-general)
+  (hb/configure-packages))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
