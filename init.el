@@ -49,9 +49,6 @@
    ;; the list `dotspacemacs-configuration-layers'. (default t)
    dotspacemacs-delete-orphan-packages t))
 
-(defmacro hb/bind-key (key command &optional map)
-  `(bind-key ,key ,command (or ,map hb-mode-map)))
-
 (defun dotspacemacs/init ()
   "Initialization function.
 This function is called at the very startup of Spacemacs initialization
