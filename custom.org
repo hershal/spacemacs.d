@@ -79,13 +79,32 @@ after a mode loads into emacs.
     (other-window 1 nil)
     (if (= prefix 1) (switch-to-next-buffer)))
 #+END_SRC
+** delete-trailing-whitespace-untabify
+i want this to be everywhere except in makefiles.
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defvar makefile-modes '(makefile-mode
+                         makefile-bsdmake-mode
+                         makefile-gmake-mode
+                         makefile-imake-mode
+                         makefile-makepp-mode
+                         makefile-automake-mode)
+"These modes are Makefile-like in that they really REALLY like tab characters.")
+
+  (defun hb/delete-trailing-whitespace-untabify ()
+    (interactive)
+    (if (not (member major-mode makefile-modes))
+        (progn
+          (delete-trailing-whitespace (point-min) (point-max))
+          (untabify (point-min) (point-max)))))
+#+END_SRC
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-macros ()
     (bind-key "M-;" 'comment-line-dwim)
     (bind-key "C-x c" 'capitalize-line-dwim)
     (bind-key "C-x 2" 'vsplit-last-buffer)
-    (bind-key "C-x 3" 'hsplit-last-buffer))
+    (bind-key "C-x 3" 'hsplit-last-buffer)
+    (add-hook 'before-save-hook 'hb/delete-trailing-whitespace-untabify))
 #+END_SRC
 * general
 ** configuration
