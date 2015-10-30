@@ -178,7 +178,8 @@ Note: =org-babel-tangle= will automatically save the buffer.
   (defun hb/configure ()
     (hb/configure-macros)
     (hb/configure-general)
-    (hb/configure-packages))
+    (hb/configure-packages)
+    (message "hb done!"))
 #+END_SRC
 
 * how to write
