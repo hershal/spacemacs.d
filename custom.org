@@ -1,5 +1,6 @@
 * introduction
 I'm still experimenting with how this is organized!
+
 * macros
 ** hb/quotemeta
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -63,6 +64,7 @@ after a mode loads into emacs.
     `(eval-after-load ,mode
        '(progn ,@body)))
 #+END_SRC
+
 ** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun vsplit-last-buffer (prefix)
@@ -79,8 +81,9 @@ after a mode loads into emacs.
     (other-window 1 nil)
     (if (= prefix 1) (switch-to-next-buffer)))
 #+END_SRC
+
 ** delete-trailing-whitespace-untabify
-i want this to be everywhere except in makefiles.
+I want this to be everywhere except in makefiles.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defvar makefile-modes '(makefile-mode
                          makefile-bsdmake-mode
@@ -97,6 +100,7 @@ i want this to be everywhere except in makefiles.
           (delete-trailing-whitespace (point-min) (point-max))
           (untabify (point-min) (point-max)))))
 #+END_SRC
+
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-macros ()
@@ -106,6 +110,7 @@ i want this to be everywhere except in makefiles.
     (bind-key "C-x 3" 'hsplit-last-buffer)
     (add-hook 'before-save-hook 'hb/delete-trailing-whitespace-untabify))
 #+END_SRC
+
 * general
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -117,6 +122,7 @@ i want this to be everywhere except in makefiles.
 
     (evil-leader/set-key "b D" 'kill-buffer-and-window))
 #+END_SRC
+
 * packages
 ** org
 *** hooks
@@ -128,6 +134,7 @@ i want this to be everywhere except in makefiles.
     (auto-fill-mode 1)
     (company-mode 0))
 #+END_SRC
+
 *** macros
 **** org-save
 Note: =org-babel-tangle= will automatically save the buffer.
@@ -137,6 +144,7 @@ Note: =org-babel-tangle= will automatically save the buffer.
     (org-update-statistics-cookies t)
     (org-babel-tangle))
 #+END_SRC
+
 *** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-org ()
@@ -159,19 +167,23 @@ Note: =org-babel-tangle= will automatically save the buffer.
                    "<src lang=\"?\">\n\n</src>"))
     (bind-key "C-c c" 'org-capture)
     (setq org-capture-templates
-          '(("n" "Notes" entry (file "~/notes.org") "* %?\n")
-            ("s" "Stack" entry (file "~/stack.org") "\n* TODO %?\n")
+
+    '(("n" "Notes" entry (file "~/notes.org") "* %?\n")
+
+    ("s" "Stack" entry (file "~/stack.org") "\n* TODO %?\n")
             ("w" "Weektree" entry (file+function "~/.emacs.d/test.org" org-capture-datetree)
              "* %?\n")))
     (bind-key "C-c a" 'org-agenda)
     (add-hook 'org-mode-hook 'hb/configure-org-mode-hook)
     t)
 #+END_SRC
+
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-packages ()
     (hb/configure-org))
 #+END_SRC
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure ()
