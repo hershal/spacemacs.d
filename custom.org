@@ -126,7 +126,6 @@ i want this to be everywhere except in makefiles.
     (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
     (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
     (auto-fill-mode 1)
-    (writegood-mode 1)
     (company-mode 0))
 #+END_SRC
 *** macros
