@@ -123,18 +123,11 @@ I want this to be everywhere except in makefiles.
     (evil-leader/set-key "b D" 'kill-buffer-and-window))
 #+END_SRC
 
-* packages
-** configuration
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-packages ())
-#+END_SRC
-
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure ()
     (hb/configure-macros)
     (hb/configure-general)
-    (hb/configure-packages)
     (message "hb done!"))
 #+END_SRC
 
