@@ -38,7 +38,7 @@ I'm still experimenting with how this is organized!
       (comment-dwim arg)))
 #+END_SRC
 
-** capitalize-dwim-line
+** capitalize-line-dwim
 #+BEGIN_SRC emacs-lisp :tangle yes
 (defun capitalize-line-dwim ()
   (interactive)
