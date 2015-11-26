@@ -127,6 +127,17 @@ I want this to be everywhere except in makefiles.
     (with-current-buffer "*scratch*" (emacs-lisp-mode)))
 #+END_SRC
 
+* hooks
+** c-mode-common
+#+BEGIN_SRC emacs-lisp :tangle yes
+    (defun hb/configure-c-mode-common-hook ()
+      (setq comment-start "/*"
+            comment-end "*/"
+            c-basic-offset 4))
+  (add-hook 'c-mode-common-hook 'hb/configure-c-mode-common-hook)
+#+END_SRC
+** configuration
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure ()
