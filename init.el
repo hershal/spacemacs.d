@@ -23,8 +23,7 @@
      ;; ----------------------------------------------------------------
      (auto-completion
       :variables
-      auto-completion-enable-sort-by-usage t
-      auto-completion-enable-help-tooltip t)
+      auto-completion-enable-sort-by-usage t)
      (c-c++
       :variables
       c-c++-enable-clang-support t
