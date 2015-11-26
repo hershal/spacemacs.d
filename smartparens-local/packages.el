@@ -1,22 +1,9 @@
 (setq smartparens-local-packages '(smartparens))
 
-(defun smartparens-local/lisp-style-mode-hook ()
-  (sp-local-pair major-mode "'" nil :actions nil)
-  (sp-local-pair major-mode "`" nil :actions nil))
-
-(defun smartparens-local/strict-style-mode-hook ()
-  (turn-on-smartparens-strict-mode))
-
 (defun smartparens-local/post-init-smartparens ()
   (setq sp-hybrid-kill-excessive-whitespace t)
   (bind-key "M-j" 'sp-join-sexp smartparens-mode-map)
   (bind-key "C-*" (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "(")))
   (bind-key "C-\"" (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "\"")))
   (smartparens-global-mode)
-  (show-smartparens-global-mode)
-  (mapc (lambda (hook)
-          (add-hook hook 'smartparens-local/lisp-style-mode-hook))
-        smartparens-local-lisp-style-mode-hooks)
-  (mapc (lambda (hook)
-          (add-hook hook 'smartparens-local/strict-style-mode-hook))
-        smartparens-local-strict-style-mode-hooks))
+  (show-smartparens-global-mode))
