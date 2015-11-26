@@ -8,9 +8,8 @@
   (turn-on-smartparens-strict-mode))
 
 (defun smartparens-local/post-init-smartparens ()
-  (setq sp-paredit-bindings (acons "M-j" 'sp-join-sexp sp-paredit-bindings)
-        sp-hybrid-kill-excessive-whitespace t)
-  (sp-use-paredit-bindings)
+  (setq sp-hybrid-kill-excessive-whitespace t)
+  (bind-key "M-j" 'sp-join-sexp smartparens-mode-map)
   (bind-key "C-*" (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "(")))
   (bind-key "C-\"" (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "\"")))
   (smartparens-global-mode)
