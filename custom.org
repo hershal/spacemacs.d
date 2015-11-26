@@ -118,7 +118,8 @@ I want this to be everywhere except in makefiles.
     (setq vc-follow-symlinks t
           evil-move-beyond-eol t
           kill-whole-line t
-          shell-command-switch "-ci")
+          shell-command-switch "-ci"
+          tramp-auto-save-directory "~/tmp/autosave-tramp/")
 
     (bind-key "C-;" 'comment-dwim-line)
     (bind-key "C-x k" 'kill-this-buffer)
