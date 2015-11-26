@@ -25,6 +25,10 @@
       :variables
       auto-completion-enable-sort-by-usage t
       auto-completion-enable-help-tooltip t)
+     (c-c++
+      :variables
+      c-c++-enable-clang-support t
+      c-c++-default-mode-for-headers 'c++-mode)
      better-defaults
      emacs-lisp
      search-engine
