@@ -30,16 +30,18 @@
       c-c++-default-mode-for-headers 'c++-mode)
      better-defaults
      emacs-lisp
-     search-engine
      git
      markdown
      ;; org
+     html
+     search-engine
+     semantic
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     html
      syntax-checking
      version-control
+     ;; hb local
      smartparens-local
      org-local
      multiple-cursors
