@@ -32,6 +32,7 @@
      emacs-lisp
      (evil-snipe
       :variables
+      evil-snipe-enable-alternate-f-and-t-behaviors t
       evil-snipe-repeat-scope 'whole-buffer)
      git
      markdown
