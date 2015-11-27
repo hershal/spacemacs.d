@@ -1,4 +1,4 @@
-(setq org-local-packages '(org))
+(setq org-local-packages '(org writegood-mode))
 
 (defun org-local/post-init-org ()
   (setq org-src-window-setup 'other-window
@@ -27,8 +27,10 @@
           ("w" "Weektree" entry (file+function "~/.emacs.d/test.org" org-capture-datetree)
            "* %?\n")))
   (bind-key "C-c a" 'org-agenda)
-  (add-hook 'org-mode-hook 'hb/configure-org-mode-hook)
-  t)
+  (add-hook 'org-mode-hook 'hb/configure-org-mode-hook))
+
+(defun org-local/init-writegood-mode ()
+  (add-hook 'org-mode-hook 'writegood-mode))
 
 (defun hb/configure-org-mode-hook ()
   (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
