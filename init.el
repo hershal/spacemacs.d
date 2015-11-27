@@ -30,6 +30,9 @@
       c-c++-default-mode-for-headers 'c++-mode)
      better-defaults
      emacs-lisp
+     (evil-snipe
+      :variables
+      evil-snipe-repeat-scope 'whole-buffer)
      git
      markdown
      ;; org
