@@ -20,9 +20,7 @@
                  "<src lang=\"?\">\n\n</src>"))
   (bind-key "C-c c" 'org-capture)
   (setq org-capture-templates
-
         '(("n" "Notes" entry (file "~/notes.org") "* %?\n")
-
           ("s" "Stack" entry (file "~/stack.org") "\n* TODO %?\n")
           ("w" "Weektree" entry (file+function "~/.emacs.d/test.org" org-capture-datetree)
            "* %?\n")))
