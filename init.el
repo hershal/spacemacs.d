@@ -44,6 +44,7 @@
             shell-default-height 30
             shell-default-position 'bottom)
      syntax-checking
+     unimpaired
      version-control
      ;; hb local
      smartparens-local
