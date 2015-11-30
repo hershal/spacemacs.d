@@ -9,6 +9,7 @@
         shell-command-switch "-ci"
         tramp-auto-save-directory "~/tmp/autosave-tramp/")
 
+  (bind-key "C-=" 'er/expand-region)
   (bind-key "C-;" 'comment-line-dwim)
   (bind-key "C-x k" 'kill-this-buffer)
   (bind-key "C-x c" 'capitalize-line-dwim)
