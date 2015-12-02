@@ -15,6 +15,7 @@
   (bind-key "C-x c" 'capitalize-line-dwim)
   (bind-key "C-x 2" 'vsplit-last-buffer)
   (bind-key "C-x 3" 'hsplit-last-buffer)
+  (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
   (evil-leader/set-key "b D" 'kill-buffer-and-window)
   (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
 
