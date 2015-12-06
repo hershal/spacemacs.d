@@ -4,6 +4,7 @@
   (setq org-src-window-setup 'other-window
         org-startup-indented t
         org-hide-emphasis-markers t
+        org-fontify-done-headline t
         org-startup-folded 'content
         org-log-into-drawer "LOGBOOK"
         org-use-sub-superscripts '{}
@@ -11,6 +12,12 @@
         org-src-fontify-natively nil
         org-refile-targets '((nil :maxlevel . 3)
                              (org-agenda-files :maxlevel . 3)))
+
+  (custom-set-faces '(org-done ((t (:foreground "PaleGreen"
+                                    :strike-through t))))
+                    '(org-headline-done ((t (:foreground "LightSalmon"
+                                             :strike-through t)))))
+
   (after 'org-indent
     (diminish 'org-indent-mode ""))
   (bind-key "C-x C-s" 'org-save org-mode-map)
