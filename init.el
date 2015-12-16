@@ -38,6 +38,7 @@
      markdown
      ;; org
      html
+     javascript
      search-engine
      semantic
      (shell :variables
