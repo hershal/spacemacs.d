@@ -17,7 +17,12 @@
   (bind-key "C-x 3" 'hsplit-last-buffer)
   (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
   (evil-leader/set-key "b D" 'kill-buffer-and-window)
+  (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
   (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
+
+(defun revert-buffer-noconfirm ()
+  (interactive)
+  (revert-buffer t t))
 
 (defun hb/quotemeta (str-val)
   "Return STR-VAL with all non-word characters and / escaped with backslash.
