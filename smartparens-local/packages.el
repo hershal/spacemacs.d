@@ -33,6 +33,8 @@
   (bind-key "C-}" 'sp-backward-barf-sexp smartparens-mode-map)
 
   (bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward smartparens-mode-map)
+  (bind-key "M-<up>" 'sp-splice-sexp-killing-backward smartparens-mode-map)
+  (bind-key "M-<down>" 'sp-splice-sexp-killing-forward smartparens-mode-map)
 
   (bind-key "C-*" (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "(")) smartparens-mode-map)
   (smartparens-global-mode)
