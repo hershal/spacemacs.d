@@ -18,8 +18,6 @@
                     '(org-headline-done ((t (:foreground "LightSalmon"
                                              :strike-through t)))))
 
-  (after 'org-indent
-    (diminish 'org-indent-mode ""))
   (bind-key "C-x C-s" 'org-save org-mode-map)
   (add-to-list 'org-structure-template-alist
                '("st"
