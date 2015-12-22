@@ -2,7 +2,8 @@
 
 (defun lisp-local/lisp-style-mode-hook ()
   (sp-local-pair major-mode "'" nil :actions nil)
-  (sp-local-pair major-mode "`" nil :actions nil))
+  (sp-local-pair major-mode "`" nil :actions nil)
+  (aggressive-indent-mode))
 
 (defun lisp-local/post-init-smartparens ()
   (mapc (lambda (hook)
