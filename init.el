@@ -36,7 +36,7 @@
       evil-snipe-repeat-scope 'whole-buffer)
      git
      markdown
-     ;; org
+     org
      html
      javascript
      search-engine
