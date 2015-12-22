@@ -18,6 +18,7 @@
   (bind-key "C-x 2" 'vsplit-last-buffer)
   (bind-key "C-x 3" 'hsplit-last-buffer)
   (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
+  (bind-key "C-x C-K" 'kill-buffer-and-window)
   (evil-leader/set-key "fp" 'ffap)
   (evil-leader/set-key "bD" 'kill-buffer-and-window)
   (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
