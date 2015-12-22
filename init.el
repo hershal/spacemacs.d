@@ -261,9 +261,7 @@ layers configuration. You are free to put any user code."
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
- '(org-agenda-files
-   (quote
-    ("~/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/DDE35344-2F48-4950-8B3F-7AB498925B68/notes.org")))
+ '(org-agenda-files nil)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
