@@ -7,7 +7,9 @@
         evil-move-beyond-eol t
         kill-whole-line t
         shell-command-switch "-ci"
-        tramp-auto-save-directory "~/tmp/autosave-tramp/")
+        tramp-auto-save-directory "~/tmp/autosave-tramp/"
+        split-height-threshold nil
+        split-width-threshold 180)
 
   (bind-key "C-=" 'er/expand-region)
   (bind-key "C-;" 'comment-line-dwim)
