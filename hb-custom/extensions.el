@@ -19,7 +19,12 @@
   (evil-leader/set-key "fp" 'ffap)
   (evil-leader/set-key "bD" 'kill-buffer-and-window)
   (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
+  (evil-leader/set-key "bs" 'goto-scratch-buffer)
   (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
+
+(defun goto-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
 
 (defun revert-buffer-noconfirm ()
   (interactive)
