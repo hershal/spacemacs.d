@@ -54,7 +54,8 @@
      lisp-local
      hb-custom
      hb-c++
-     hb-swift)
+     hb-swift
+     org-projectile)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
@@ -261,7 +262,7 @@ layers configuration. You are free to put any user code."
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
- '(org-agenda-files nil)
+ '(org-agenda-files (quote ("~/org/projects.org")))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
