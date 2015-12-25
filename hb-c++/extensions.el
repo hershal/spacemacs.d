@@ -9,4 +9,4 @@
   (setq comment-start "/*"
         comment-end "*/"
         c-basic-offset 4)
-  (c-set-offset 'arglist-cont-nonempty '*))
+  (c-set-offset 'arglist-cont-nonempty '+))
