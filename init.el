@@ -39,6 +39,7 @@
      org
      html
      javascript
+     restclient
      search-engine
      semantic
      (shell :variables
