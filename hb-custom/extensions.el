@@ -29,10 +29,6 @@
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
 
-(defun goto-scratch-buffer ()
-  (interactive)
-  (switch-to-buffer "*scratch*"))
-
 (defun revert-buffer-noconfirm ()
   (interactive)
   (revert-buffer t t))
