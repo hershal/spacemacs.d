@@ -24,6 +24,7 @@
   (add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append)
   (setq org-structure-template-alist
         '(("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
+          ("st" "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC" "<src lang=\"?\">\n\n</src>")
           ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
           ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
           ("v" "#+begin_verse\n?\n#+end_verse" "<verse>\n?\n</verse>")
