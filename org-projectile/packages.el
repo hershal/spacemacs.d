@@ -22,7 +22,7 @@
   (use-package org-projectile
     :ensure t
     :config
-    (setq org-projectile:per-repo-filename "TODO.org"
+    (setq org-projectile:projects-file "~/repos/org/projects.org"
           org-agenda-files (append org-agenda-files (org-projectile:todo-files)))
     (evil-leader/set-key "op" 'org-projectile:project-todo-completing-read)))
 
