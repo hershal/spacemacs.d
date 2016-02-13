@@ -41,6 +41,7 @@ values."
      org
      html
      javascript
+     latex
      restclient
      search-engine
      semantic
