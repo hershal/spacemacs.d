@@ -22,6 +22,7 @@
   (evil-leader/set-key "fp" 'ffap)
   (evil-leader/set-key "bD" 'kill-buffer-and-window)
   (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
+  (evil-leader/set-key "wf" 'follow-delete-other-windows-and-split)
 
   ;; helm setup
   (setq helm-ff-newfile-prompt-p nil
