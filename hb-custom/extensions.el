@@ -20,6 +20,7 @@
   (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
   (bind-key "C-x C-K" 'kill-buffer-and-window)
   (bind-key "M-y" 'helm-show-kill-ring)
+  (bind-key "C-c C-x C-e" 'fc-eval-and-replace)
   (evil-leader/set-key "fp" 'ffap)
   (evil-leader/set-key "bD" 'kill-buffer-and-window)
   (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
@@ -30,6 +31,16 @@
         helm-buffer-max-length nil)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
+
+(defun fc-eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
 
 (defun revert-buffer-noconfirm ()
   (interactive)
