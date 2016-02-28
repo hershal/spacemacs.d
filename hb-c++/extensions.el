@@ -1,5 +1,4 @@
 (setq hb-c++-pre-extensions '())
-
 (setq hb-c++-post-extensions '(hooks))
 
 (defun hb-c++/init-hooks ()
