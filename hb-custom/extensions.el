@@ -1,5 +1,4 @@
 (setq hb-custom-pre-extensions '())
-
 (setq hb-custom-post-extensions '(general))
 
 (defun hb-custom/init-general ()
@@ -9,7 +8,8 @@
         shell-command-switch "-ci"
         tramp-auto-save-directory "~/tmp/autosave-tramp/"
         split-height-threshold nil
-        split-width-threshold 180)
+        split-width-threshold 180
+        search-whitespace-regexp "[ \t\r\n\-]+")
 
   (bind-key "C-=" 'er/expand-region)
   (bind-key "C-;" 'comment-line-dwim)
