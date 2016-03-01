@@ -21,6 +21,8 @@
   (bind-key "C-x C-K" 'kill-buffer-and-window)
   (bind-key "M-y" 'helm-show-kill-ring)
   (bind-key "C-c C-x C-e" 'fc-eval-and-replace)
+  (bind-key "C-x b" 'helm-mini)
+  (bind-key "C-x C-f" 'spacemacs/helm-find-files)
   (evil-leader/set-key "fp" 'ffap)
   (evil-leader/set-key "bD" 'kill-buffer-and-window)
   (evil-leader/set-key "fn" 'revert-buffer-noconfirm)
