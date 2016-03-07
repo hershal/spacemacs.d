@@ -2,22 +2,21 @@
 
 (defun hb-latex/post-init-auctex ()
   (spacemacs/set-leader-keys-for-major-mode 'latex-mode
-    "l" 'hb-latex/helm-label))
+    "l" 'hb-latex/insert-label))
 
-(defun hb-latex/helm-label ()
+(defun hb-latex/insert-label ()
   (interactive)
-  (helm :sources (helm-build-sync-source "latex-labels"
-                   :candidates (hb-latex/enumerate-labels)
-                   :action 'insert
-                   :fuzzy-match t)
-        :buffer "*helm labels-complete*"))
+  (let* ((ref (completing-read
+               "LaTeX-labels"
+               (hb-latex/enumerate-labels) nil nil nil nil nil)))
+    (insert ref)))
 
 (defun hb-latex/enumerate-labels ()
   (with-current-buffer (current-buffer)
     (save-excursion
       (save-restriction
         (widen)
-        (mapcar 'cadr
+        (mapcar '(lambda (candidate) (list (cadr candidate)))
                 (s-match-strings-all
                  (concat "\\\\label{\\(" hb-latex/label-regexp "\\)}")
                  (buffer-substring-no-properties (point-min) (point-max))))))))
