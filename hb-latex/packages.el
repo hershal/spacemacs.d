@@ -1,10 +1,8 @@
 (defconst hb-latex-packages '(auctex))
 
 (defun hb-latex/post-init-auctex ()
-  (bind-key "M-RET")
-
   (spacemacs/set-leader-keys-for-major-mode 'latex-mode
-    "l" 'hb-latex/helm-label)
+    "l" 'hb-latex/helm-label))
 
 (defun hb-latex/helm-label ()
   (interactive)
