@@ -57,10 +57,10 @@ values."
      org-local
      multiple-cursors
      lisp-local
-     hb-custom
+     org-projectile
      hb-c++
      hb-latex
-     org-projectile
+     hb-custom
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
