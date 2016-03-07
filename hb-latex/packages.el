@@ -7,8 +7,8 @@
 (defun hb-latex/helm-label ()
   (interactive)
   (helm :sources (helm-build-sync-source "latex-labels"
-                   :candidates (latex-enumerate-labels)
-                   :action '(lambda (candidate) (insert "\\label{" candidate "}"))
+                   :candidates (hb-latex/enumerate-labels)
+                   :action 'insert
                    :fuzzy-match t)
         :buffer "*helm labels-complete*"))
 
@@ -19,5 +19,5 @@
         (widen)
         (mapcar 'cadr
                 (s-match-strings-all
-                 (concat "\\\\label{\\(" LaTeX-equation-label hb-latex/label-regexp "\\)}")
+                 (concat "\\\\label{\\(" hb-latex/label-regexp "\\)}")
                  (buffer-substring-no-properties (point-min) (point-max))))))))
