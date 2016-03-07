@@ -32,7 +32,9 @@
   (setq helm-ff-newfile-prompt-p nil
         helm-buffer-max-length nil)
 
-  (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify))
+  (add-hook 'before-save-hook 'delete-trailing-whitespace-untabify)
+
+  (evil-search-highlight-persist 0))
 
 (defun fc-eval-and-replace ()
   "Replace the preceding sexp with its value."
