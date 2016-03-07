@@ -1,1 +1,1 @@
-(defvar hb-latex/label-regexp "\[^\s\]+")
+(defvar hb-latex/label-regexp "\[^\s\{\}\]+")
