@@ -52,6 +52,7 @@ values."
      syntax-checking
      unimpaired
      version-control
+     ruby
      yaml
      ;; hb local
      smartparens-local
