@@ -52,6 +52,7 @@ values."
      syntax-checking
      unimpaired
      version-control
+     yaml
      ;; hb local
      smartparens-local
      org-local
