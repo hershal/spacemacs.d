@@ -25,7 +25,8 @@ values."
      ;; ----------------------------------------------------------------
      (auto-completion
       :variables
-      auto-completion-enable-sort-by-usage t)
+      auto-completion-enable-sort-by-usage t
+      auto-completion-enable-snippets-in-popup t)
      (c-c++
       :variables
       c-c++-enable-clang-support t
