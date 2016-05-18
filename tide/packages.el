@@ -66,6 +66,7 @@ Each entry is either:
 (defun tide/configure-tide ()
   (tide-setup)
   (flycheck-mode 1)
-  (company-mode-on))
+  (company-mode-on)
+  (setq company-backends 'company-tide))
 
 ;;; packages.el ends here
