@@ -68,6 +68,7 @@ Each entry is either:
   (flycheck-mode 1)
   (company-mode-on)
   (eldoc-mode t)
-  (setq company-backends '(company-tide)))
+  (setq company-backends '(company-tide company-yasnippet))
+  (bind-key "TAB" 'yas-expand))
 
 ;;; packages.el ends here
