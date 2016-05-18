@@ -69,6 +69,6 @@ Each entry is either:
   (company-mode-on)
   (eldoc-mode t)
   (setq company-backends '(company-tide company-yasnippet))
-  (bind-key "TAB" 'yas-expand))
+  (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 
 ;;; packages.el ends here
