@@ -33,7 +33,7 @@
 
 (defun u/node-configure ()
   (bind-key "C-x C-n" 'u/node-eval js2-mode-map)
-  (bind-key "SPC n" 'u/node-eval js2-mode-map))
+  (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval))
 
 (add-hook 'js2-mode-hook 'u/node-configure)
 
