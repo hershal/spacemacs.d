@@ -67,6 +67,7 @@ Each entry is either:
   (tide-setup)
   (flycheck-mode 1)
   (company-mode-on)
-  (setq company-backends 'company-tide))
+  (eldoc-mode t)
+  (setq company-backends '(company-tide)))
 
 ;;; packages.el ends here
