@@ -51,6 +51,7 @@ values."
             shell-default-position 'bottom)
      swift
      syntax-checking
+     typescript
      unimpaired
      version-control
      ruby
@@ -64,6 +65,7 @@ values."
      hb-c++
      hb-latex
      hb-custom
+     tide
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
