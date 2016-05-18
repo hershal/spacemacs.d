@@ -12,6 +12,7 @@
         search-whitespace-regexp "[ \t\r\n\-]+")
 
   (bind-key "C-=" 'er/expand-region)
+  (bind-key "C-'" 'helm-M-x)
   (bind-key "C-;" 'comment-line-dwim)
   (bind-key "C-x k" 'kill-this-buffer)
   (bind-key "C-x c" 'capitalize-line-dwim)
