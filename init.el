@@ -320,6 +320,7 @@ layers configuration. You are free to put any user code."
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(js2-basic-offset 2)
  '(js2-include-node-externs t)
+ '(js-indent-level 2)
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    (quote
