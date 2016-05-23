@@ -5,4 +5,7 @@
 (bind-key "C-h" 'helm-find-files-up-one-level helm-find-files-map)
 (bind-key "C-l" 'helm-execute-persistent-action helm-find-files-map)
 
+(require 'yasnippet)
+(bind-key "TAB" 'yas-expand yas-minor-mode-map)
+
 (provide 'keybindings)
