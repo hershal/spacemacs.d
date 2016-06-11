@@ -5,7 +5,7 @@
 
 (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
 
-(define-auto-insert '("\\.js" . "Javascript skeleton")
+(define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
   'js-skeleton)
 
-(provide 'javascript-setup)
+(provide 'js-setup)
