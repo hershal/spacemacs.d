@@ -3,4 +3,9 @@
 
 (add-hook 'js2-mode-hook 'js2-hooks/remove-broken-tab-complete)
 
+(define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
+
+(define-auto-insert '("\\.js" . "Javascript skeleton")
+  'js-skeleton)
+
 (provide 'javascript-setup)
