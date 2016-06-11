@@ -1,7 +1,7 @@
 (defun hb/init ()
   (require 'node)
   (require 'keybindings)
-  (require 'js2-mode-hooks))
+  (require 'javascript-setup))
 
 (hb/init)
 (provide 'hb-init)
