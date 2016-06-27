@@ -1,0 +1,54 @@
+* init
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/init ()
+    (hb/introduction)
+    (hb/os-specific)
+    (hb/spacemacs)
+    (hb/internal)
+    (hb/external)
+    (hb/conclusion))
+#+END_SRC
+* introduction
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/introduction ()
+    (hb/introduction/who-am-i))
+#+END_SRC
+** who-am-i
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/introduction/who-am-i ()
+    (setq user-full-name "Hershal Bhave"))
+#+END_SRC
+* os-specific
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/os-specific ())
+#+END_SRC
+* spacemacs
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/spacemacs ())
+#+END_SRC
+** packages
+* internal
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/internal ()
+    (hb/internal/org))
+#+END_SRC
+** org
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/internal/org ()
+    (with-eval-after-load 'org
+      (add-to-list 'org-structure-template-alist
+                   '("st"
+                     "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
+                     "<src lang=\"?\">\n\n</src>"))))
+
+#+END_SRC
+* external
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/external())
+#+END_SRC
+* conclusion
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/conclusion ()
+    (find-file "~/.spacemacs.d/init-new.org"))
+  (provide 'init-new)
+#+END_SRC
