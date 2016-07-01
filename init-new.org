@@ -1,54 +1,78 @@
 * init
 #+BEGIN_SRC emacs-lisp :tangle yes
+  (defconst hb/configs
+    '(introduction os-specific spacemacs internal external conclusion))
+
   (defun hb/init ()
-    (hb/introduction)
-    (hb/os-specific)
-    (hb/spacemacs)
-    (hb/internal)
-    (hb/external)
-    (hb/conclusion))
+    (hb/load-configs hb/configs))
+
+  (defun hb/load-configs (configs)
+    (mapc 'hb/load-config configs)  )
+
+  (defun hb/load-config (config)
+    (message (format "loading %S..." config))
+    (funcall (intern (format "hb/configure-%S" config)))
+    (message (format "loading %S... done." config)))
+
 #+END_SRC
 * introduction
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/introduction ()
-    (hb/introduction/who-am-i))
+  (defun hb/configure-introduction ()
+    (load-configs '(who-am-i)))
 #+END_SRC
 ** who-am-i
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/introduction/who-am-i ()
+  (defun hb/configure-who-am-i ()
     (setq user-full-name "Hershal Bhave"))
 #+END_SRC
+** general-keybindings
+
 * os-specific
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/os-specific ())
+  (defun hb/configure-os-specific ()
+    (load-configs '()))
 #+END_SRC
 * spacemacs
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/spacemacs ())
+  (defun hb/configure-spacemacs ()
+    (hb/load-configs '()))
 #+END_SRC
-** packages
+
 * internal
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/internal ()
-    (hb/internal/org))
+  (defun hb/configure-internal ()
+    (hb/load-configs '(org)))
 #+END_SRC
-** org
+
+** TODO org
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/internal/org ()
+  (defun hb/configure-org ()
     (with-eval-after-load 'org
       (add-to-list 'org-structure-template-alist
                    '("st"
                      "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
                      "<src lang=\"?\">\n\n</src>"))))
+#+END_SRC
+** TODO visual-line-mode
 
-#+END_SRC
 * external
+** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/external())
+  (defun hb/configure-external ()
+    (load-configs '()))
 #+END_SRC
+
+** TODO multiple-cursors
+** TODO smartparens
+** TODO undo-tree
+** TODO visual-fill-colum-mode
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/conclusion ()
+  (defun hb/configure-conclusion ()
     (find-file "~/.spacemacs.d/init-new.org"))
   (provide 'init-new)
 #+END_SRC
