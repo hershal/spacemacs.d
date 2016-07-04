@@ -69,13 +69,104 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-internal ()
-    (hb/load-configs '(internal-bindings org)))
+    (hb/load-configs '(org split-last-buffer capitalize-line-dwim
+                           eval-and-replace comment-line-dwim))
+
+    (setq vc-follow-symlinks t
+          evil-move-beyond-eol t
+          kill-whole-line t
+          shell-command-switch "-ci"
+          tramp-auto-save-directory "~/tmp/autosave-tramp/"
+          split-height-threshold nil
+          split-width-threshold 150
+          search-whitespace-regexp "[ \t\r\n\-]+")
+
+    (bind-key "C-x k" 'kill-this-buffer)
+    (bind-key "C-x C-K" 'kill-buffer-and-window))
 #+END_SRC
-** bindings
+** macros
+*** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-internal-bindings ()
-    (bind-key "C-'" 'helm-M-x))
+  (defun hb/configure-split-last-buffer ()
+    (defun vsplit-last-buffer (prefix)
+      "Split the window vertically and display the previous buffer."
+      (interactive "p")
+      (split-window-vertically)
+      (other-window 1 nil)
+      (if (= prefix 1) (switch-to-next-buffer)))
+
+    (defun hsplit-last-buffer (prefix)
+      "Split the window horizontally and display the previous buffer."
+      (interactive "p")
+      (split-window-horizontally)
+      (other-window 1 nil)
+      (if (= prefix 1) (switch-to-next-buffer)))
+    (bind-key "C-x 2" 'vsplit-last-buffer)
+    (bind-key "C-x 3" 'hsplit-last-buffer))
 #+END_SRC
+
+*** capitalize-line-dwim
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-capitalize-line-dwim ()
+   (defun capitalize-line-dwim ()
+     (interactive)
+     (if (region-active-p)
+         (save-excursion
+           (let ((beg (region-beginning))
+                 (end (region-end)))
+             (capitalize-region beg end)))
+       (save-excursion
+         (let ((beg (line-beginning-position))
+               (end (line-end-position)))
+           (capitalize-region beg end)))))
+   (bind-key "C-x c" 'capitalize-line-dwim))
+#+END_SRC
+
+*** eval-and-replace
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-eval-and-replace ()
+    (defun eval-and-replace ()
+      "Replace the preceding sexp with its value."
+      (interactive)
+      (backward-kill-sexp)
+      (condition-case nil
+          (prin1 (eval (read (current-kill 0)))
+                 (current-buffer))
+        (error (message "Invalid expression")
+               (insert (current-kill 0)))))
+    (bind-key "C-c C-x C-e" 'eval-and-replace))
+#+END_SRC
+
+*** comment-line-dwim
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-comment-line-dwim ()
+    (defun comment-line-dwim (&optional arg)
+      "Replacement for the comment-dwim command.
+    If no region is selected and current line is not blank and we
+    are not at the end of the line, then comment current line.
+    Replaces default behaviour of comment-dwim, when it inserts
+    comment at the end of the line."
+      (interactive "*P")
+      (comment-normalize-vars)
+      (if (or (and (not (region-active-p))
+                   (not (looking-at "[ \t]*$")))
+              (and (not (equal comment-end ""))
+                   (looking-at (hb/quotemeta comment-end))))
+          (if (looking-at (hb/quotemeta comment-end))
+              (progn
+                (comment-or-uncomment-region
+                 (if (comment-beginning)
+                     (comment-beginning)
+                   (line-beginning-position))
+                 (line-end-position))
+                (delete-trailing-whitespace
+                 (line-beginning-position) (line-end-position)))
+            (comment-or-uncomment-region
+             (line-beginning-position) (line-end-position)))
+        (comment-dwim arg)))
+    (bind-key "C-;" 'comment-line-dwim))
+#+END_SRC
+
 ** lisp
 :PROPERTIES:
 :header-args+: :tangle layers/hb-lisp/packages.el
