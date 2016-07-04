@@ -78,7 +78,8 @@
           search-whitespace-regexp "[ \t\r\n\-]+")
 
     (bind-key "C-x k" 'kill-this-buffer)
-    (bind-key "C-x C-K" 'kill-buffer-and-window))
+    (bind-key "C-x C-K" 'kill-buffer-and-window)
+    (evil-leader/set-key "bD" 'kill-buffer-and-window))
 #+END_SRC
 ** macros
 *** split-last-buffer
