@@ -36,21 +36,80 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-spacemacs ()
-    (hb/load-configs '()))
+    (hb/load-configs '(helm spacemacs-bindings magit)))
 #+END_SRC
-
+** spacemacs-bindings
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-spacemacs-bindings ()
+    (bind-key "C-x C-b" 'spacemacs/alternate-buffer))
+#+END_SRC
+** helm
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-helm ()
+    (with-eval-after-load 'helm
+      (dolist (keymap (list helm-find-files-map helm-read-file-map))
+        (bind-key "C-h" 'helm-find-files-up-one-level keymap)
+        (bind-key "C-l" 'helm-execute-persistent-action keymap)))
+    (bind-key "C-x C-f" 'spacemacs/helm-find-files))
+#+END_SRC
+** magit
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-magit ()
+    (setq-default git-magit-status-fullscreen t)
+    (setq magit-repository-directories "~/repos/"))
+#+END_SRC
 * internal
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-internal ()
-    (hb/load-configs '(org)))
+    (hb/load-configs '(internal-bindings org)))
+#+END_SRC
+** bindings
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-internal-bindings ()
+    (bind-key "C-'" 'helm-M-x))
+#+END_SRC
+** lisp
+:PROPERTIES:
+:header-args+: :tangle layers/hb-lisp/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar hb-lisp-strict-style-mode-hooks
+    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
+    "Major mode hooks which require smartparens to be extra strict")
+
+  (defvar hb-lisp-lisp-style-mode-hooks
+    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
+    "Major mode hooks which require smartparens to be extra lispy")
+
+  (setq hb-lisp-packages '(smartparens))
+
+  (defun hb-lisp/lisp-style-mode-hook ()
+    (sp-local-pair major-mode "'" nil :actions nil)
+    (sp-local-pair major-mode "`" nil :actions nil)
+    (aggressive-indent-mode))
+
+  (defun hb-lisp/post-init-smartparens ()
+    (mapc (lambda (hook)
+            (add-hook hook 'hb-lisp/lisp-style-mode-hook))
+          hb-lisp-lisp-style-mode-hooks)
+    (mapc (lambda (hook)
+            (add-hook hook 'turn-on-smartparens-strict-mode))
+          hb-lisp-strict-style-mode-hooks))
 #+END_SRC
 
 ** TODO org
+:PROPERTIES:
+:header-args+: :tangle layers/hb-org/packages.el
+:END:
+
 #+BEGIN_SRC emacs-lisp :tangle yes
+  (setq hb-org/packages '())
+
   (defun hb/configure-org ()
     (with-eval-after-load 'org
-      (add-to-list 'org-structure-template-alist
+    (add-to-list 'org-structure-template-alist
                    '("st"
                      "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
                      "<src lang=\"?\">\n\n</src>"))))
