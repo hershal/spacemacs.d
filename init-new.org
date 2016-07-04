@@ -37,11 +37,7 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-spacemacs ()
-    (hb/load-configs '(helm spacemacs-bindings magit)))
-#+END_SRC
-** spacemacs-bindings
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-spacemacs-bindings ()
+    (hb/load-configs '(helm magit))
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer))
 #+END_SRC
 ** helm
