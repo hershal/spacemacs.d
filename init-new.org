@@ -69,8 +69,8 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-internal ()
-    (hb/load-configs '(org split-last-buffer capitalize-line-dwim
-                           eval-and-replace comment-line-dwim))
+    (hb/load-configs '(split-last-buffer capitalize-line-dwim
+                       eval-and-replace comment-line-dwim))
 
     (setq vc-follow-symlinks t
           evil-move-beyond-eol t
@@ -167,51 +167,6 @@
     (bind-key "C-;" 'comment-line-dwim))
 #+END_SRC
 
-** lisp
-:PROPERTIES:
-:header-args+: :tangle layers/hb-lisp/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (defvar hb-lisp-strict-style-mode-hooks
-    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
-    "Major mode hooks which require smartparens to be extra strict")
-
-  (defvar hb-lisp-lisp-style-mode-hooks
-    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
-    "Major mode hooks which require smartparens to be extra lispy")
-
-  (setq hb-lisp-packages '(smartparens))
-
-  (defun hb-lisp/lisp-style-mode-hook ()
-    (sp-local-pair major-mode "'" nil :actions nil)
-    (sp-local-pair major-mode "`" nil :actions nil)
-    (aggressive-indent-mode))
-
-  (defun hb-lisp/post-init-smartparens ()
-    (mapc (lambda (hook)
-            (add-hook hook 'hb-lisp/lisp-style-mode-hook))
-          hb-lisp-lisp-style-mode-hooks)
-    (mapc (lambda (hook)
-            (add-hook hook 'turn-on-smartparens-strict-mode))
-          hb-lisp-strict-style-mode-hooks))
-#+END_SRC
-
-** TODO org
-:PROPERTIES:
-:header-args+: :tangle layers/hb-org/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (setq hb-org/packages '())
-
-  (defun hb/configure-org ()
-    (with-eval-after-load 'org
-    (add-to-list 'org-structure-template-alist
-                   '("st"
-                     "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
-                     "<src lang=\"?\">\n\n</src>"))))
-#+END_SRC
 ** TODO visual-line-mode
 
 * layers
@@ -255,6 +210,60 @@ These are layers which are tangled into the =layers= directory.
 #+END_SRC
 ** TODO undo-tree
 ** TODO visual-fill-colum-mode
+** lisp
+:PROPERTIES:
+:header-args+: :tangle layers/hb-lisp/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar hb-lisp-mode-hooks
+    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
+    "Major mode hooks which require smartparens to be extra lispy")
+
+  (setq hb-lisp-packages '(smartparens aggressive-indent))
+
+  (defun hb-lisp/remove-bad-lisp-pairs ()
+    (sp-local-pair major-mode "'" nil :actions nil)
+    (sp-local-pair major-mode "`" nil :actions nil))
+
+  (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
+    (mapc (lambda (hook)
+            (add-hook hook hook-to-add))
+          hb-lisp-mode-hooks))
+
+  (defun hb-lisp/post-init-smartparens ()
+    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/remove-bad-lisp-pairs))
+
+  (defun hb-lisp/init-aggressive-indent ()
+    (use-package aggressive-indent
+      :ensure t))
+
+  (defun hb-lisp/post-init-aggressive-indent ()
+    (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
+#+END_SRC
+
+** TODO org
+:PROPERTIES:
+:header-args+: :tangle layers/hb-org/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-org-packages '(org))
+
+  (defun hb-org/post-init-org ()
+    (with-eval-after-load 'org
+      (add-to-list 'org-structure-template-alist
+                   '("st"
+                     "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
+                     "<src lang=\"?\">\n\n</src>"))
+      (bind-key "C-x C-s" 'org-babel-tangle org-mode-map)
+      (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)))
+
+  (defun hb-org/tangle-parent-buffer ()
+    (interactive)
+    (with-current-buffer (org-src--source-buffer)
+      (org-babel-tangle)))
+#+END_SRC
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
