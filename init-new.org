@@ -205,7 +205,9 @@ These are layers which are tangled into the =layers= directory.
     (bind-key "M-~" 'mc/sort-regions)
     (bind-key "C-~" 'mc/reverse-regions)
     (bind-key "C-S-c C-e" 'mc/edit-ends-of-lines)
-    (bind-key "C-S-c C-a" 'mc/edit-beginnings-of-lines))
+    (bind-key "C-S-c C-a" 'mc/edit-beginnings-of-lines)
+    (bind-key "C-s" 'jc/mc-search-forward mc/keymap)
+    (bind-key "C-r" 'jc/mc-search-backward mc/keymap))
 
   (defun hb/configure-mc-fixes ()
     (bind-key "M-SPC" 'just-one-space mc/keymap))
@@ -218,9 +220,7 @@ These are layers which are tangled into the =layers= directory.
   (defun multiple-cursors/init-multiple-cursors ()
     (use-package multiple-cursors
       :ensure t
-      :config (hb/configure-mc)
-      (bind-key "C-s" 'jc/mc-search-forward mc/keymap)
-      (bind-key "C-r" 'jc/mc-search-backward mc/keymap)))
+      :config (hb/configure-mc)))
 #+END_SRC
 
 ** TODO smartparens
