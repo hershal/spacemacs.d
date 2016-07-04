@@ -51,7 +51,13 @@
       (dolist (keymap (list helm-find-files-map helm-read-file-map))
         (bind-key "C-h" 'helm-find-files-up-one-level keymap)
         (bind-key "C-l" 'helm-execute-persistent-action keymap)))
-    (bind-key "C-x C-f" 'spacemacs/helm-find-files))
+    (bind-key "C-x C-f" 'spacemacs/helm-find-files)
+    (bind-key "C-x b" 'helm-mini)
+    (bind-key "C-'" 'helm-M-x)
+    (bind-key "M-y" 'helm-show-kill-ring)
+    (bind-key "M-y" 'helm-show-kill-ring)
+    (setq helm-ff-newfile-prompt-p nil
+          helm-buffer-max-length nil))
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp :tangle yes
