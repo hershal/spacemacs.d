@@ -125,6 +125,41 @@
 
 ** TODO multiple-cursors
 ** TODO smartparens
+:PROPERTIES:
+:header-args+: :tangle layers/hb-smartparens/packages.el
+:END:
+
+*** packages
+#+BEGIN_SRC emacs-lisp
+(setq hb-smartparens-packages '(smartparens))
+
+(defun hb-smartparens/init-smartparens ()
+  (message "initializing smartparens")
+  (use-package smartparens
+    :ensure t
+    :config (hb/configure-smartparens)))
+#+END_SRC
+*** bindings
+#+BEGIN_SRC emacs-lisp
+  (defun hb/configure-smartparens-bindings ()
+    (bind-key "C-*" 'sp-wrap-with-parens smartparens-mode-map)
+    (bind-key "C-<backspace>" 'sp-splice-sexp smartparens-mode-map)
+    (bind-key "C-)" 'sp-forward-slurp-sexp smartparens-mode-map)
+    (bind-key "C-(" 'sp-forward-barf-sexp smartparens-mode-map)
+    (bind-key "C-{" 'sp-backward-slurp-sexp smartparens-mode-map)
+    (bind-key "C-}" 'sp-backward-barf-sexp smartparens-mode-map))
+#+END_SRC
+*** configuration
+#+BEGIN_SRC emacs-lisp
+(defun hb/configure-smartparens ()
+  (smartparens-global-mode)
+  (show-smartparens-global-mode)
+  (hb/configure-smartparens-bindings))
+
+(defun sp-wrap-with-parens (&optional arg)
+  (interactive "P")
+  (sp-wrap-with-pair "("))
+#+END_SRC
 ** TODO undo-tree
 ** TODO visual-fill-colum-mode
 * conclusion
