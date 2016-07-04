@@ -3,7 +3,7 @@
 
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
-    '(introduction os-specific spacemacs internal conclusion))
+    '(introduction os-specific general conclusion))
 
   (defun hb/init ()
     (hb/load-configs hb/configs))
@@ -33,14 +33,32 @@
   (defun hb/configure-os-specific ()
     (hb/load-configs '()))
 #+END_SRC
-* spacemacs
+* general
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-spacemacs ()
-    (hb/load-configs '(helm magit))
-    (bind-key "C-x C-b" 'spacemacs/alternate-buffer))
+  (defun hb/configure-general ()
+    (hb/load-configs '(helm magit split-last-buffer
+                            capitalize-line-dwim
+                            eval-and-replace
+                            comment-line-dwim))
+    (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
+    (setq vc-follow-symlinks t
+          evil-move-beyond-eol t
+          kill-whole-line t
+          shell-command-switch "-ci"
+          tramp-auto-save-directory "~/tmp/autosave-tramp/"
+          split-height-threshold nil
+          split-width-threshold 150
+          search-whitespace-regexp "[ \t\r\n\-]+")
+
+    (bind-key "C-x k" 'kill-this-buffer)
+    (bind-key "C-x C-K" 'kill-buffer-and-window)
+    (evil-leader/set-key "bD" 'kill-buffer-and-window))
 #+END_SRC
 ** helm
+These are bindings that brings the evil-equivalent helm functionality in
+spacemacs.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-helm ()
     (with-eval-after-load 'helm
@@ -61,26 +79,7 @@
     (setq-default git-magit-status-fullscreen t)
     (setq magit-repository-directories "~/repos/"))
 #+END_SRC
-* internal
-** configuration
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-internal ()
-    (hb/load-configs '(split-last-buffer capitalize-line-dwim
-                       eval-and-replace comment-line-dwim))
 
-    (setq vc-follow-symlinks t
-          evil-move-beyond-eol t
-          kill-whole-line t
-          shell-command-switch "-ci"
-          tramp-auto-save-directory "~/tmp/autosave-tramp/"
-          split-height-threshold nil
-          split-width-threshold 150
-          search-whitespace-regexp "[ \t\r\n\-]+")
-
-    (bind-key "C-x k" 'kill-this-buffer)
-    (bind-key "C-x C-K" 'kill-buffer-and-window)
-    (evil-leader/set-key "bD" 'kill-buffer-and-window))
-#+END_SRC
 ** macros
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
