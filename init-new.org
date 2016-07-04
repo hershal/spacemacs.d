@@ -2,7 +2,7 @@
 #+PROPERTY: header-args :mkdirp t
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
-    '(introduction os-specific spacemacs internal external conclusion))
+    '(introduction os-specific spacemacs internal conclusion))
 
   (defun hb/init ()
     (hb/load-configs hb/configs))
@@ -214,13 +214,8 @@
 #+END_SRC
 ** TODO visual-line-mode
 
-* external
-** configuration
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-external ()
-    (hb/load-configs '()))
-#+END_SRC
-
+* layers
+These are layers which are tangled into the =layers= directory.
 ** TODO multiple-cursors
 ** TODO smartparens
 :PROPERTIES:
