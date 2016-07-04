@@ -164,8 +164,6 @@ spacemacs.
     (bind-key "C-;" 'comment-line-dwim))
 #+END_SRC
 
-** TODO visual-line-mode
-
 * layers
 These are layers which are tangled into the =layers= directory.
 ** multiple-cursors
@@ -260,7 +258,6 @@ These are layers which are tangled into the =layers= directory.
   (interactive "P")
   (sp-wrap-with-pair "("))
 #+END_SRC
-** TODO undo-tree
 ** TODO visual-fill-colum-mode
 ** lisp
 :PROPERTIES:
