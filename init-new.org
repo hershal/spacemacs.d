@@ -26,8 +26,6 @@
   (defun hb/configure-who-am-i ()
     (setq user-full-name "Hershal Bhave"))
 #+END_SRC
-** general-keybindings
-
 * os-specific
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
