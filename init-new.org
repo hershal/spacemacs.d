@@ -1,4 +1,5 @@
 * init
+#+PROPERTY: header-args :mkdirp t
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
     '(introduction os-specific spacemacs internal external conclusion))
