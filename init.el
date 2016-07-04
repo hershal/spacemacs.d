@@ -23,16 +23,39 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion
+      :variables
+      auto-completion-enable-sort-by-usage t
+      auto-completion-enable-snippets-in-popup t)
+     (c-c++
+      :variables
+      c-c++-enable-clang-support t
+      c-c++-default-mode-for-headers 'c++-mode)
      better-defaults
      emacs-lisp
+     (evil-snipe
+      :variables
+      evil-snipe-enable-alternate-f-and-t-behaviors t
+      evil-snipe-repeat-scope 'whole-buffer)
      git
      markdown
      org
-     shell
-     (spell-checking :variables spell-checking-enable-by-default nil)
+     html
+     javascript
+     latex
+     restclient
+     search-engine
+     semantic
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     swift
      syntax-checking
+     typescript
+     unimpaired
      version-control
+     ruby
+     yaml
 
      ;; hb layers
      hb-smartparens
