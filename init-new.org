@@ -312,6 +312,7 @@ These are layers which are tangled into the =layers= directory.
 
   (defun hb-org/tangle-parent-buffer ()
     (interactive)
+    (org-edit-src-save)
     (with-current-buffer (org-src--source-buffer)
       (org-babel-tangle)))
 #+END_SRC
