@@ -265,15 +265,16 @@ These are layers which are tangled into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
+  (setq hb-lisp-packages '(smartparens aggressive-indent diminish))
+
   (defvar hb-lisp-mode-hooks
     '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
     "Major mode hooks which require smartparens to be extra lispy")
 
-  (setq hb-lisp-packages '(smartparens aggressive-indent))
-
-  (defun hb-lisp/remove-bad-lisp-pairs ()
+  (defun hb-lisp/configure-lisp-smartparens ()
     (sp-local-pair major-mode "'" nil :actions nil)
-    (sp-local-pair major-mode "`" nil :actions nil))
+    (sp-local-pair major-mode "`" nil :actions nil)
+    (turn-on-smartparens-strict-mode))
 
   (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
     (mapc (lambda (hook)
@@ -281,16 +282,17 @@ These are layers which are tangled into the =layers= directory.
           hb-lisp-mode-hooks))
 
   (defun hb-lisp/post-init-smartparens ()
-    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/remove-bad-lisp-pairs))
+    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
 
   (defun hb-lisp/init-aggressive-indent ()
-    (use-package aggressive-indent
-      :ensure t))
+    (use-package aggressive-indent))
 
   (defun hb-lisp/post-init-aggressive-indent ()
     (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
-#+END_SRC
 
+  (defun hb-lisp/post-init-diminish ()
+    (diminish 'aggressive-indent-mode))
+#+END_SRC
 ** TODO org
 :PROPERTIES:
 :header-args+: :tangle layers/hb-org/packages.el
