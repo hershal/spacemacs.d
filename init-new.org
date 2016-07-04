@@ -217,10 +217,11 @@ These are layers which are tangled into the =layers= directory.
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
 
-  (defun multiple-cursors/init-multiple-cursors ()
-    (use-package multiple-cursors
-      :ensure t
-      :config (hb/configure-mc)))
+  (defun hb-multiple-cursors/init-multiple-cursors ()
+    (use-package multiple-cursors))
+
+  (defun hb-multiple-cursors/post-init-multiple-cursors ()
+    (hb/configure-mc))
 #+END_SRC
 
 ** smartparens
