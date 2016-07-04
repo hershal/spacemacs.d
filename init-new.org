@@ -1,5 +1,6 @@
 * init
 #+PROPERTY: header-args :mkdirp t
+
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
     '(introduction os-specific spacemacs internal conclusion))
@@ -14,7 +15,6 @@
     (message (format "loading %S..." config))
     (funcall (intern (format "hb/configure-%S" config)))
     (message (format "loading %S... done." config)))
-
 #+END_SRC
 * introduction
 ** configuration
@@ -97,6 +97,7 @@
       (split-window-horizontally)
       (other-window 1 nil)
       (if (= prefix 1) (switch-to-next-buffer)))
+
     (bind-key "C-x 2" 'vsplit-last-buffer)
     (bind-key "C-x 3" 'hsplit-last-buffer))
 #+END_SRC
