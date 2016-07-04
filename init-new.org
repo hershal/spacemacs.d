@@ -168,7 +168,7 @@ spacemacs.
 
 * layers
 These are layers which are tangled into the =layers= directory.
-** TODO multiple-cursors
+** multiple-cursors
 :PROPERTIES:
 :header-args+: :tangle layers/hb-multiple-cursors/packages.el
 :END:
@@ -223,7 +223,7 @@ These are layers which are tangled into the =layers= directory.
       :config (hb/configure-mc)))
 #+END_SRC
 
-** TODO smartparens
+** smartparens
 :PROPERTIES:
 :header-args+: :tangle layers/hb-smartparens/packages.el
 :END:
