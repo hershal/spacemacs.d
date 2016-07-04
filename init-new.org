@@ -316,6 +316,36 @@ These are layers which are tangled into the =layers= directory.
     (with-current-buffer (org-src--source-buffer)
       (org-babel-tangle)))
 #+END_SRC
+** diminish
+:PROPERTIES:
+:header-args+: :tangle layers/hb-diminish/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-diminish-packages '(diminish company evil-org smartparens holy-mode hybrid-mode yasnippet which-key))
+
+  (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
+
+  (defun hb-diminish/post-init-diminish ()
+    (let ((diminish-modes (mapcar '(lambda (m) (cons m (mode-from-package m))) (set-difference hb-diminish-packages '(diminish)))))
+      (dolist (diminish-mode diminish-modes)
+        (let ((package (car diminish-mode))
+              (mode (cdr diminish-mode)))
+          (message (format "hi %s %s" mode package))
+          (if mode
+              (diminish-after-load package mode)
+            (error (format "Could not diminish %s!")))))))
+
+  (defun mode-from-package (package)
+    (let ((package-mode-from-alist (cdr (assoc package package-mode-alist)))
+          (package-mode-concat (intern-soft (format "%s-mode" package))))
+      (cond (package-mode-from-alist package-mode-from-alist)
+            (package-mode-concat package-mode-concat)
+            (package package))))
+
+  (defun diminish-after-load (file mode)
+    (eval-after-load file `(diminish ',mode)))
+#+END_SRC
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
