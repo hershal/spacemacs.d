@@ -19,7 +19,7 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-introduction ()
-    (load-configs '(who-am-i)))
+    (hb/load-configs '(who-am-i)))
 #+END_SRC
 ** who-am-i
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -32,7 +32,7 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-os-specific ()
-    (load-configs '()))
+    (hb/load-configs '()))
 #+END_SRC
 * spacemacs
 ** configuration
@@ -63,7 +63,7 @@
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-external ()
-    (load-configs '()))
+    (hb/load-configs '()))
 #+END_SRC
 
 ** TODO multiple-cursors
