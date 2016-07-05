@@ -280,7 +280,8 @@ These are layers which are tangled into the =layers= directory.
   (defun hb/configure-smartparens ()
     (smartparens-global-mode)
     (show-smartparens-global-mode)
-    (hb/configure-smartparens-bindings))
+    (hb/configure-smartparens-bindings)
+    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 
   (defun sp-wrap-with-parens (&optional arg)
     (interactive "P")
