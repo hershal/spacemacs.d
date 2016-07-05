@@ -323,8 +323,7 @@ These are layers which are tangled into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-diminish-packages '(diminish company evil-org smartparens holy-mode hybrid-mode yasnippet which-key))
-
+  (defvar hb-diminish-packages '(diminish company evil-org smartparens holy-mode hybrid-mode yasnippet which-key))
   (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
 
   (defun hb-diminish/post-init-diminish ()
@@ -332,7 +331,6 @@ These are layers which are tangled into the =layers= directory.
       (dolist (diminish-mode diminish-modes)
         (let ((package (car diminish-mode))
               (mode (cdr diminish-mode)))
-          (message (format "hi %s %s" mode package))
           (if mode
               (diminish-after-load package mode)
             (error (format "Could not diminish %s!")))))))
