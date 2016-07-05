@@ -253,7 +253,7 @@ These are layers which are tangled into the =layers= directory.
       ("C-(" . sp-forward-barf-sexp)
       ("C-{" . sp-backward-slurp-sexp)
       ("C-}" . sp-backward-barf-sexp)
-      ("C-M-<backspace>" . sp-splice-sexp-killing-backward)))
+      ("M-<up>" . sp-splice-sexp-killing-backward)))
 
   (defun hb/configure-smartparens-bindings ()
     (dolist (binding hb/smartparens-bindings)
