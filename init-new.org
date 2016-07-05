@@ -256,7 +256,18 @@ These are layers which are tangled into the =layers= directory.
     (use-package smartparens))
 
   (defun hb-smartparens/post-init-smartparens ()
-    (hb/configure-smartparens))
+    (hb-smartparens/configure))
+
+  (defun hb-smartparens/configure ()
+    (smartparens-global-mode)
+    (show-smartparens-global-mode)
+    (hb-smartparens/configure-bindings)
+    (hb-smartparens/configure-specialcase)
+    (diminish-after-load 'smartparens))
+
+  (defun hb-smartparens/configure-bindings ()
+    (dolist (binding hb/smartparens-bindings)
+      (bind-key (car binding) (cdr binding) smartparens-mode-map)))
 
   (defvar hb/smartparens-bindings
     '(("C-*" . sp-wrap-with-parens)
@@ -267,19 +278,12 @@ These are layers which are tangled into the =layers= directory.
       ("C-}" . sp-backward-barf-sexp)
       ("M-<up>" . sp-splice-sexp-killing-backward)))
 
-  (defun hb/configure-smartparens-bindings ()
-    (dolist (binding hb/smartparens-bindings)
-      (bind-key (car binding) (cdr binding) smartparens-mode-map)))
-
-  (defun hb/configure-smartparens ()
-    (smartparens-global-mode)
-    (show-smartparens-global-mode)
-    (hb/configure-smartparens-bindings)
-    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
-
   (defun sp-wrap-with-parens (&optional arg)
     (interactive "P")
     (sp-wrap-with-pair "("))
+
+  (defun hb-smartparens/configure-specialcase ()
+    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** TODO visual-fill-colum-mode
