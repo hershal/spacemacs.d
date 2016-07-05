@@ -23,17 +23,20 @@
   (defun hb/configure-introduction ()
     (hb/load-configs '(who-am-i)))
 #+END_SRC
+
 ** who-am-i
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-who-am-i ()
     (setq user-full-name "Hershal Bhave"))
 #+END_SRC
+
 * os-specific
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-os-specific ()
     (hb/load-configs '()))
 #+END_SRC
+
 * general
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -56,6 +59,7 @@
     (bind-key "C-x C-K" 'kill-buffer-and-window)
     (evil-leader/set-key "bD" 'kill-buffer-and-window))
 #+END_SRC
+
 ** helm
 These are bindings that brings the evil-equivalent helm functionality in
 spacemacs.
@@ -74,6 +78,7 @@ spacemacs.
     (setq helm-ff-newfile-prompt-p nil
           helm-buffer-max-length nil))
 #+END_SRC
+
 ** magit
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-magit ()
@@ -238,6 +243,7 @@ These are layers which are tangled into the =layers= directory.
     :ensure t
     :config (hb/configure-smartparens)))
 #+END_SRC
+
 *** bindings
 #+BEGIN_SRC emacs-lisp
   (defvar hb/smartparens-bindings
@@ -253,6 +259,7 @@ These are layers which are tangled into the =layers= directory.
     (dolist (binding hb/smartparens-bindings)
       (bind-key (car binding) (cdr binding) smartparens-mode-map)))
 #+END_SRC
+
 *** configuration
 #+BEGIN_SRC emacs-lisp
 (defun hb/configure-smartparens ()
@@ -264,6 +271,7 @@ These are layers which are tangled into the =layers= directory.
   (interactive "P")
   (sp-wrap-with-pair "("))
 #+END_SRC
+
 ** TODO visual-fill-colum-mode
 ** lisp
 :PROPERTIES:
@@ -299,6 +307,7 @@ These are layers which are tangled into the =layers= directory.
   (defun hb-lisp/post-init-diminish ()
     (diminish 'aggressive-indent-mode))
 #+END_SRC
+
 ** TODO org
 :PROPERTIES:
 :header-args+: :tangle layers/hb-org/packages.el
@@ -333,6 +342,7 @@ These are layers which are tangled into the =layers= directory.
     (with-current-buffer (org-src--source-buffer)
       (org-babel-tangle)))
 #+END_SRC
+
 ** diminish
 :PROPERTIES:
 :header-args+: :tangle layers/hb-diminish/packages.el
@@ -361,6 +371,7 @@ These are layers which are tangled into the =layers= directory.
   (defun diminish-after-load (file mode)
     (eval-after-load file `(diminish ',mode)))
 #+END_SRC
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
