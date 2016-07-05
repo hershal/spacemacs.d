@@ -375,6 +375,6 @@ These are layers which are tangled into the =layers= directory.
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
-    (find-file "~/.spacemacs.d/init-new.org"))
+    (find-file hb/init-file))
   (provide 'init-new)
 #+END_SRC

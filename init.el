@@ -2,6 +2,22 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(defconst hb/init-directory "~/.spacemacs.d/")
+(defconst hb/init-file-name "init-new.org")
+(defconst hb/init-file (concat hb/init-directory hb/init-file-name))
+(defconst hb/init-file-compiled (replace-regexp-in-string ".org$" ".el" hb/init-file))
+(defconst hb/layers-directory-compiled (concat hb/init-directory "layers/"))
+
+(add-to-list 'load-path hb/init-directory)
+
+(if (and (file-exists-p hb/init-file)
+         (not (and (file-exists-p hb/init-file-compiled)
+                   (file-directory-p hb/layers-directory-compiled))))
+    (progn (require 'ob-tangle)
+           (org-babel-tangle-file hb/init-file)))
+
+(require 'init-new)
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -278,8 +294,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (add-to-list 'load-path "~/.spacemacs.d")
-  (require 'init-new)
   )
 
 (defun dotspacemacs/user-config ()
