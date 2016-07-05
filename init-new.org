@@ -1,5 +1,6 @@
 * init
 #+PROPERTY: header-args :mkdirp t
+#+STARTUP: content
 
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
