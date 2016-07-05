@@ -329,7 +329,7 @@ These are layers which are tangled into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-org-packages '(org))
+  (setq hb-org-packages '(org writegood-mode smartparens))
 
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
@@ -339,15 +339,28 @@ These are layers which are tangled into the =layers= directory.
                      "<src lang=\"?\">\n\n</src>"))
       (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
       (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map))
-
     (setq org-goto-interface 'outline-path-completion
           org-goto-max-level 10
           org-outline-path-complete-in-steps nil)
-
     (advice-add 'org-goto :after 'org-show-subtree-with-context)
-
     (with-eval-after-load 'ob-tangle
-      (remove-hook 'org-babel-pre-tangle-hook 'save-buffer)))
+      (remove-hook 'org-babel-pre-tangle-hook 'save-buffer))
+    (add-hook 'org-mode-hook 'turn-on-auto-fill))
+
+  (defun hb-org/init-writegood-mode ()
+    (use-package writegood-mode))
+
+  (defun hb-org/post-init-writegood-mode ()
+    (add-hook 'org-mode-hook 'writegood-turn-on))
+
+  (defun hb-org/post-init-smartparens ()
+    (defun hb-org/configure-smartparens ()
+      (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
+    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
 
   (defun org-show-subtree-with-context (&optional ignored)
     (save-excursion
