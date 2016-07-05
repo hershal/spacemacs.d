@@ -39,6 +39,7 @@
   (defun hb/configure-general ()
     (hb/load-configs '(helm magit split-last-buffer capitalize-line-dwim
                             eval-and-replace comment-line-dwim))
+
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
     (setq vc-follow-symlinks t
           evil-move-beyond-eol t
