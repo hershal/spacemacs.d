@@ -2,6 +2,8 @@
 #+PROPERTY: header-args :mkdirp t
 #+STARTUP: content
 
+** mechanism
+Some basic configuration loading mechanisms
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
     '(introduction os-specific general conclusion))
@@ -17,6 +19,13 @@
     (funcall (intern (format "hb/configure-%S" config)))
     (message (format "loading %S... done." config)))
 #+END_SRC
+
+** pre-init
+These are defaults which must be set before spacemacs initialization.
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq exec-path-from-shell-check-startup-files nil)
+#+END_SRC
+
 * introduction
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
