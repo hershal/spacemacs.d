@@ -245,7 +245,8 @@ These are layers which are tangled into the =layers= directory.
     (bind-key "C-)" 'sp-forward-slurp-sexp smartparens-mode-map)
     (bind-key "C-(" 'sp-forward-barf-sexp smartparens-mode-map)
     (bind-key "C-{" 'sp-backward-slurp-sexp smartparens-mode-map)
-    (bind-key "C-}" 'sp-backward-barf-sexp smartparens-mode-map))
+    (bind-key "C-}" 'sp-backward-barf-sexp smartparens-mode-map)
+    (bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward smartparens-mode-map))
 #+END_SRC
 *** configuration
 #+BEGIN_SRC emacs-lisp
