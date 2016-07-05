@@ -248,19 +248,16 @@ These are layers which are tangled into the =layers= directory.
 :header-args+: :tangle layers/hb-smartparens/packages.el
 :END:
 
-*** packages
 #+BEGIN_SRC emacs-lisp
-(setq hb-smartparens-packages '(smartparens))
+  (setq hb-smartparens-packages '(smartparens))
 
-(defun hb-smartparens/init-smartparens ()
-  (message "initializing smartparens")
-  (use-package smartparens
-    :ensure t
-    :config (hb/configure-smartparens)))
-#+END_SRC
+  (defun hb-smartparens/init-smartparens ()
+    (message "initializing smartparens")
+    (use-package smartparens))
 
-*** bindings
-#+BEGIN_SRC emacs-lisp
+  (defun hb-smartparens/post-init-smartparens ()
+    (hb/configure-smartparens))
+
   (defvar hb/smartparens-bindings
     '(("C-*" . sp-wrap-with-parens)
       ("C-<backspace>" . sp-splice-sexp)
@@ -273,10 +270,7 @@ These are layers which are tangled into the =layers= directory.
   (defun hb/configure-smartparens-bindings ()
     (dolist (binding hb/smartparens-bindings)
       (bind-key (car binding) (cdr binding) smartparens-mode-map)))
-#+END_SRC
 
-*** configuration
-#+BEGIN_SRC emacs-lisp
   (defun hb/configure-smartparens ()
     (smartparens-global-mode)
     (show-smartparens-global-mode)
@@ -295,33 +289,36 @@ These are layers which are tangled into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-lisp-packages '(smartparens aggressive-indent diminish))
+  (setq hb-lisp-packages '(smartparens aggressive-indent))
+#+END_SRC
+
+*** smartparens
+#+BEGIN_SRC emacs-lisp
+  (defun hb-lisp/post-init-smartparens ()
+    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
 
   (defvar hb-lisp-mode-hooks
     '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
     "Major mode hooks which require smartparens to be extra lispy")
-
-  (defun hb-lisp/configure-lisp-smartparens ()
-    (sp-local-pair major-mode "'" nil :actions nil)
-    (sp-local-pair major-mode "`" nil :actions nil)
-    (turn-on-smartparens-strict-mode))
 
   (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
     (mapc (lambda (hook)
             (add-hook hook hook-to-add))
           hb-lisp-mode-hooks))
 
-  (defun hb-lisp/post-init-smartparens ()
-    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
+  (defun hb-lisp/configure-lisp-smartparens ()
+    (sp-local-pair major-mode "'" nil :actions nil)
+    (sp-local-pair major-mode "`" nil :actions nil)
+    (turn-on-smartparens-strict-mode))
+#+END_SRC
 
+*** aggressive-indent
+#+BEGIN_SRC emacs-lisp
   (defun hb-lisp/init-aggressive-indent ()
     (use-package aggressive-indent))
 
   (defun hb-lisp/post-init-aggressive-indent ()
     (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
-
-  (defun hb-lisp/post-init-diminish ()
-    (diminish 'aggressive-indent-mode))
 #+END_SRC
 
 ** TODO org
@@ -331,7 +328,10 @@ These are layers which are tangled into the =layers= directory.
 
 #+BEGIN_SRC emacs-lisp
   (setq hb-org-packages '(org writegood-mode smartparens))
+#+END_SRC
 
+*** org
+#+BEGIN_SRC emacs-lisp
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
       (add-to-list 'org-structure-template-alist
@@ -347,21 +347,6 @@ These are layers which are tangled into the =layers= directory.
     (with-eval-after-load 'ob-tangle
       (remove-hook 'org-babel-pre-tangle-hook 'save-buffer))
     (add-hook 'org-mode-hook 'turn-on-auto-fill))
-
-  (defun hb-org/init-writegood-mode ()
-    (use-package writegood-mode))
-
-  (defun hb-org/post-init-writegood-mode ()
-    (add-hook 'org-mode-hook 'writegood-turn-on))
-
-  (defun hb-org/post-init-smartparens ()
-    (defun hb-org/configure-smartparens ()
-      (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
-    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
 
   (defun org-show-subtree-with-context (&optional ignored)
     (save-excursion
@@ -383,17 +368,43 @@ These are layers which are tangled into the =layers= directory.
             (org-babel-tangle)))))
 #+END_SRC
 
+*** writegood
+#+BEGIN_SRC emacs-lisp
+  (defun hb-org/init-writegood-mode ()
+    (use-package writegood-mode))
+
+  (defun hb-org/post-init-writegood-mode ()
+    (add-hook 'org-mode-hook 'writegood-turn-on))
+#+END_SRC
+
+*** smartparens
+#+BEGIN_SRC emacs-lisp
+  (defun hb-org/post-init-smartparens ()
+    (defun hb-org/configure-smartparens ()
+      (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
+      (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
+    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
+#+END_SRC
+
 ** diminish
 :PROPERTIES:
 :header-args+: :tangle layers/hb-diminish/packages.el
 :END:
-
 #+BEGIN_SRC emacs-lisp
-  (defvar hb-diminish-packages '(diminish company evil-org smartparens holy-mode hybrid-mode yasnippet which-key))
+  (defvar hb-diminish-packages
+    '(diminish aggressive-indent company evil-org smartparens holy-mode
+               hybrid-mode yasnippet which-key))
+  (defvar hb-diminish-additional-packages '(auto-fill-mode))
   (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
 
   (defun hb-diminish/post-init-diminish ()
-    (let ((diminish-modes (mapcar '(lambda (m) (cons m (mode-from-package m))) (set-difference hb-diminish-packages '(diminish)))))
+    (let ((diminish-modes
+           (mapcar '(lambda (m) (cons m (mode-from-package m)))
+                   (union hb-diminish-additional-packages
+                          (set-difference hb-diminish-packages '(diminish))))))
       (dolist (diminish-mode diminish-modes)
         (let ((package (car diminish-mode))
               (mode (cdr diminish-mode)))
