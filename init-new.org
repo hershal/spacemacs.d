@@ -337,25 +337,36 @@ These are layers which are tangled into the =layers= directory.
                    '("st"
                      "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
                      "<src lang=\"?\">\n\n</src>"))
-      (bind-key "C-x C-s" 'org-babel-tangle org-mode-map)
+      (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
       (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map))
 
     (setq org-goto-interface 'outline-path-completion
           org-goto-max-level 10
           org-outline-path-complete-in-steps nil)
 
-    (advice-add 'org-goto :after 'org-show-subtree-with-context))
+    (advice-add 'org-goto :after 'org-show-subtree-with-context)
+
+    (with-eval-after-load 'ob-tangle
+      (remove-hook 'org-babel-pre-tangle-hook 'save-buffer)))
 
   (defun org-show-subtree-with-context (&optional ignored)
     (save-excursion
       (org-up-element)
       (org-show-subtree)))
 
+  (defun hb-org/tangle-if-modified ()
+    (interactive)
+    (let ((modified (buffer-modified-p)))
+      (save-buffer)
+      (if modified (org-babel-tangle))))
+
   (defun hb-org/tangle-parent-buffer ()
     (interactive)
-    (org-edit-src-save)
-    (with-current-buffer (org-src--source-buffer)
-      (org-babel-tangle)))
+    (let ((modified (buffer-modified-p)))
+      (org-edit-src-save)
+      (if modified
+          (with-current-buffer (org-src--source-buffer)
+            (org-babel-tangle)))))
 #+END_SRC
 
 ** diminish
