@@ -238,14 +238,18 @@ These are layers which are tangled into the =layers= directory.
 #+END_SRC
 *** bindings
 #+BEGIN_SRC emacs-lisp
+  (defvar hb/smartparens-bindings
+    '(("C-*" . sp-wrap-with-parens)
+      ("C-<backspace>" . sp-splice-sexp)
+      ("C-)" . sp-forward-slurp-sexp)
+      ("C-(" . sp-forward-barf-sexp)
+      ("C-{" . sp-backward-slurp-sexp)
+      ("C-}" . sp-backward-barf-sexp)
+      ("C-M-<backspace>" . sp-splice-sexp-killing-backward)))
+
   (defun hb/configure-smartparens-bindings ()
-    (bind-key "C-*" 'sp-wrap-with-parens smartparens-mode-map)
-    (bind-key "C-<backspace>" 'sp-splice-sexp smartparens-mode-map)
-    (bind-key "C-)" 'sp-forward-slurp-sexp smartparens-mode-map)
-    (bind-key "C-(" 'sp-forward-barf-sexp smartparens-mode-map)
-    (bind-key "C-{" 'sp-backward-slurp-sexp smartparens-mode-map)
-    (bind-key "C-}" 'sp-backward-barf-sexp smartparens-mode-map)
-    (bind-key "C-M-<backspace>" 'sp-splice-sexp-killing-backward smartparens-mode-map))
+    (dolist (binding hb/smartparens-bindings)
+      (bind-key (car binding) (cdr binding) smartparens-mode-map)))
 #+END_SRC
 *** configuration
 #+BEGIN_SRC emacs-lisp
