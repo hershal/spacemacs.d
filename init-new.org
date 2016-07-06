@@ -449,6 +449,8 @@ These are layers which are tangled into the =layers= directory.
   (setq hb-javascript-packages '(js2-mode))
 
   (defun hb-javascript/post-init-js2-mode ()
+    (setq js2-basic-offset 2
+          js2-include-node-externs t)
     (hb-javascript/configure-skeleton)
     (hb-javascript/configure-node))
 
