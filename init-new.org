@@ -493,7 +493,7 @@ These are layers which are tangled into the =layers= directory.
           (switch-to-buffer node-eval-buffer)
           (goto-char (point-max))
           (forward-line -1)
-          (message (buffer-substring (point-min) (point-at-eol)))
+          (message "%s" (buffer-substring (point-min) (point-at-eol)))
           ))
       (setq deactivate-mark t)))
 #+END_SRC
