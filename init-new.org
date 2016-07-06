@@ -440,6 +440,62 @@ These are layers which are tangled into the =layers= directory.
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
 
+** javascript
+:PROPERTIES:
+:header-args+: :tangle layers/hb-javascript/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-javascript-packages '(js2-mode))
+
+  (defun hb-javascript/post-init-js2-mode ()
+    (hb-javascript/configure-skeleton)
+    (hb-javascript/configure-node))
+
+  (defun hb-javascript/configure-skeleton ()
+    (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
+    (define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
+      'js-skeleton))
+
+  (defun hb-javascript/configure-node ()
+    (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
+    (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval))
+
+  (defconst node-eval-buffer "*node.js*")
+
+  (defun hb-javascript/node-eval ()
+    "Evaluate the current buffer (or region if mark-active),
+     and return the result into another buffer,
+     which is to be shown in a window."
+    (interactive)
+    (when (get-buffer node-eval-buffer)
+      (with-current-buffer node-eval-buffer
+        (delete-region (point-min) (point-max))
+        ))
+    (let ((debug-on-error t) (start 1) (end 1))
+      (cond
+       (mark-active
+        (setq start (point))
+        (setq end (mark)))
+       (t
+        (setq start (point-min))
+        (setq end (point-max))))
+      (call-process-region
+       start end     ; seems the order does not matter
+       "node"        ; node.js
+       nil           ; don't delete region
+       node-eval-buffer     ; output buffer
+       nil)          ; no redisply during output
+      (let ((contents ""))
+        (save-window-excursion
+          (switch-to-buffer node-eval-buffer)
+          (goto-char (point-max))
+          (forward-line -1)
+          (message (buffer-substring (point-min) (point-at-eol)))
+          ))
+      (setq deactivate-mark t)))
+#+END_SRC
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
