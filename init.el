@@ -67,6 +67,7 @@ values."
      typescript
      ruby
      yaml
+     python
 
      ;; evil-related
      (evil-snipe
