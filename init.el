@@ -49,9 +49,7 @@ values."
      restclient
      search-engine
      semantic
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+     (shell :variables shell-enable-smart-eshell t)
      syntax-checking
 
      ;; languages
