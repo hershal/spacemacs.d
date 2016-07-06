@@ -62,7 +62,8 @@ These are defaults which must be set before spacemacs initialization.
           split-height-threshold nil
           split-width-threshold 150
           search-whitespace-regexp "[ \t\r\n\-]+"
-          tab-always-indent t)
+          tab-always-indent t
+          disabled-command-function nil)
 
     (bind-key "C-h C-F" 'find-function)
     (bind-key "C-x k" 'kill-this-buffer)
