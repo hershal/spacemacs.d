@@ -424,6 +424,20 @@ These are layers which are tangled into the =layers= directory.
       (eval-after-load file `(diminish ',mode))))
 #+END_SRC
 
+** yasnippet
+:PROPERTIES:
+:header-args+: :tangle layers/hb-yasnippet/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-yasnippet-packages '(yasnippet))
+
+  (defun hb-yasnippet/post-init-yasnippet ()
+    (yas-reload-all)
+    (add-hook 'prog-mode-hook #'yas-minor-mode)
+    (bind-key "TAB" 'yas-expand yas-minor-mode-map))
+#+END_SRC
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
