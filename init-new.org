@@ -496,6 +496,22 @@ These are layers which are tangled into the =layers= directory.
       (setq deactivate-mark t)))
 #+END_SRC
 
+** expand-region
+:PROPERTIES:
+:header-args+: :tangle layers/hb-expand-region/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-expand-region-packages '(expand-region))
+
+  (defun hb-expand-region/init-expand-region ()
+    (use-package expand-region))
+
+  (defun hb-expand-region/post-init-expand-region ()
+    (bind-key "C-=" 'er/expand-region)
+    (bind-key "C-+" 'er/contract-region))
+#+END_SRC
+
 * conclusion
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
