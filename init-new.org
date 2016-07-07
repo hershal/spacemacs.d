@@ -460,8 +460,9 @@ These are layers which are tangled into the =layers= directory.
       'js-skeleton))
 
   (defun hb-javascript/configure-node ()
-    (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
-    (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval))
+    (with-eval-after-load 'js2-mode
+      (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
+      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)))
 
   (defconst node-eval-buffer "*node.js*")
 
