@@ -349,12 +349,12 @@ These are layers which are tangled into the =layers= directory.
     (setq org-goto-interface 'outline-path-completion
           org-goto-max-level 10
           org-outline-path-complete-in-steps nil)
-    (advice-add 'org-goto :after 'org-show-subtree-with-context)
+    (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
     (with-eval-after-load 'ob-tangle
       (remove-hook 'org-babel-pre-tangle-hook 'save-buffer))
     (add-hook 'org-mode-hook 'turn-on-auto-fill))
 
-  (defun org-show-subtree-with-context (&optional ignored)
+  (defun hb-org/show-subtree-with-context (&optional ignored)
     (save-excursion
       (org-up-element)
       (org-show-subtree)))
