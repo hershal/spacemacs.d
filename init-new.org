@@ -340,15 +340,8 @@ These are layers which are tangled into the =layers= directory.
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
-      (add-to-list 'org-structure-template-alist
-                   '("st"
-                     "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
-                     "<src lang=\"?\">\n\n</src>"))
-      (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
-      (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map))
-    (setq org-goto-interface 'outline-path-completion
-          org-goto-max-level 10
-          org-outline-path-complete-in-steps nil)
+      (hb-org/general-config)
+      (hb-org/gtd-setup))
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
     (with-eval-after-load 'ob-tangle
       (remove-hook 'org-babel-pre-tangle-hook 'save-buffer))
@@ -372,6 +365,62 @@ These are layers which are tangled into the =layers= directory.
       (if modified
           (with-current-buffer (org-src--source-buffer)
             (org-babel-tangle)))))
+
+  (defun hb-org/remove-empty-drawer-on-clock-out ()
+    (interactive)
+    (save-excursion
+      (beginning-of-line 0)
+      (org-remove-empty-drawer-at "LOGBOOK" (point))))
+
+
+  (defun hb-org/general-setup ()
+    (add-to-list 'org-structure-template-alist
+                 '("st"
+                   "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
+                   "<src lang=\"?\">\n\n</src>"))
+    (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
+    (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
+
+    (setq org-goto-interface 'outline-path-completion
+          org-goto-max-level 10
+          org-outline-path-complete-in-steps nil
+          org-src-window-setup 'other-window
+          org-startup-indented t
+          org-hide-emphasis-markers t
+          org-startup-folded 'content
+          org-log-into-drawer "LOGBOOK"
+          org-use-sub-superscripts '{}
+          org-export-with-sub-superscripts nil
+          org-src-fontify-natively nil
+          org-alphabetical-lists t
+          org-use-fast-todo-selection t
+          org-agenda-files '("~/repos/org/")
+          org-directory "~/repos/org/"
+          org-default-notes-file "~/repos/org/refile.org"
+          org-refile-targets '((nil :maxlevel . 9)
+                               (org-agenda-files :maxlevel . 9)))
+
+    (add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append))
+
+  (defun hb-org/gtd-setup ()
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d)")
+            (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+    (setq org-todo-keyword-faces
+          '(("TODO" :foreground "red" :weight bold)
+            ("REVIEW" :foreground "yellow" :weight bold)
+            ("NEXT" :foreground "yellow" :weight bold)
+            ("HOLD" :foreground "yellow" :weight bold)
+            ("DONE" org-done)
+            ("CANCELLED" org-done)
+            ("MEETING" org-done)))
+    (setq org-capture-templates
+          '(("t" "todo" entry (file "~/repos/org/refile.org")
+             "* TODO %?\n%U\n%a\n")
+            ("j" "Journal" entry (file+datetree "~/repos/org/diary.org")
+             "* %?\n%U\n")
+            ("m" "Meeting" entry (file "~/repos/org/refile.org")
+             "* MEETING with %? :meeting:\n%U"))))
 #+END_SRC
 
 *** writegood
