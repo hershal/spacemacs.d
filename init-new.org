@@ -423,9 +423,9 @@ These are layers which are tangled into the =layers= directory.
             (sequence "TODO(t)" "HOLD(h!)" "NEXT(n!)" "REVIEW(r!)" "|" "DONE(d!)")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
-            ("REVIEW" :foreground "yellow" :weight bold)
-            ("NEXT" :foreground "yellow" :weight bold)
-            ("HOLD" :foreground "yellow" :weight bold)
+            ("REVIEW" :foreground "orange" :weight bold)
+            ("NEXT" :foreground "orange" :weight bold)
+            ("HOLD" :foreground "orange" :weight bold)
             ("DONE" org-done)
             ("CANCELLED" org-done)
             ("MEETINGPLAN" :foreground "purple" :weight bold)
