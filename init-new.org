@@ -498,6 +498,7 @@ These are layers which are tangled into the =layers= directory.
   (setq hb-yasnippet-packages '(yasnippet))
 
   (defun hb-yasnippet/post-init-yasnippet ()
+    (with-eval-after-load 'yasnippet (yas-reload-all))
     (yas-reload-all)
     (add-hook 'prog-mode-hook #'yas-minor-mode)
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
