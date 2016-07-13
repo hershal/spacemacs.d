@@ -78,6 +78,7 @@ values."
 
      ;; source control
      git
+     perforce
      version-control
 
      ;; hb layers
