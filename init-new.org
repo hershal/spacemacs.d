@@ -103,12 +103,14 @@ spacemacs.
 ** python
 This is a hack until this pull request goes through:
 https://github.com/syl20bnr/spacemacs/pull/5997
+
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-python ()
     (setq python-shell-interpreter "python3")
     (with-eval-after-load 'python
       (remove-hook 'python-mode-hook 'python-setup-shell)))
 #+END_SRC
+
 ** macros
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -580,8 +582,11 @@ These are layers which are tangled into the =layers= directory.
 #+END_SRC
 
 * conclusion
+
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
     (find-file hb/init-file))
   (provide 'init-new)
 #+END_SRC
+
+All done!
