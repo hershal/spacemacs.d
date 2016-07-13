@@ -97,6 +97,15 @@ spacemacs.
     (setq magit-repository-directories "~/repos/"))
 #+END_SRC
 
+** python
+This is a hack until this pull request goes through:
+https://github.com/syl20bnr/spacemacs/pull/5997
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-python ()
+    (setq python-shell-interpreter "python3")
+    (with-eval-after-load 'python
+      (remove-hook 'python-mode-hook 'python-setup-shell)))
+#+END_SRC
 ** macros
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
