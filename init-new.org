@@ -405,6 +405,7 @@ These are layers which are tangled into the =layers= directory.
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
           '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d)")
+            (sequence "MEETINGPLAN(p)" "|" "MEETING(m)")
             (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
@@ -413,7 +414,8 @@ These are layers which are tangled into the =layers= directory.
             ("HOLD" :foreground "yellow" :weight bold)
             ("DONE" org-done)
             ("CANCELLED" org-done)
-            ("MEETING" org-done)))
+            ("MEETINGPLAN" :foreground "purple" :weight bold)
+            ("MEETING" :foreground "blue" :weight bold)))
     (setq org-capture-templates
           '(("t" "todo" entry (file "~/repos/org/refile.org")
              "* TODO %?\n%U\n%a\n")
