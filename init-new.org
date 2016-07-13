@@ -65,7 +65,10 @@ These are defaults which must be set before spacemacs initialization.
           tab-always-indent t
           disabled-command-function nil)
 
-    (bind-key "C-h C-F" 'find-function)
+    (bind-key "C-h C-f" 'find-function)
+    (bind-key "C-h C-S-f" 'find-function-at-point)
+    (bind-key "C-h C-v" 'find-variable)
+    (bind-key "C-h C-S-v" 'find-variable-at-point)
     (bind-key "C-x k" 'kill-this-buffer)
     (bind-key "C-x C-K" 'kill-buffer-and-window)
     (evil-leader/set-key "bD" 'kill-buffer-and-window))
