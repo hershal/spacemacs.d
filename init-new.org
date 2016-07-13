@@ -352,7 +352,7 @@ These are layers which are tangled into the =layers= directory.
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
-      (hb-org/general-config)
+      (hb-org/general-setup)
       (hb-org/gtd-setup))
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
     (with-eval-after-load 'ob-tangle
