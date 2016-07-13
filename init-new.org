@@ -413,9 +413,9 @@ These are layers which are tangled into the =layers= directory.
 
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d)")
-            (sequence "MEETINGPLAN(p)" "|" "MEETING(m)")
-            (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+          '((sequence "TODO(t)" "NEXT(n!)" "REVIEW(r!)" "|" "DONE(d!)")
+            (sequence "MEETINGPLAN(!p)" "|" "MEETING(m!)")
+            (sequence "TODO(t)" "HOLD(h!)" "NEXT(n!)" "REVIEW(r!)" "|" "DONE(d!)")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
             ("REVIEW" :foreground "yellow" :weight bold)
