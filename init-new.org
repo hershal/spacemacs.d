@@ -501,7 +501,6 @@ These are layers which are tangled into the =layers= directory.
 
   (defun hb-yasnippet/post-init-yasnippet ()
     (with-eval-after-load 'yasnippet (yas-reload-all))
-    (yas-reload-all)
     (add-hook 'prog-mode-hook #'yas-minor-mode)
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
