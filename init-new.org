@@ -395,7 +395,8 @@ These are layers which are tangled into the =layers= directory.
     (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
 
-    (setq org-goto-interface 'outline-path-completion
+    (setq org-special-ctrl-a/e t
+          org-goto-interface 'outline-path-completion
           org-goto-max-level 10
           org-outline-path-complete-in-steps nil
           org-src-window-setup 'other-window
