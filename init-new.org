@@ -202,6 +202,16 @@ https://github.com/syl20bnr/spacemacs/pull/5997
     (bind-key "C-;" 'comment-line-dwim))
 #+END_SRC
 
+*** copy-buffer-file-path
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-copy-buffer-file-path ()
+    (defun copy-buffer-file-path ()
+      (interactive)
+      (kill-new (buffer-file-name)))
+
+    (evil-leader/set-key "by" 'copy-buffer-file-path))
+#+END_SRC
+
 * layers
 These are layers which are tangled into the =layers= directory.
 ** multiple-cursors
