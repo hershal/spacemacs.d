@@ -174,7 +174,8 @@ https://github.com/syl20bnr/spacemacs/pull/5997
     This is more vigorous than `shell-quote-argument'."
       (save-match-data
         (replace-regexp-in-string "\\([^A-Za-z_0-9 /]\\)" "\\\\\\1" str-val)))
-    (defun comment-line-dwim (&optional arg) ;
+
+    (defun comment-line-dwim (&optional arg)
       "Replacement for the comment-dwim command.
       If no region is selected and current line is not blank and we
       are not at the end of the line, then comment current line.
