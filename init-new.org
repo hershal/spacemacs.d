@@ -50,8 +50,7 @@ These are defaults which must be set before spacemacs initialization.
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-general ()
-    (hb/load-configs '(helm magit split-last-buffer capitalize-line-dwim
-                            eval-and-replace comment-line-dwim python))
+    (hb/load-configs '(helm magit python macros))
 
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
     (setq vc-follow-symlinks t
@@ -112,6 +111,14 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 #+END_SRC
 
 ** macros
+*** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-macros ()
+    (hb/load-configs '(split-last-buffer
+                       capitalize-line-dwim
+                       eval-and-replace
+                       comment-line-dwim)))
+#+END_SRC
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-split-last-buffer ()
