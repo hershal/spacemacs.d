@@ -221,6 +221,150 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 
 * layers
 These are layers which are tangled into the =layers= directory.
+
+** diminish
+:PROPERTIES:
+:header-args+: :tangle layers/hb-diminish/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar hb-diminish-packages
+    '(diminish aggressive-indent company evil-org holy-mode
+               hybrid-mode yasnippet which-key))
+  (defvar hb-diminish-modes '(auto-fill-function))
+  (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
+
+  (defun hb-diminish/post-init-diminish ()
+    (let ((diminish-packages (set-difference hb-diminish-packages '(diminish))))
+      (dolist (package diminish-packages)
+        (diminish-after-load package)))
+    (dolist (mode hb-diminish-modes)
+      (diminish mode)))
+
+  (defun mode-from-package (package)
+    (let ((package-mode-from-alist (cdr (assoc package package-mode-alist)))
+          (package-mode-concat (intern-soft (format "%s-mode" package))))
+      (cond (package-mode-from-alist package-mode-from-alist)
+            (package-mode-concat package-mode-concat)
+            (package package))))
+
+  (defun diminish-after-load (file &optional mode)
+    (let ((mode (if mode mode (mode-from-package file))))
+      (eval-after-load file `(diminish ',mode))))
+#+END_SRC
+
+** expand-region
+:PROPERTIES:
+:header-args+: :tangle layers/hb-expand-region/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-expand-region-packages '(expand-region))
+
+  (defun hb-expand-region/init-expand-region ()
+    (use-package expand-region))
+
+  (defun hb-expand-region/post-init-expand-region ()
+    (bind-key "C-=" 'er/expand-region)
+    (bind-key "C-+" 'er/contract-region))
+#+END_SRC
+** javascript
+:PROPERTIES:
+:header-args+: :tangle layers/hb-javascript/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-javascript-packages '(js2-mode))
+
+  (defun hb-javascript/post-init-js2-mode ()
+    (setq js2-basic-offset 2
+          js2-include-node-externs t)
+    (hb-javascript/configure-skeleton)
+    (hb-javascript/configure-node))
+
+  (defun hb-javascript/configure-skeleton ()
+    (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
+    (define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
+      'js-skeleton))
+
+  (defun hb-javascript/configure-node ()
+    (with-eval-after-load 'js2-mode
+      (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
+      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)))
+
+  (defconst node-eval-buffer "*node.js*")
+
+  (defun hb-javascript/node-eval ()
+    "Evaluate the current buffer (or region if mark-active),
+     and return the result into another buffer,
+     which is to be shown in a window."
+    (interactive)
+    (when (get-buffer node-eval-buffer)
+      (with-current-buffer node-eval-buffer
+        (delete-region (point-min) (point-max))
+        ))
+    (let ((debug-on-error t) (start 1) (end 1))
+      (cond
+       (mark-active
+        (setq start (point))
+        (setq end (mark)))
+       (t
+        (setq start (point-min))
+        (setq end (point-max))))
+      (call-process-region
+       start end     ; seems the order does not matter
+       "node"        ; node.js
+       nil           ; don't delete region
+       node-eval-buffer     ; output buffer
+       nil)          ; no redisply during output
+      (let ((contents ""))
+        (save-window-excursion
+          (switch-to-buffer node-eval-buffer)
+          (goto-char (point-max))
+          (forward-line -1)
+          (message "%s" (buffer-substring (point-min) (point-at-eol)))
+          ))
+      (setq deactivate-mark t)))
+#+END_SRC
+
+** lisp
+:PROPERTIES:
+:header-args+: :tangle layers/hb-lisp/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-lisp-packages '(smartparens aggressive-indent))
+#+END_SRC
+
+*** smartparens
+#+BEGIN_SRC emacs-lisp
+  (defun hb-lisp/post-init-smartparens ()
+    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
+
+  (defvar hb-lisp-mode-hooks
+    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
+    "Major mode hooks which require smartparens to be extra lispy")
+
+  (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
+    (mapc (lambda (hook)
+            (add-hook hook hook-to-add))
+          hb-lisp-mode-hooks))
+
+  (defun hb-lisp/configure-lisp-smartparens ()
+    (sp-local-pair major-mode "'" nil :actions nil)
+    (sp-local-pair major-mode "`" nil :actions nil)
+    (turn-on-smartparens-strict-mode))
+#+END_SRC
+
+*** aggressive-indent
+#+BEGIN_SRC emacs-lisp
+  (defun hb-lisp/init-aggressive-indent ()
+    (use-package aggressive-indent))
+
+  (defun hb-lisp/post-init-aggressive-indent ()
+    (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
+#+END_SRC
+
 ** multiple-cursors
 :PROPERTIES:
 :header-args+: :tangle layers/hb-multiple-cursors/packages.el
@@ -276,89 +420,6 @@ These are layers which are tangled into the =layers= directory.
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
 #+END_SRC
-
-** smartparens
-:PROPERTIES:
-:header-args+: :tangle layers/hb-smartparens/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (setq hb-smartparens-packages '(smartparens))
-
-  (defun hb-smartparens/init-smartparens ()
-    (message "initializing smartparens")
-    (use-package smartparens))
-
-  (defun hb-smartparens/post-init-smartparens ()
-    (hb-smartparens/configure))
-
-  (defun hb-smartparens/configure ()
-    (smartparens-global-mode)
-    (show-smartparens-global-mode)
-    (hb-smartparens/configure-bindings)
-    (hb-smartparens/configure-specialcase)
-    (diminish-after-load 'smartparens))
-
-  (defun hb-smartparens/configure-bindings ()
-    (dolist (binding hb/smartparens-bindings)
-      (bind-key (car binding) (cdr binding) smartparens-mode-map)))
-
-  (defvar hb/smartparens-bindings
-    '(("C-*" . sp-wrap-with-parens)
-      ("C-<backspace>" . sp-splice-sexp)
-      ("C-)" . sp-forward-slurp-sexp)
-      ("C-(" . sp-forward-barf-sexp)
-      ("C-{" . sp-backward-slurp-sexp)
-      ("C-}" . sp-backward-barf-sexp)
-      ("M-<up>" . sp-splice-sexp-killing-backward)))
-
-  (defun sp-wrap-with-parens (&optional arg)
-    (interactive "P")
-    (sp-wrap-with-pair "("))
-
-  (defun hb-smartparens/configure-specialcase ()
-    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
-#+END_SRC
-
-** TODO visual-fill-colum-mode
-** lisp
-:PROPERTIES:
-:header-args+: :tangle layers/hb-lisp/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (setq hb-lisp-packages '(smartparens aggressive-indent))
-#+END_SRC
-
-*** smartparens
-#+BEGIN_SRC emacs-lisp
-  (defun hb-lisp/post-init-smartparens ()
-    (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
-
-  (defvar hb-lisp-mode-hooks
-    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
-    "Major mode hooks which require smartparens to be extra lispy")
-
-  (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
-    (mapc (lambda (hook)
-            (add-hook hook hook-to-add))
-          hb-lisp-mode-hooks))
-
-  (defun hb-lisp/configure-lisp-smartparens ()
-    (sp-local-pair major-mode "'" nil :actions nil)
-    (sp-local-pair major-mode "`" nil :actions nil)
-    (turn-on-smartparens-strict-mode))
-#+END_SRC
-
-*** aggressive-indent
-#+BEGIN_SRC emacs-lisp
-  (defun hb-lisp/init-aggressive-indent ()
-    (use-package aggressive-indent))
-
-  (defun hb-lisp/post-init-aggressive-indent ()
-    (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
-#+END_SRC
-
 ** TODO org
 :PROPERTIES:
 :header-args+: :tangle layers/hb-org/packages.el
@@ -479,36 +540,50 @@ These are layers which are tangled into the =layers= directory.
     (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
 #+END_SRC
 
-** diminish
+** smartparens
 :PROPERTIES:
-:header-args+: :tangle layers/hb-diminish/packages.el
+:header-args+: :tangle layers/hb-smartparens/packages.el
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defvar hb-diminish-packages
-    '(diminish aggressive-indent company evil-org holy-mode
-               hybrid-mode yasnippet which-key))
-  (defvar hb-diminish-modes '(auto-fill-function))
-  (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
+  (setq hb-smartparens-packages '(smartparens))
 
-  (defun hb-diminish/post-init-diminish ()
-    (let ((diminish-packages (set-difference hb-diminish-packages '(diminish))))
-      (dolist (package diminish-packages)
-        (diminish-after-load package)))
-    (dolist (mode hb-diminish-modes)
-      (diminish mode)))
+  (defun hb-smartparens/init-smartparens ()
+    (message "initializing smartparens")
+    (use-package smartparens))
 
-  (defun mode-from-package (package)
-    (let ((package-mode-from-alist (cdr (assoc package package-mode-alist)))
-          (package-mode-concat (intern-soft (format "%s-mode" package))))
-      (cond (package-mode-from-alist package-mode-from-alist)
-            (package-mode-concat package-mode-concat)
-            (package package))))
+  (defun hb-smartparens/post-init-smartparens ()
+    (hb-smartparens/configure))
 
-  (defun diminish-after-load (file &optional mode)
-    (let ((mode (if mode mode (mode-from-package file))))
-      (eval-after-load file `(diminish ',mode))))
+  (defun hb-smartparens/configure ()
+    (smartparens-global-mode)
+    (show-smartparens-global-mode)
+    (hb-smartparens/configure-bindings)
+    (hb-smartparens/configure-specialcase)
+    (diminish-after-load 'smartparens))
+
+  (defun hb-smartparens/configure-bindings ()
+    (dolist (binding hb/smartparens-bindings)
+      (bind-key (car binding) (cdr binding) smartparens-mode-map)))
+
+  (defvar hb/smartparens-bindings
+    '(("C-*" . sp-wrap-with-parens)
+      ("C-<backspace>" . sp-splice-sexp)
+      ("C-)" . sp-forward-slurp-sexp)
+      ("C-(" . sp-forward-barf-sexp)
+      ("C-{" . sp-backward-slurp-sexp)
+      ("C-}" . sp-backward-barf-sexp)
+      ("M-<up>" . sp-splice-sexp-killing-backward)))
+
+  (defun sp-wrap-with-parens (&optional arg)
+    (interactive "P")
+    (sp-wrap-with-pair "("))
+
+  (defun hb-smartparens/configure-specialcase ()
+    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 #+END_SRC
+
+** TODO visual-fill-colum-mode
 
 ** yasnippet
 :PROPERTIES:
@@ -519,84 +594,19 @@ These are layers which are tangled into the =layers= directory.
   (setq hb-yasnippet-packages '(yasnippet))
 
   (defun hb-yasnippet/post-init-yasnippet ()
-    (with-eval-after-load 'yasnippet (yas-reload-all))
     (add-hook 'prog-mode-hook #'yas-minor-mode)
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
 
-** javascript
-:PROPERTIES:
-:header-args+: :tangle layers/hb-javascript/packages.el
-:END:
+* major-modes
+** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
 
-#+BEGIN_SRC emacs-lisp
-  (setq hb-javascript-packages '(js2-mode))
-
-  (defun hb-javascript/post-init-js2-mode ()
-    (setq js2-basic-offset 2
-          js2-include-node-externs t)
-    (hb-javascript/configure-skeleton)
-    (hb-javascript/configure-node))
-
-  (defun hb-javascript/configure-skeleton ()
-    (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
-    (define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
-      'js-skeleton))
-
-  (defun hb-javascript/configure-node ()
-    (with-eval-after-load 'js2-mode
-      (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
-      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)))
-
-  (defconst node-eval-buffer "*node.js*")
-
-  (defun hb-javascript/node-eval ()
-    "Evaluate the current buffer (or region if mark-active),
-     and return the result into another buffer,
-     which is to be shown in a window."
-    (interactive)
-    (when (get-buffer node-eval-buffer)
-      (with-current-buffer node-eval-buffer
-        (delete-region (point-min) (point-max))
-        ))
-    (let ((debug-on-error t) (start 1) (end 1))
-      (cond
-       (mark-active
-        (setq start (point))
-        (setq end (mark)))
-       (t
-        (setq start (point-min))
-        (setq end (point-max))))
-      (call-process-region
-       start end     ; seems the order does not matter
-       "node"        ; node.js
-       nil           ; don't delete region
-       node-eval-buffer     ; output buffer
-       nil)          ; no redisply during output
-      (let ((contents ""))
-        (save-window-excursion
-          (switch-to-buffer node-eval-buffer)
-          (goto-char (point-max))
-          (forward-line -1)
-          (message "%s" (buffer-substring (point-min) (point-at-eol)))
-          ))
-      (setq deactivate-mark t)))
 #+END_SRC
 
-** expand-region
-:PROPERTIES:
-:header-args+: :tangle layers/hb-expand-region/packages.el
-:END:
+** c/c++
+#+BEGIN_SRC emacs-lisp :tangle yes
 
-#+BEGIN_SRC emacs-lisp
-  (setq hb-expand-region-packages '(expand-region))
-
-  (defun hb-expand-region/init-expand-region ()
-    (use-package expand-region))
-
-  (defun hb-expand-region/post-init-expand-region ()
-    (bind-key "C-=" 'er/expand-region)
-    (bind-key "C-+" 'er/contract-region))
 #+END_SRC
 
 * conclusion
