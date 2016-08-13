@@ -70,7 +70,9 @@ These are defaults which must be set before spacemacs initialization.
     (bind-key "C-h C-S-v" 'find-variable-at-point)
     (bind-key "C-x k" 'kill-this-buffer)
     (bind-key "C-x C-K" 'kill-buffer-and-window)
-    (evil-leader/set-key "bD" 'kill-buffer-and-window))
+    (evil-leader/set-key "bD" 'kill-buffer-and-window)
+
+    (windmove-default-keybindings))
 #+END_SRC
 
 ** helm
