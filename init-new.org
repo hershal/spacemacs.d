@@ -296,16 +296,20 @@ These are layers which are tangled into the =layers= directory.
 
   (defconst node-eval-buffer "*node.js*")
 
-  (defun hb-javascript/node-eval ()
-    "Evaluate the current buffer (or region if mark-active),
-     and return the result into another buffer,
-     which is to be shown in a window."
-    (interactive)
+  (defun hb-javascript/node-eval-helper ()
+    "Evaluate the current buffer (or region if mark-active), and
+  return the result"
+
+    ;; delete the contents of the current node buffer
     (when (get-buffer node-eval-buffer)
       (with-current-buffer node-eval-buffer
-        (delete-region (point-min) (point-max))
-        ))
+        (delete-region (point-min) (point-max))))
+
+    ;; Setup some variables
     (let ((debug-on-error t) (start 1) (end 1))
+
+      ;; If the mark is active, set the point and mark to the selected region;
+      ;; else select the entire buffer.
       (cond
        (mark-active
         (setq start (point))
@@ -313,20 +317,28 @@ These are layers which are tangled into the =layers= directory.
        (t
         (setq start (point-min))
         (setq end (point-max))))
+
+      ;; Send the input from `start` to `end` through stdin to the node process.
+      ;; This will popluate the `node-eval-buffer` with the results.
       (call-process-region
        start end     ; seems the order does not matter
        "node"        ; node.js
        nil           ; don't delete region
        node-eval-buffer     ; output buffer
        nil)          ; no redisply during output
-      (let ((contents ""))
-        (save-window-excursion
-          (switch-to-buffer node-eval-buffer)
-          (goto-char (point-max))
-          (forward-line -1)
-          (message "%s" (buffer-substring (point-min) (point-at-eol)))
-          ))
-      (setq deactivate-mark t)))
+
+      (setq deactivate-mark t)
+      (with-current-buffer node-eval-buffer
+        (buffer-string))))
+
+  (defun hb-javascript/node-eval (&optional prefix)
+    "Evalute the current buffer (or region if mark-active), and
+  print the result in the message buffer. When given a prefix
+  argument, also push the results into the kill-ring."
+    (interactive "P")
+    (let ((contents (hb-javascript/node-eval-helper)))
+      (when prefix (kill-new contents))
+      (message "%s" contents)))
 #+END_SRC
 
 ** lisp
