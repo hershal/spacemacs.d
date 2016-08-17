@@ -444,6 +444,7 @@ These are layers which are tangled into the =layers= directory.
 #+END_SRC
 
 *** org
+**** general
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
@@ -523,16 +524,18 @@ These are layers which are tangled into the =layers= directory.
             ("DONE" org-done)
             ("CANCELLED" org-done)
             ("MEETINGPLAN" :foreground "purple" :weight bold)
-            ("MEETING" :foreground "blue" :weight bold)))
-    (setq org-capture-templates
-          '(("t" "todo" entry (file "~/repos/org/refile.org")
-             "* TODO %?\n%U\n%a\n")
-            ("j" "Journal" entry (file+datetree "~/repos/org/diary.org")
-             "* %?\n%U\n")
-            ("m" "Meeting" entry (file "~/repos/org/refile.org")
-             "* MEETING with %? :meeting:\n%U"))))
+            ("MEETING" :foreground "blue" :weight bold))))
 #+END_SRC
-
+**** capture
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+        '(("t" "todo" entry (file "~/repos/org/refile.org")
+           "* TODO %?\n%U\n%a\n")
+          ("j" "Journal" entry (file+datetree "~/repos/org/diary.org")
+           "* %?\n%U\n")
+          ("m" "Meeting" entry (file "~/repos/org/refile.org")
+           "* MEETING with %? :meeting:\n%U")))
+#+END_SRC
 *** writegood
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/init-writegood-mode ()
