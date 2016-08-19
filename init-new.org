@@ -355,10 +355,11 @@ These are layers which are tangled into the =layers= directory.
 *** smartparens
 #+BEGIN_SRC emacs-lisp
   (defun hb-lisp/post-init-smartparens ()
+    (setq sp-ignore-modes-list (delete 'minibuffer-inactive-mode sp-ignore-modes-list))
     (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens))
 
   (defvar hb-lisp-mode-hooks
-    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook)
+    '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook minibuffer-setup-hook)
     "Major mode hooks which require smartparens to be extra lispy")
 
   (defun hb-lisp/add-hook-to-lisp-modes (hook-to-add)
