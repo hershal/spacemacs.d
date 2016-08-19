@@ -6,7 +6,7 @@
 Some basic configuration loading mechanisms
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
-    '(introduction os-specific general conclusion))
+    '(introduction os-specific general conclusion major-modes))
 
   (defun hb/init ()
     (hb/load-configs hb/configs))
@@ -620,15 +620,19 @@ These are layers which are tangled into the =layers= directory.
 * major-modes
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (hb/load-configs '(clang-major-mode))
+  (defun hb/configure-major-modes ()
+   (hb/load-configs '(clang-major-mode)))
 #+END_SRC
 
 ** clang
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-clang-major-mode ()
     (defun hb/configure-clang-major-mode-hook ()
-      (setq c-basic-offset 4))
-    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode))
+      (setq c-basic-offset 4)
+      (setq comment-start "/*")
+      (setq comment-end "*/")
+      (setq company-clang-arguments "-std=c++14"))
+    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook))
 #+END_SRC
 
 * conclusion
