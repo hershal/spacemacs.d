@@ -645,7 +645,14 @@ These are layers which are tangled into the =layers= directory.
     (defun colorize-compilation-buffer ()
       (let ((inhibit-read-only t))
         (ansi-color-apply-on-region compilation-filter-start (point-max))))
-    (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
+    (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+    (defun compilation-remove-window-on-success (buffer exit-str)
+      (when (string-match "finished" exit-str)
+        (message (format "burying buffer: %s" exit-str))
+        (with-current-buffer buffer
+          (bury-buffer buffer)
+          (delete-windows-on buffer))))
+    (add-hook 'compilation-finish-functions 'compilation-remove-window-on-success))
 #+END_SRC
 
 * conclusion
