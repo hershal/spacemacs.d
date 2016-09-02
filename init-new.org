@@ -72,6 +72,8 @@ These are defaults which must be set before spacemacs initialization.
     (bind-key "C-x C-K" 'kill-buffer-and-window)
     (bind-key "M-r" 'replace-string)
     (bind-key "M-R" 'replace-regexp)
+    (bind-key "C-c m" 'compile)
+    (bind-key "C-c C-m" 'recompile)
     (evil-leader/set-key "bD" 'kill-buffer-and-window)
 
     (windmove-default-keybindings))
@@ -634,9 +636,7 @@ These are layers which are tangled into the =layers= directory.
       (setq comment-start "/*")
       (setq comment-end "*/")
       (setq company-clang-arguments "-std=c++14"))
-    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook)
-    (bind-key "C-c m" 'compile c++-mode-map)
-    (bind-key "C-c C-m" 'recompile c++-mode-map))
+    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook))
 #+END_SRC
 
 ** compilation-mode
