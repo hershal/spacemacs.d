@@ -51,6 +51,7 @@ values."
      semantic
      (shell :variables shell-enable-smart-eshell t)
      syntax-checking
+     gtags
 
      ;; languages
      (c-c++
