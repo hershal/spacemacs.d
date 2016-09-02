@@ -634,7 +634,9 @@ These are layers which are tangled into the =layers= directory.
       (setq comment-start "/*")
       (setq comment-end "*/")
       (setq company-clang-arguments "-std=c++14"))
-    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook))
+    (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook)
+    (bind-key "C-c m" 'compile c++-mode-map)
+    (bind-key "C-c C-m" 'recompile c++-mode-map))
 #+END_SRC
 
 ** compilation-mode
