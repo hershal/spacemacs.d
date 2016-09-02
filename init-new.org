@@ -623,7 +623,7 @@ These are layers which are tangled into the =layers= directory.
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-major-modes ()
-   (hb/load-configs '(clang-major-mode)))
+    (hb/load-configs '(clang-major-mode compilation-major-mode)))
 #+END_SRC
 
 ** clang
@@ -635,6 +635,15 @@ These are layers which are tangled into the =layers= directory.
       (setq comment-end "*/")
       (setq company-clang-arguments "-std=c++14"))
     (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook))
+#+END_SRC
+
+** compilation-mode
+#+BEGIN_SRC emacs-lisp :tangle yet
+  (defun hb/configure-compilation-major-mode ()
+    (defun colorize-compilation-buffer ()
+      (let ((inhibit-read-only t))
+        (ansi-color-apply-on-region (point-min) (point-max))))
+    (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 #+END_SRC
 
 * conclusion
