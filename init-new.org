@@ -659,7 +659,7 @@ These are layers which are tangled into the =layers= directory.
 #+END_SRC
 
 ** compilation-mode
-#+BEGIN_SRC emacs-lisp :tangle yet
+#+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-compilation-major-mode ()
     (defun colorize-compilation-buffer ()
       (let ((inhibit-read-only t))
