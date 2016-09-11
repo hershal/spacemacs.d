@@ -283,7 +283,7 @@ These are layers which tangle into the =layers= directory.
   (setq hb-javascript-packages '(js2-mode))
 
   (defun hb-javascript/post-init-js2-mode ()
-    (setq js2-basic-offset 2
+    (setq js-indent-level 2
           js2-include-node-externs t)
     (hb-javascript/configure-skeleton)
     (hb-javascript/configure-node))
@@ -303,7 +303,6 @@ These are layers which tangle into the =layers= directory.
   (defun hb-javascript/node-eval-helper ()
     "Evaluate the current buffer (or region if mark-active), and
   return the result"
-
     ;; delete the contents of the current node buffer
     (when (get-buffer node-eval-buffer)
       (with-current-buffer node-eval-buffer
