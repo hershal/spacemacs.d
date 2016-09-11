@@ -226,7 +226,7 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 #+END_SRC
 
 * layers
-These are layers which are tangled into the =layers= directory.
+These are layers which tangle into the =layers= directory.
 
 ** diminish
 :PROPERTIES:
