@@ -613,6 +613,20 @@ These are layers which are tangled into the =layers= directory.
 
 ** TODO visual-fill-colum-mode
 
+** web
+:PROPERTIES:
+:header-args+: :tangle layers/hb-web/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-web-packages '(web-mode))
+
+  (defun hb-web/post-init-web-mode ()
+    (mapc (lambda (mode)
+            (set (intern-soft (format "web-mode-%S-indent-offset" mode)) 2))
+          '(css sql code attr-value attr markup)))
+#+END_SRC
+
 ** yasnippet
 :PROPERTIES:
 :header-args+: :tangle layers/hb-yasnippet/packages.el
