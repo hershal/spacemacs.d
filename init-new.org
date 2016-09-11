@@ -591,12 +591,17 @@ These are layers which are tangled into the =layers= directory.
 
   (defvar hb/smartparens-bindings
     '(("C-*" . sp-wrap-with-parens)
+      ("C-\"" . sp-wrap-with-double-quotes)
       ("C-<backspace>" . sp-splice-sexp)
       ("C-)" . sp-forward-slurp-sexp)
       ("C-(" . sp-forward-barf-sexp)
       ("C-{" . sp-backward-slurp-sexp)
       ("C-}" . sp-backward-barf-sexp)
       ("M-<up>" . sp-splice-sexp-killing-backward)))
+
+  (defun sp-wrap-with-double-quotes (&optional arg)
+    (interactive "P")
+    (sp-wrap-with-pair "\""))
 
   (defun sp-wrap-with-parens (&optional arg)
     (interactive "P")
