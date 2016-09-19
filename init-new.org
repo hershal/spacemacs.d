@@ -284,6 +284,7 @@ These are layers which tangle into the =layers= directory.
 
   (defun hb-javascript/post-init-js2-mode ()
     (setq js-indent-level 2
+          js2-basic-offset 2
           js2-include-node-externs t)
     (hb-javascript/configure-skeleton)
     (hb-javascript/configure-node))
