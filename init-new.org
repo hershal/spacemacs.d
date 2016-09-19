@@ -60,7 +60,7 @@ These are defaults which must be set before spacemacs initialization.
           tramp-auto-save-directory "~/tmp/autosave-tramp/"
           split-height-threshold nil
           split-width-threshold 150
-          search-whitespace-regexp "[ \t\r\n\-]+"
+          search-whitespace-regexp "[ \t\r\n\-\*]+"
           tab-always-indent t
           disabled-command-function nil)
 
