@@ -503,7 +503,7 @@ These are layers which tangle into the =layers= directory.
           org-startup-indented t
           org-hide-emphasis-markers t
           org-startup-folded 'content
-          org-log-into-drawer "LOGBOOK"
+          org-log-into-drawer "LOG"
           org-use-sub-superscripts '{}
           org-export-with-sub-superscripts nil
           org-src-fontify-natively nil
