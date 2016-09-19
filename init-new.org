@@ -495,6 +495,9 @@ These are layers which tangle into the =layers= directory.
     (bind-key "C-c j" 'org-goto org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
 
+    (load-library "ob-shell")
+    (load-library "ox-gfm")
+
     (setq org-special-ctrl-a/e t
           org-goto-interface 'outline-path-completion
           org-goto-max-level 10
