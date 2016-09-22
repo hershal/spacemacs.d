@@ -294,10 +294,15 @@ These are layers which tangle into the =layers= directory.
     (define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
       'js-skeleton))
 
+  (defun hb-javascript/configure-js2-mode ()
+    (setq comment-start "/*")
+    (setq comment-end "*/"))
+
   (defun hb-javascript/configure-node ()
     (with-eval-after-load 'js2-mode
       (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
-      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)))
+      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)
+      (add-hook 'js2-mode-hook 'hb-javascript/configure-js2-mode)))
 
   (defconst node-eval-buffer "*node.js*")
 
