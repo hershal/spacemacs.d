@@ -694,8 +694,7 @@ These are layers which tangle into the =layers= directory.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
-    (find-file hb/init-file)
-    (toggle-frame-maximized))
+    (find-file hb/init-file))
   (provide 'init-new)
 #+END_SRC
 
