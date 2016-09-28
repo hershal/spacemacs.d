@@ -62,7 +62,8 @@ These are defaults which must be set before spacemacs initialization.
           split-width-threshold 150
           search-whitespace-regexp "[ \t\r\n\-\*]+"
           tab-always-indent t
-          disabled-command-function nil)
+          disabled-command-function nil
+          auto-insert-query nil)
 
     (bind-key "C-h C-f" 'find-function)
     (bind-key "C-h C-S-f" 'find-function-at-point)
@@ -76,6 +77,7 @@ These are defaults which must be set before spacemacs initialization.
     (bind-key "C-c C-m" 'recompile)
     (evil-leader/set-key "bD" 'kill-buffer-and-window)
 
+    (auto-insert-mode)
     (windmove-default-keybindings))
 #+END_SRC
 
