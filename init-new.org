@@ -6,7 +6,7 @@
 Some basic configuration loading mechanisms
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
-    '(introduction os-specific general conclusion major-modes))
+    '(introduction os-specific general conclusion micro-states major-modes))
 
   (defun hb/init ()
     (hb/load-configs hb/configs))
