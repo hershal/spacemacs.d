@@ -655,6 +655,48 @@ These are layers which tangle into the =layers= directory.
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
 
+* micro-states
+** configuration
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-micro-states ()
+    (hb/load-configs '(movement-micro-state)))
+#+END_SRC
+** movement
+Scrolling in emacs corresponds to moving the document, not the viewport. Thus
+"scrolling up" moves the document down, or appears as if the viewport moves up.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-movement-micro-state ()
+    (defvar hb/scrolling-distance 10)
+
+    (defun hb/scroll-down ()
+      (interactive)
+      (scroll-down-command hb/scrolling-distance))
+
+    (defun hb/scroll-up ()
+      (interactive)
+      (scroll-up-command hb/scrolling-distance))
+
+    (defun hb/scroll-down-half-page ()
+      (interactive)
+      (scroll-down-command (/ (window-height) 2)))
+
+    (defun hb/scroll-up-half-page ()
+      (interactive)
+      (scroll-up-command (/ (window-height) 2)))
+
+    (spacemacs|define-micro-state movement
+      :doc "[j]down [k]up [f]orward [b]ack [u]p [d]own [q]uit"
+      :evil-leader "m."
+      :bindings
+      ("j" hb/scroll-up)
+      ("k" hb/scroll-down)
+      ("f" scroll-up-command)
+      ("b" scroll-down-command)
+      ("d" hb/scroll-up-half-page)
+      ("u" hb/scroll-down-half-page)
+      ("q" nil :exit t)))
+#+END_SRC
 * major-modes
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
