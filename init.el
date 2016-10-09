@@ -84,6 +84,7 @@ values."
 
      ;; hb layers
      hb-smartparens
+     hb-cmake
      hb-lisp
      hb-org
      hb-multiple-cursors

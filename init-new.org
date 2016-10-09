@@ -230,6 +230,23 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 * layers
 These are layers which tangle into the =layers= directory.
 
+** cmake
+:PROPERTIES:
+:header-args+: :tangle layers/hb-cmake/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-cmake-packages '(cmake-ide rtags))
+
+  (defun hb-cmake/init-cmake-ide ()
+    (use-package cmake-ide))
+
+  (defun hb-cmake/init-rtags ()
+    (use-package rtags))
+
+  (defun hb-cmake/post-init-cmake-ide ()
+    (cmake-ide-setup))
+#+END_SRC
 ** diminish
 :PROPERTIES:
 :header-args+: :tangle layers/hb-diminish/packages.el
