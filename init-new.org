@@ -730,7 +730,7 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-major-modes ()
-    (hb/load-configs '(clang-major-mode compilation-major-mode)))
+    (hb/load-configs '(clang-major-mode compilation-major-mode help-major-mode)))
 #+END_SRC
 
 ** clang
@@ -761,6 +761,12 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
     (add-hook 'compilation-finish-functions 'compilation-remove-window-on-success))
 #+END_SRC
 
+** help-mode
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-help-major-mode ()
+    (bind-key "[" 'help-go-back help-mode-map)
+    (bind-key "]" 'help-go-forward help-mode-map))
+#+END_SRC
 * conclusion
 
 #+BEGIN_SRC emacs-lisp :tangle yes
