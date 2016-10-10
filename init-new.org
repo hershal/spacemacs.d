@@ -246,6 +246,7 @@ These are layers which tangle into the =layers= directory.
     (use-package rtags))
 
   (defun hb-cmake/post-init-cmake-ide ()
+    (setq cmake-ide-build-pool-use-persistent-naming t)
     (cmake-ide-setup))
 #+END_SRC
 ** TODO diminish
