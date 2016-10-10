@@ -471,7 +471,7 @@ current (brittle) mechanism.
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
 #+END_SRC
-** TODO org
+** org
 :PROPERTIES:
 :header-args+: :tangle layers/hb-org/packages.el
 :END:
