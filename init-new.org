@@ -88,7 +88,7 @@ spacemacs.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-helm ()
     (with-eval-after-load 'helm
-    (dolist (keymap (list helm-find-files-map helm-read-file-map helm-map))
+      (dolist (keymap (list helm-find-files-map helm-read-file-map helm-map))
         (bind-key "C-h" 'helm-find-files-up-one-level keymap)
         (bind-key "TAB" 'helm-execute-persistent-action keymap)
         (bind-key "C-l" 'helm-execute-persistent-action keymap)))
