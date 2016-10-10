@@ -248,17 +248,23 @@ These are layers which tangle into the =layers= directory.
   (defun hb-cmake/post-init-cmake-ide ()
     (cmake-ide-setup))
 #+END_SRC
-** diminish
+** TODO diminish
 :PROPERTIES:
 :header-args+: :tangle layers/hb-diminish/packages.el
 :END:
 
+I'm trying to fix this up. I need to create a macro or function which will
+define the function =hb-diminish/post-init-<package>= which will then diminish the
+proper major mode within =package=. That would probably be more reliable than the
+current (brittle) mechanism.
+
 #+BEGIN_SRC emacs-lisp
-  (defvar hb-diminish-packages
-    '(diminish aggressive-indent company evil-org holy-mode
-               hybrid-mode yasnippet which-key))
+  (defvar hb-diminish-packages '(diminish
+                                 aggressive-indent company evil-org holy-mode
+                                 yasnippet which-key undo-tree))
   (defvar hb-diminish-modes '(auto-fill-function))
-  (defvar package-mode-alist '((yasnippet . yas-minor-mode)))
+  (setq package-mode-alist '((yasnippet . yas-minor-mode) (undo-tree . undo-tree-mode)
+                             (evil-org . evil-org-mode) (holy-mode . holy-mode)))
 
   (defun hb-diminish/post-init-diminish ()
     (let ((diminish-packages (set-difference hb-diminish-packages '(diminish))))
