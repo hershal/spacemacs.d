@@ -98,7 +98,9 @@ spacemacs.
     (bind-key "M-y" 'helm-show-kill-ring)
     (bind-key "M-y" 'helm-show-kill-ring)
     (setq helm-ff-newfile-prompt-p nil
-          helm-buffer-max-length nil))
+          helm-buffer-max-length nil
+          helm-split-window-default-side 'left
+          helm-always-two-windows t))
 #+END_SRC
 
 ** magit
