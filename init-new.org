@@ -471,7 +471,7 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-org-packages '(org writegood-mode smartparens))
+  (setq hb-org-packages '(org writegood-mode smartparens ox-gfm ob-restclient))
 #+END_SRC
 
 *** org
@@ -522,7 +522,6 @@ These are layers which tangle into the =layers= directory.
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
 
     (load-library "ob-shell")
-    (load-library "ox-gfm")
 
     (setq org-special-ctrl-a/e t
           org-goto-interface 'outline-path-completion
@@ -572,6 +571,17 @@ These are layers which tangle into the =layers= directory.
           ("m" "Meeting" entry (file "~/repos/org/refile.org")
            "* MEETING with %? :meeting:\n%U")))
 #+END_SRC
+*** ox-gfm
+#+BEGIN_SRC emacs-lisp
+  (defun hb-org/init-gfm ()
+    (use-package ox-gfm))
+#+END_SRC
+*** ob-restclient
+#+BEGIN_SRC emacs-lisp
+  (defun hb-org/init-ob-restclient ()
+    (use-package ob-restclient))
+#+END_SRC
+
 *** writegood
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/init-writegood-mode ()
