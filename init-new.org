@@ -6,7 +6,7 @@
 Some basic configuration loading mechanisms
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defconst hb/configs
-    '(introduction os-specific general conclusion micro-states major-modes))
+    '(introduction os-specific general conclusion transient-states major-modes))
 
   (defun hb/init ()
     (hb/load-configs hb/configs))
@@ -694,18 +694,18 @@ current (brittle) mechanism.
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
 
-* micro-states
+* transient-states
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-micro-states ()
-    (hb/load-configs '(movement-micro-state)))
+  (defun hb/configure-transient-states ()
+    (hb/load-configs '(movement-transient-state)))
 #+END_SRC
 ** movement
 Scrolling in emacs corresponds to moving the document, not the viewport. Thus
 "scrolling up" moves the document down, or appears as if the viewport moves up.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-movement-micro-state ()
+  (defun hb/configure-movement-transient-state ()
     (defvar hb/scrolling-distance 10)
 
     (defun hb/scroll-down ()
@@ -724,7 +724,7 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
       (interactive)
       (scroll-up-command (/ (window-height) 2)))
 
-    (spacemacs|define-micro-state movement
+    (spacemacs|define-transient-state movement
       :doc "[j]down [k]up [f]orward [b]ack [u]p [d]own [q]uit"
       :evil-leader "m."
       :bindings
