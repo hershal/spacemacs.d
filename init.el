@@ -87,13 +87,6 @@ values."
      yaml
      python
 
-     ;; evil-related
-     (evil-snipe
-      :variables
-      evil-snipe-enable-alternate-f-and-t-behaviors t
-      evil-snipe-repeat-scope 'whole-buffer)
-     unimpaired
-
      ;; source control
      git
      perforce
