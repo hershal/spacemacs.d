@@ -583,7 +583,7 @@ current (brittle) mechanism.
 #+END_SRC
 *** ox-gfm
 #+BEGIN_SRC emacs-lisp
-  (defun hb-org/init-gfm ()
+  (defun hb-org/init-ox-gfm ()
     (use-package ox-gfm))
 #+END_SRC
 *** ob-restclient
