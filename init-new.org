@@ -134,101 +134,105 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-split-last-buffer ()
-    (defun vsplit-last-buffer (prefix)
-      "Split the window vertically and display the previous buffer."
-      (interactive "p")
-      (split-window-vertically)
-      (other-window 1 nil)
-      (if (= prefix 1) (switch-to-next-buffer)))
-
-    (defun hsplit-last-buffer (prefix)
-      "Split the window horizontally and display the previous buffer."
-      (interactive "p")
-      (split-window-horizontally)
-      (other-window 1 nil)
-      (if (= prefix 1) (switch-to-next-buffer)))
-
     (bind-key "C-x 2" 'vsplit-last-buffer)
     (bind-key "C-x 3" 'hsplit-last-buffer))
+
+  (defun vsplit-last-buffer (prefix)
+    "Split the window vertically and display the previous buffer."
+    (interactive "p")
+    (split-window-vertically)
+    (other-window 1 nil)
+    (if (= prefix 1) (switch-to-next-buffer)))
+
+  (defun hsplit-last-buffer (prefix)
+    "Split the window horizontally and display the previous buffer."
+    (interactive "p")
+    (split-window-horizontally)
+    (other-window 1 nil)
+    (if (= prefix 1) (switch-to-next-buffer)))
 #+END_SRC
 
 *** capitalize-line-dwim
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-capitalize-line-dwim ()
-   (defun capitalize-line-dwim ()
-     (interactive)
-     (if (region-active-p)
-         (save-excursion
-           (let ((beg (region-beginning))
-                 (end (region-end)))
-             (capitalize-region beg end)))
-       (save-excursion
-         (let ((beg (line-beginning-position))
-               (end (line-end-position)))
-           (capitalize-region beg end)))))
-   (bind-key "C-x c" 'capitalize-line-dwim))
+    (bind-key "C-x c" 'capitalize-line-dwim))
+
+  (defun capitalize-line-dwim ()
+    (interactive)
+    (if (region-active-p)
+        (save-excursion
+          (let ((beg (region-beginning))
+                (end (region-end)))
+            (capitalize-region beg end)))
+      (save-excursion
+        (let ((beg (line-beginning-position))
+              (end (line-end-position)))
+          (capitalize-region beg end)))))
 #+END_SRC
 
 *** eval-and-replace
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-eval-and-replace ()
-    (defun eval-and-replace ()
-      "Replace the preceding sexp with its value."
-      (interactive)
-      (backward-kill-sexp)
-      (condition-case nil
-          (prin1 (eval (read (current-kill 0)))
-                 (current-buffer))
-        (error (message "Invalid expression")
-               (insert (current-kill 0)))))
     (bind-key "C-c C-x C-e" 'eval-and-replace))
+
+  (defun eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (backward-kill-sexp)
+    (condition-case nil
+        (prin1 (eval (read (current-kill 0)))
+               (current-buffer))
+      (error (message "Invalid expression")
+             (insert (current-kill 0)))))
 #+END_SRC
 
 *** comment-line-dwim
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-comment-line-dwim ()
-    (defun hb/quotemeta (str-val)
-      "Return STR-VAL with all non-word characters and / escaped with backslash.
+    (bind-key "C-;" 'comment-line-dwim))
 
-    This is more vigorous than `shell-quote-argument'."
-      (save-match-data
-        (replace-regexp-in-string "\\([^A-Za-z_0-9 /]\\)" "\\\\\\1" str-val)))
-
-    (defun comment-line-dwim (&optional arg)
-      "Replacement for the comment-dwim command.
+  (defun comment-line-dwim (&optional arg)
+    "Replacement for the comment-dwim command.
       If no region is selected and current line is not blank and we
       are not at the end of the line, then comment current line.
       Replaces default behaviour of comment-dwim, when it inserts
       comment at the end of the line."
-      (interactive "*P")
-      (comment-normalize-vars)
-      (if (or (and (not (region-active-p))
-                   (not (looking-at "[ \t]*$")))
-              (and (not (equal comment-end ""))
-                   (looking-at (hb/quotemeta comment-end))))
-          (if (looking-at (hb/quotemeta comment-end))
-              (progn
-                (comment-or-uncomment-region
-                 (if (comment-beginning)
-                     (comment-beginning)
-                   (line-beginning-position))
-                 (line-end-position))
-                (delete-trailing-whitespace
-                 (line-beginning-position) (line-end-position)))
-            (comment-or-uncomment-region
-             (line-beginning-position) (line-end-position)))
-        (comment-dwim arg)))
-    (bind-key "C-;" 'comment-line-dwim))
+    (interactive "*P")
+    (comment-normalize-vars)
+    (if (or (and (not (region-active-p))
+                 (not (looking-at "[ \t]*$")))
+            (and (not (equal comment-end ""))
+                 (looking-at (hb/quotemeta comment-end))))
+        (if (looking-at (hb/quotemeta comment-end))
+            (progn
+              (comment-or-uncomment-region
+               (if (comment-beginning)
+                   (comment-beginning)
+                 (line-beginning-position))
+               (line-end-position))
+              (delete-trailing-whitespace
+               (line-beginning-position) (line-end-position)))
+          (comment-or-uncomment-region
+           (line-beginning-position) (line-end-position)))
+      (comment-dwim arg)))
+
+  (defun hb/quotemeta (str-val)
+    "Return STR-VAL with all non-word characters and / escaped with backslash.
+   This is more vigorous than `shell-quote-argument'."
+    (save-match-data
+      (replace-regexp-in-string "\\([^A-Za-z_0-9 /]\\)" "\\\\\\1" str-val)))
+
+
 #+END_SRC
 
 *** copy-buffer-file-path
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-copy-buffer-file-path ()
-    (defun copy-buffer-file-path ()
-      (interactive)
-      (kill-new (buffer-file-name)))
-
     (evil-leader/set-key "by" 'copy-buffer-file-path))
+
+  (defun copy-buffer-file-path ()
+    (interactive)
+    (kill-new (buffer-file-name)))
 #+END_SRC
 
 * layers
@@ -604,13 +608,14 @@ current (brittle) mechanism.
 *** smartparens
 #+BEGIN_SRC emacs-lisp
   (defun hb-org/post-init-smartparens ()
-    (defun hb-org/configure-smartparens ()
-      (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
-      (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
     (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
+
+  (defun hb-org/configure-smartparens ()
+    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** smartparens
@@ -709,25 +714,9 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
 "scrolling up" moves the document down, or appears as if the viewport moves up.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
+  (defvar hb/scrolling-distance 10)
+
   (defun hb/configure-movement-transient-state ()
-    (defvar hb/scrolling-distance 10)
-
-    (defun hb/scroll-down ()
-      (interactive)
-      (scroll-down-command hb/scrolling-distance))
-
-    (defun hb/scroll-up ()
-      (interactive)
-      (scroll-up-command hb/scrolling-distance))
-
-    (defun hb/scroll-down-half-page ()
-      (interactive)
-      (scroll-down-command (/ (window-height) 2)))
-
-    (defun hb/scroll-up-half-page ()
-      (interactive)
-      (scroll-up-command (/ (window-height) 2)))
-
     (spacemacs|define-transient-state movement
       :doc "[j]down [k]up [f]orward [b]ack [u]p [d]own [q]uit"
       :evil-leader "m."
@@ -739,6 +728,23 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
       ("d" hb/scroll-up-half-page)
       ("u" hb/scroll-down-half-page)
       ("q" nil :exit t)))
+
+  (defun hb/scroll-down ()
+    (interactive)
+    (scroll-down-command hb/scrolling-distance))
+
+  (defun hb/scroll-up ()
+    (interactive)
+    (scroll-up-command hb/scrolling-distance))
+
+  (defun hb/scroll-down-half-page ()
+    (interactive)
+    (scroll-down-command (/ (window-height) 2)))
+
+  (defun hb/scroll-up-half-page ()
+    (interactive)
+    (scroll-up-command (/ (window-height) 2)))
+
 #+END_SRC
 * major-modes
 ** configuration
@@ -750,29 +756,32 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
 ** clang
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-clang-major-mode ()
-    (defun hb/configure-clang-major-mode-hook ()
-      (setq c-basic-offset 4
-            comment-start "/*"
-            comment-end "*/"
-            company-clang-arguments "-std=c++14"
-            flycheck-clang-args "-std=c++14"))
     (add-hook 'c++-mode-hook 'hb/configure-clang-major-mode-hook))
+
+  (defun hb/configure-clang-major-mode-hook ()
+    (setq c-basic-offset 4
+          comment-start "/*"
+          comment-end "*/"
+          company-clang-arguments "-std=c++14"
+          flycheck-clang-args "-std=c++14"))
 #+END_SRC
 
 ** compilation-mode
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-compilation-major-mode ()
-    (defun colorize-compilation-buffer ()
-      (let ((inhibit-read-only t))
-        (ansi-color-apply-on-region compilation-filter-start (point-max))))
     (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-    (defun compilation-remove-window-on-success (buffer exit-str)
-      (when (string-match "finished" exit-str)
-        (message (format "burying buffer: %s" exit-str))
-        (with-current-buffer buffer
-          (bury-buffer buffer)
-          (delete-windows-on buffer))))
     (add-hook 'compilation-finish-functions 'compilation-remove-window-on-success))
+
+  (defun colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+
+  (defun compilation-remove-window-on-success (buffer exit-str)
+    (when (string-match "finished" exit-str)
+      (message (format "burying buffer: %s" exit-str))
+      (with-current-buffer buffer
+        (bury-buffer buffer)
+        (delete-windows-on buffer))))
 #+END_SRC
 
 ** help-mode
