@@ -494,11 +494,10 @@ current (brittle) mechanism.
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
       (hb-org/general-setup)
+      (hb-org/template-setup)
       (hb-org/gtd-setup))
-    (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
     (with-eval-after-load 'ob-tangle
-      (remove-hook 'org-babel-pre-tangle-hook 'save-buffer))
-    (add-hook 'org-mode-hook 'turn-on-auto-fill))
+      (remove-hook 'org-babel-pre-tangle-hook 'save-buffer)))
 
   (defun hb-org/show-subtree-with-context (&optional ignored)
     (save-excursion
@@ -545,6 +544,8 @@ current (brittle) mechanism.
     (bind-key "C-c j" 'org-goto org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
 
+    (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
+
     (load-library "ob-shell")
 
     (setq org-special-ctrl-a/e t
@@ -567,7 +568,8 @@ current (brittle) mechanism.
           org-refile-targets '((nil :maxlevel . 9)
                                (org-agenda-files :maxlevel . 9)))
 
-    (add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append))
+    (add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append)
+    (add-hook 'org-mode-hook 'turn-on-auto-fill))
 
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
