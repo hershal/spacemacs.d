@@ -526,11 +526,21 @@ current (brittle) mechanism.
       (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
 
+  (defun hb-org/template-for-lang (key lang &optional options)
+    (list key (concat "#+BEGIN_SRC " lang " "
+                      (when (plist-get options :tangle) ":tangle yes")
+                      "\n?\n#+END_SRC")))
+
+  (defun hb-org/template-setup ()
+    (mapc (lambda (template)
+            (add-to-list 'org-structure-template-alist
+                         (hb-org/template-for-lang
+                          (car template) (cadr template) (cddr template))))
+          '(("st" "emacs-lisp" :tangle t)
+            ("se" "emacs-lisp")
+            ("sh" "sh"))))
+
   (defun hb-org/general-setup ()
-    (add-to-list 'org-structure-template-alist
-                 '("st"
-                   "#+BEGIN_SRC emacs-lisp :tangle yes\n?\n#+END_SRC"
-                   "<src lang=\"?\">\n\n</src>"))
     (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
     (bind-key "C-c j" 'org-goto org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
