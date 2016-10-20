@@ -54,6 +54,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
 
+     ;; a package in a league of its own
      helm
 
      ;; misc
