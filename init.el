@@ -67,7 +67,7 @@ values."
      search-engine
      ;; semantic
      (shell :variables shell-enable-smart-eshell t)
-     spell-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      gtags
 

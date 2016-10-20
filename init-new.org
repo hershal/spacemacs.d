@@ -661,6 +661,10 @@ current (brittle) mechanism.
     (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
+** TODO spell-checking
+I need to turn on spell checking for the major modes I would like to
+spell-check.
+
 ** TODO visual-fill-colum-mode
 
 ** web
