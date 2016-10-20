@@ -545,7 +545,7 @@ current (brittle) mechanism.
           org-use-sub-superscripts '{}
           org-export-with-sub-superscripts nil
           org-src-fontify-natively nil
-          org-alphabetical-lists t
+          org-list-allow-alphabetical t
           org-use-fast-todo-selection t
           org-agenda-files '("~/repos/org/")
           org-directory "~/repos/org/"
