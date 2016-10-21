@@ -99,7 +99,6 @@ values."
      hb-lisp
      hb-org
      hb-multiple-cursors
-     hb-diminish
      hb-yasnippet
      hb-javascript
      hb-expand-region

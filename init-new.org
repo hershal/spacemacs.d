@@ -49,7 +49,7 @@ These are defaults which must be set before spacemacs initialization.
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-general ()
-    (hb/load-configs '(helm magit python macros))
+    (hb/load-configs '(helm magit mode-line python macros))
 
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
     (setq vc-follow-symlinks t
@@ -108,7 +108,29 @@ spacemacs.
     (setq-default git-magit-status-fullscreen t)
     (setq magit-repository-directories "~/repos/"))
 #+END_SRC
-
+** mode-line
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-mode-line ()
+    (setq hb-diminish-modes '(undo-tree-mode
+                              holy-mode
+                              hybrid-mode
+                              smartparens-mode
+                              aggressive-indent-mode
+                              which-key-mode
+                              flyspell-mode
+                              flycheck-mode
+                              company-mode
+                              auto-fill-function))
+    (mapc (lambda (mode)
+            (eval `(spacemacs|diminish ,mode)))
+          hb-diminish-modes)
+    (add-hook 'evil-org-mode-hook
+              (lambda ()
+                (spacemacs|diminish evil-org-mode)))
+    (add-hook 'yas-minor-mode-hook
+              (lambda ()
+                (spacemacs|diminish yas-minor-mode))))
+#+END_SRC
 ** python
 This is a hack until this pull request goes through:
 https://github.com/syl20bnr/spacemacs/pull/5997
@@ -254,59 +276,6 @@ These are layers which tangle into the =layers= directory.
     (setq cmake-ide-build-pool-use-persistent-naming t)
     (cmake-ide-setup))
 #+END_SRC
-** TODO diminish
-:PROPERTIES:
-:header-args+: :tangle layers/hb-diminish/packages.el
-:END:
-
-I'm trying to fix this up. I need to create a macro or function which will
-define the function =hb-diminish/post-init-<package>= which will then diminish the
-proper major mode within =package=. That would probably be more reliable than the
-current (brittle) mechanism.
-
-#+BEGIN_SRC emacs-lisp
-  (defvar hb-diminish-package-mode-alist
-    '((yasnippet . yas-minor-mode)
-      (undo-tree . undo-tree-mode)
-      (holy-mode . holy-mode)
-      (nil . auto-fill-function)))
-
-  (defvar hb-diminish-packages
-    (cl-remove-if 'not
-                  (append (mapcar 'car hb-diminish-package-mode-alist)
-                          '(diminish))))
-
-  (defun hb-diminish/emit-post-init-defun-name (package)
-    (intern (format "hb-diminish/post-init-%s" package)))
-
-  (defvar hb-diminish-post-init-function-mode-file-list
-    (mapcar (lambda (x)
-              (list (hb-diminish/emit-post-init-defun-name (car x)) (car x) (cdr x)))
-            (cl-remove-if (lambda (x) (not (car x))) hb-diminish-package-mode-alist)))
-
-  (defun hb-diminish/post-init-diminish ()
-    (mapcar
-     (lambda (mode)
-       (eval `(spacemacs|diminish ,mode)))
-     (mapcar 'cdr (cl-remove-if 'car hb-diminish-package-mode-alist))))
-
-  (defun hb-diminish/emit-post-init-defun (defun-name mode file)
-    `(defun ,defun-name ()
-       (eval-after-load ,file
-         '(progn (message "diminishing %s from %s" ',mode ',file)
-                 (spacemacs|diminish ,mode)))))
-
-  (defmacro hb-diminish/emit-post-init-defuns ()
-    `(progn
-       ,@(mapcar
-          (lambda (package-mode-file)
-            (let ((defun-name (car package-mode-file)) (file (symbol-name (cadr package-mode-file))) (mode (nth 2 package-mode-file)))
-              (hb-diminish/emit-post-init-defun defun-name mode file)))
-          hb-diminish-post-init-function-mode-file-list)))
-
-  (hb-diminish/emit-post-init-defuns)
-#+END_SRC
-
 ** expand-region
 :PROPERTIES:
 :header-args+: :tangle layers/hb-expand-region/packages.el
