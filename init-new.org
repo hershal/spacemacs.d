@@ -267,30 +267,46 @@ proper major mode within =package=. That would probably be more reliable than th
 current (brittle) mechanism.
 
 #+BEGIN_SRC emacs-lisp
-  (defvar hb-diminish-packages '(diminish
-                                 aggressive-indent company evil-org holy-mode
-                                 yasnippet which-key undo-tree))
-  (defvar hb-diminish-modes '(auto-fill-function))
-  (setq package-mode-alist '((yasnippet . yas-minor-mode) (undo-tree . undo-tree-mode)
-                             (evil-org . evil-org-mode) (holy-mode . holy-mode)))
+  (defvar hb-diminish-package-mode-alist
+    '((yasnippet . yas-minor-mode)
+      (undo-tree . undo-tree-mode)
+      (holy-mode . holy-mode)
+      (nil . auto-fill-function)))
+
+  (defvar hb-diminish-packages
+    (cl-remove-if 'not
+                  (append (mapcar 'car hb-diminish-package-mode-alist)
+                          '(diminish))))
+
+  (defun hb-diminish/emit-post-init-defun-name (package)
+    (intern (format "hb-diminish/post-init-%s" package)))
+
+  (defvar hb-diminish-post-init-function-mode-file-list
+    (mapcar (lambda (x)
+              (list (hb-diminish/emit-post-init-defun-name (car x)) (car x) (cdr x)))
+            (cl-remove-if (lambda (x) (not (car x))) hb-diminish-package-mode-alist)))
 
   (defun hb-diminish/post-init-diminish ()
-    (let ((diminish-packages (set-difference hb-diminish-packages '(diminish))))
-      (dolist (package diminish-packages)
-        (diminish-after-load package)))
-    (dolist (mode hb-diminish-modes)
-      (diminish mode)))
+    (mapcar
+     (lambda (mode)
+       (eval `(spacemacs|diminish ,mode)))
+     (mapcar 'cdr (cl-remove-if 'car hb-diminish-package-mode-alist))))
 
-  (defun mode-from-package (package)
-    (let ((package-mode-from-alist (cdr (assoc package package-mode-alist)))
-          (package-mode-concat (intern-soft (format "%s-mode" package))))
-      (cond (package-mode-from-alist package-mode-from-alist)
-            (package-mode-concat package-mode-concat)
-            (package package))))
+  (defun hb-diminish/emit-post-init-defun (defun-name mode file)
+    `(defun ,defun-name ()
+       (eval-after-load ,file
+         '(progn (message "diminishing %s from %s" ',mode ',file)
+                 (spacemacs|diminish ,mode)))))
 
-  (defun diminish-after-load (file &optional mode)
-    (let ((mode (if mode mode (mode-from-package file))))
-      (eval-after-load file `(diminish ',mode))))
+  (defmacro hb-diminish/emit-post-init-defuns ()
+    `(progn
+       ,@(mapcar
+          (lambda (package-mode-file)
+            (let ((defun-name (car package-mode-file)) (file (symbol-name (cadr package-mode-file))) (mode (nth 2 package-mode-file)))
+              (hb-diminish/emit-post-init-defun defun-name mode file)))
+          hb-diminish-post-init-function-mode-file-list)))
+
+  (hb-diminish/emit-post-init-defuns)
 #+END_SRC
 
 ** expand-region
@@ -649,8 +665,7 @@ current (brittle) mechanism.
     (smartparens-global-mode)
     (show-smartparens-global-mode)
     (hb-smartparens/configure-bindings)
-    (hb-smartparens/configure-specialcase)
-    (diminish-after-load 'smartparens))
+    (hb-smartparens/configure-specialcase))
 
   (defun hb-smartparens/configure-bindings ()
     (dolist (binding hb/smartparens-bindings)
