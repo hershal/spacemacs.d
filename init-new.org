@@ -25,7 +25,6 @@ These are defaults which must be set before spacemacs initialization.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (setq exec-path-from-shell-check-startup-files nil)
 #+END_SRC
-
 * introduction
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -81,7 +80,6 @@ These are defaults which must be set before spacemacs initialization.
     (windmove-default-keybindings)
     (add-hook 'before-save-hook 'whitespace-cleanup))
 #+END_SRC
-
 ** helm
 These are bindings that brings the evil-equivalent helm functionality in
 spacemacs.
@@ -726,7 +724,7 @@ spell-check.
   (setq hb-yasnippet-packages '(yasnippet))
 
   (defun hb-yasnippet/post-init-yasnippet ()
-    (add-hook 'prog-mode-hook #'yas-minor-mode)
+    (add-hook 'prog-mode-hook 'yas-minor-mode-on)
     (bind-key "TAB" 'yas-expand yas-minor-mode-map))
 #+END_SRC
 
