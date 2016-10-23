@@ -308,7 +308,7 @@ These are layers which tangle into the =layers= directory.
 
   (defun hb-javascript/configure-skeleton ()
     (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
-    (define-auto-insert '("\\.\\(js\\|ts\\)" . "Javascript skeleton")
+    (define-auto-insert '("\\.js" . "Javascript skeleton")
       'js-skeleton))
 
   (defun hb-javascript/configure-js2-mode ()
