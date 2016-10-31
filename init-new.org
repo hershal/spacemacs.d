@@ -556,15 +556,16 @@ These are layers which tangle into the =layers= directory.
 
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n!)" "INPROG(i)" "REVIEW(r!)" "|" "DONE(d!)")
-            (sequence "MEETINGPLAN(!p)" "|" "MEETING(m!)")
-            (sequence "TODO(t)" "HOLD(h!)" "INPROG(i)" "NEXT(n!)" "REVIEW(r!)" "|" "DONE(d!)")))
+          '((sequence "TODO(t)" "NEXT(n!)" "INPROG(i!)" "WAITING(w!)" "REVIEW(r!)" "|" "DONE(d!)")
+            (sequence "PLAN(!p)" "|" "MEETING(m!)")
+            (sequence "TODO(t)" "HOLD(h!)" "INPROG(i!)" "WAITING(w!)" "NEXT(n!)" "REVIEW(r!)" "|" "DONE(d!)")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
             ("REVIEW" :foreground "orange" :weight bold)
             ("NEXT" :foreground "orange" :weight bold)
             ("INPROG" :foreground "orange" :weight bold)
             ("HOLD" :foreground "orange" :weight bold)
+            ("WAITING" :foreground "orange" :weight bold)
             ("DONE" org-done)
             ("CANCELLED" org-done)
             ("PLAN" :foreground "purple" :weight bold)
