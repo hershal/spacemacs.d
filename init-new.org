@@ -75,6 +75,7 @@ These are defaults which must be set before spacemacs initialization.
     (bind-key "C-c m" 'compile)
     (bind-key "C-c C-m" 'recompile)
     (evil-leader/set-key "bD" 'kill-buffer-and-window)
+    (evil-leader/set-key "to" 'overwrite-mode)
 
     (auto-insert-mode)
     (windmove-default-keybindings)
