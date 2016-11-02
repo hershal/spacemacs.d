@@ -78,7 +78,7 @@ values."
       c-c++-default-mode-for-headers 'c++-mode)
      emacs-lisp
      markdown
-     org
+     (org :variables org-enable-bootstrap-support t)
      html
      javascript
      latex
