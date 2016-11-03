@@ -298,29 +298,32 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-javascript-packages '(js2-mode))
+  (setq hb-javascript-packages '(js2-mode typescript-mode))
 
   (defun hb-javascript/post-init-js2-mode ()
     (setq js-indent-level 2
           js2-basic-offset 2
           js2-include-node-externs t)
     (hb-javascript/configure-skeleton)
-    (hb-javascript/configure-node))
+    (hb-javascript/configure-node)
+    (add-hook 'js2-mode-hook 'hb-javascript/configure-js-style))
+
+  (defun hb-javascript/post-init-typescript-mode ()
+    (add-hook 'typescript-mode-hook 'hb-javascript/configure-js-style))
 
   (defun hb-javascript/configure-skeleton ()
     (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
     (define-auto-insert '("\\.js" . "Javascript skeleton")
       'js-skeleton))
 
-  (defun hb-javascript/configure-js2-mode ()
+  (defun hb-javascript/configure-js-style ()
     (setq comment-start "/*")
     (setq comment-end "*/"))
 
   (defun hb-javascript/configure-node ()
     (with-eval-after-load 'js2-mode
       (bind-key "C-x C-n" 'hb-javascript/node-eval js2-mode-map)
-      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)
-      (add-hook 'js2-mode-hook 'hb-javascript/configure-js2-mode)))
+      (spacemacs/set-leader-keys-for-major-mode 'js2-mode "n" 'u/node-eval)))
 
   (defconst node-eval-buffer "*node.js*")
 
