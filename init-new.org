@@ -121,7 +121,9 @@ spacemacs.
                               flyspell-mode
                               flycheck-mode
                               company-mode
-                              auto-fill-function))
+                              auto-fill-function
+                              ggtags-mode
+                              spacemacs-whitespace-cleanup-mode))
     (mapc (lambda (mode)
             (eval `(spacemacs|diminish ,mode)))
           hb-diminish-modes)
