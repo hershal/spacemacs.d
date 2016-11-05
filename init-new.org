@@ -792,8 +792,12 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
 #+END_SRC
 * conclusion
 
+We have to reload Org here because it doesn't always load properly initially,
+especially after configuration. This ensures that Org will always initialize
+properly.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-conclusion ()
+    (org-reload)
     (find-file hb/init-file))
   (provide 'init-new)
 #+END_SRC
