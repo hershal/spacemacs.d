@@ -549,6 +549,7 @@ These are layers which tangle into the =layers= directory.
           org-agenda-files '("~/repos/org/")
           org-directory "~/repos/org/"
           org-default-notes-file "~/repos/org/refile.org"
+          org-tags-column -80
           org-refile-targets '((nil :maxlevel . 9)
                                (org-agenda-files :maxlevel . 9)))
 
