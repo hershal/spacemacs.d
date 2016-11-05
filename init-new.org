@@ -680,13 +680,14 @@ spell-check.
   (setq hb-web-packages '(web-mode))
 
   (defun hb-web/post-init-web-mode ()
-    (defun hb-web/configure-web-mode ()
-      (mapc (lambda (mode)
-              (set (intern-soft (format "web-mode-%S-indent-offset" mode)) 2))
-            '(css sql code attr-value attr markup))
-      (setq web-mode-enable-current-column-highlight t)
-      (setq web-mode-enable-current-element-highlight t))
     (add-hook 'web-mode-hook 'hb-web/configure-web-mode))
+
+  (defun hb-web/configure-web-mode ()
+    (mapc (lambda (mode)
+            (set (intern-soft (format "web-mode-%S-indent-offset" mode)) 2))
+          '(css sql code attr-value attr markup))
+    (setq web-mode-enable-current-column-highlight t)
+    (setq web-mode-enable-current-element-highlight t))
 #+END_SRC
 
 ** yasnippet
