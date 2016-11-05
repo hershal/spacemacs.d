@@ -12,7 +12,7 @@ Some basic configuration loading mechanisms
     (hb/load-configs hb/configs))
 
   (defun hb/load-configs (configs)
-    (mapc 'hb/load-config configs)  )
+    (mapc 'hb/load-config configs))
 
   (defun hb/load-config (config)
     (message (format "loading %S..." config))
