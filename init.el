@@ -70,6 +70,7 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      gtags
+     spacemacs-editing
 
      ;; languages
      (c-c++

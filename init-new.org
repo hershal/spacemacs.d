@@ -285,9 +285,6 @@ These are layers which tangle into the =layers= directory.
 #+BEGIN_SRC emacs-lisp
   (setq hb-expand-region-packages '(expand-region))
 
-  (defun hb-expand-region/init-expand-region ()
-    (use-package expand-region))
-
   (defun hb-expand-region/post-init-expand-region ()
     (bind-key "C-=" 'er/expand-region)
     (bind-key "C-+" 'er/contract-region))
