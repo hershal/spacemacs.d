@@ -382,7 +382,6 @@ These are layers which tangle into the =layers= directory.
 *** smartparens
 #+BEGIN_SRC emacs-lisp
   (defun hb-lisp/post-init-smartparens ()
-    (setq sp-ignore-modes-list (delete 'minibuffer-inactive-mode sp-ignore-modes-list))
     (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens)
     (smartparens-global-mode))
 
