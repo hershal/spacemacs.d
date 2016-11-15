@@ -583,8 +583,9 @@ These are layers which tangle into the =layers= directory.
 #+END_SRC
 *** ob-restclient
 #+BEGIN_SRC emacs-lisp
-  (defun hb-org/init-ob-restclient ()
-    (use-package ob-restclient))
+  (with-eval-after-load 'org
+    (defun hb-org/init-ob-restclient ()
+      (use-package ob-restclient)))
 #+END_SRC
 
 *** writegood
