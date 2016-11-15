@@ -60,8 +60,7 @@ values."
      ;; misc
      (auto-completion
       :variables
-      auto-completion-enable-sort-by-usage t
-      auto-completion-enable-snippets-in-popup t)
+      auto-completion-enable-sort-by-usage t)
      better-defaults
      restclient
      search-engine
