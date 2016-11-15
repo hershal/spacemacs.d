@@ -467,7 +467,7 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-org-packages '(org writegood-mode smartparens ox-gfm ob-restclient))
+  (setq hb-org-packages '(org writegood-mode smartparens ob-restclient))
 #+END_SRC
 
 *** org
@@ -580,11 +580,6 @@ These are layers which tangle into the =layers= directory.
            "* %?\n%U\n")
           ("m" "Meeting" entry (file "~/repos/org/refile.org")
            "* MEETING with %? :meeting:\n%U")))
-#+END_SRC
-*** ox-gfm
-#+BEGIN_SRC emacs-lisp
-  (defun hb-org/init-ox-gfm ()
-    (use-package ox-gfm))
 #+END_SRC
 *** ob-restclient
 #+BEGIN_SRC emacs-lisp
