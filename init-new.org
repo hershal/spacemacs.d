@@ -622,10 +622,6 @@ These are layers which tangle into the =layers= directory.
 #+BEGIN_SRC emacs-lisp
   (setq hb-smartparens-packages '(smartparens))
 
-  (defun hb-smartparens/init-smartparens ()
-    (message "initializing smartparens")
-    (use-package smartparens))
-
   (defun hb-smartparens/post-init-smartparens ()
     (hb-smartparens/configure))
 
