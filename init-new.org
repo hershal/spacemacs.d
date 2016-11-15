@@ -402,9 +402,6 @@ These are layers which tangle into the =layers= directory.
 
 *** aggressive-indent
 #+BEGIN_SRC emacs-lisp
-  (defun hb-lisp/init-aggressive-indent ()
-    (use-package aggressive-indent))
-
   (defun hb-lisp/post-init-aggressive-indent ()
     (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
 #+END_SRC
