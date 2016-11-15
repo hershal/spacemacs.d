@@ -691,8 +691,9 @@ spell-check.
   (setq hb-yasnippet-packages '(yasnippet))
 
   (defun hb-yasnippet/post-init-yasnippet ()
-    (add-hook 'prog-mode-hook 'yas-minor-mode-on)
-    (bind-key "TAB" 'yas-expand yas-minor-mode-map))
+    (with-eval-after-load 'yasnippet
+      (add-hook 'prog-mode-hook 'yas-minor-mode-on)
+      (bind-key "TAB" 'yas-expand yas-minor-mode-map)))
 #+END_SRC
 
 * transient-states
