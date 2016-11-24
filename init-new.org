@@ -70,6 +70,7 @@ These are defaults which must be set before spacemacs initialization.
     (bind-key "C-h C-S-v" 'find-variable-at-point)
     (bind-key "C-x k" 'kill-this-buffer)
     (bind-key "C-x C-K" 'kill-buffer-and-window)
+    (bind-key "C-x M-k" 'bury-buffer)
     (bind-key "M-r" 'replace-string)
     (bind-key "M-R" 'replace-regexp)
     (bind-key "C-c m" 'compile)
