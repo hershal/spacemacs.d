@@ -384,7 +384,8 @@ These are layers which tangle into the =layers= directory.
 #+BEGIN_SRC emacs-lisp
   (defun hb-lisp/post-init-smartparens ()
     (hb-lisp/add-hook-to-lisp-modes 'hb-lisp/configure-lisp-smartparens)
-    (smartparens-global-mode))
+    (smartparens-global-mode)
+    (setq sp-escape-quotes-after-insert nil))
 
   (defvar hb-lisp-mode-hooks
     '(emacs-lisp-mode-hook lisp-mode-hook lisp-interaction-mode-hook minibuffer-setup-hook)
