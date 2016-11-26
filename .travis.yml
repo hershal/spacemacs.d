@@ -1,10 +1,9 @@
 language: ruby
 
 before_install:
-  - git clone https://github.com/rejeep/evm.git $HOME/.evm
   - git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+  - git clone https://github.com/rejeep/evm.git $HOME/.evm
   - export PATH=$HOME/.evm/bin:$PATH
-
   - evm config path /tmp
   - evm install $EVM_EMACS --use --skip
 
