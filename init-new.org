@@ -64,6 +64,11 @@ These are defaults which must be set before spacemacs initialization.
           disabled-command-function nil
           auto-insert-query nil)
 
+
+    (bind-key "C-x O" 'ace-window)
+    (bind-key "C-c C-j" 'avy-goto-word-1)
+    (bind-key "C-x j" 'avy-goto-word-0)
+    (bind-key "C-x C-j" 'avy-goto-line)
     (bind-key "C-h C-f" 'find-function)
     (bind-key "C-h C-S-f" 'find-function-at-point)
     (bind-key "C-h C-v" 'find-variable)
