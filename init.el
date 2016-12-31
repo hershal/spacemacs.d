@@ -79,6 +79,7 @@ values."
       c-c++-default-mode-for-headers 'c++-mode)
      emacs-lisp
      html
+     go
      javascript
      latex
      markdown
