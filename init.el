@@ -78,12 +78,11 @@ values."
       c-c++-enable-clang-support t
       c-c++-default-mode-for-headers 'c++-mode)
      emacs-lisp
-     markdown
-     (org :variables org-enable-bootstrap-support t)
      html
      javascript
      latex
-     swift
+     markdown
+     (org :variables org-enable-bootstrap-support t)swift
      typescript
      ruby
      yaml
