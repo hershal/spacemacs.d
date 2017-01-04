@@ -566,7 +566,8 @@ These are layers which tangle into the =layers= directory.
           '((sequence "TODO(t!/@)" "HOLD(h@)" "NEXT(n!)" "INPROG(i!)"
                       "WAITING(w@)" "REVIEW(r@)" "|"
                       "DONE(d@)" "CANCELLED(c@)")
-            (sequence "|" "PLAN(p!)" "MEETING(m!)")))
+            (sequence "|" "PLAN(p!)" "MEETING(m!)")
+            (sequence "PROJECT(r!)" "|" "DONE(d@)" "CANCELLED(c@)")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
             ("REVIEW" :foreground "orange" :weight bold)
@@ -576,6 +577,7 @@ These are layers which tangle into the =layers= directory.
             ("WAITING" :foreground "orange" :weight bold)
             ("DONE" org-done)
             ("CANCELLED" org-done)
+            ("PROJECT" :foreground "purple" :weight bold)
             ("PLAN" :foreground "purple" :weight bold)
             ("MEETING" :foreground "blue" :weight bold))))
 #+END_SRC
