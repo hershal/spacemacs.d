@@ -685,7 +685,14 @@ spell-check.
             (set (intern-soft (format "web-mode-%S-indent-offset" mode)) 2))
           '(css sql code attr-value attr markup))
     (setq web-mode-enable-current-column-highlight t)
-    (setq web-mode-enable-current-element-highlight t))
+    (setq web-mode-enable-current-element-highlight t)
+    (hb-web/configure-bindings))
+
+  (defun hb-web/configure-bindings ()
+    (bind-key "C-M-a" 'web-mode-element-beginning web-mode-map)
+    (bind-key "C-M-e" 'web-mode-element-end web-mode-map)
+    (bind-key "C-c <backspace>" 'web-mode-element-vanish web-mode-map)
+    (bind-key "C-c t" 'web-mode-element-rename web-mode-map))
 #+END_SRC
 
 ** yasnippet
