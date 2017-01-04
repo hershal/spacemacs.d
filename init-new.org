@@ -733,6 +733,8 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
       ("b" scroll-down-command)
       ("d" hb/scroll-up-half-page)
       ("u" hb/scroll-down-half-page)
+      ("/" isearch-forward)
+      ("s" helm-swoop)
       ("q" nil :exit t)))
 
   (defun hb/scroll-down ()
