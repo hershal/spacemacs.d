@@ -21,7 +21,7 @@ Some basic configuration loading mechanisms
 #+END_SRC
 
 ** pre-init
-These are defaults which must be set before spacemacs initialization.
+These are defaults which one must set before spacemacs initialization.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (setq exec-path-from-shell-check-startup-files nil)
 #+END_SRC
@@ -619,6 +619,11 @@ These are layers which tangle into the =layers= directory.
     (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
     (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
+
+** python
+:PROPERTIES:
+:header-args+: :tangle layers/hb-python/packages.el
+:END:
 
 ** smartparens
 :PROPERTIES:
