@@ -186,8 +186,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font (cond (find-font (font-spec :name "SF Mono"))
-                                   '("SF Mono" :size 10)
+   dotspacemacs-default-font (cond ((find-font (font-spec :name "SF Mono"))
+                                    '("SF Mono" :size 10))
                                    ((find-font (font-spec :name "Menlo"))
                                     '("Menlo" :size 10))
                                    ((find-font (font-spec :name "Monospace"))
