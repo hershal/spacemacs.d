@@ -277,12 +277,15 @@ These are layers which tangle into the =layers= directory.
   (defun hb-cmake/init-cmake-ide ()
     (use-package cmake-ide))
 
-  (defun hb-cmake/init-rtags ()
-    (use-package rtags))
-
   (defun hb-cmake/post-init-cmake-ide ()
     (setq cmake-ide-build-pool-use-persistent-naming t)
     (cmake-ide-setup))
+
+  (defun hb-cmake/init-rtags ()
+    (use-package rtags))
+
+  (defun hb-cmake/post-init-rtags ()
+    (rtags-enable-standard-keybindings))
 #+END_SRC
 ** expand-region
 :PROPERTIES:
