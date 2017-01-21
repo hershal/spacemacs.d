@@ -82,7 +82,8 @@ values."
      javascript
      latex
      markdown
-     (org :variables org-enable-bootstrap-support t)swift
+     (org :variables org-enable-bootstrap-support t)
+     swift
      typescript
      ruby
      yaml
