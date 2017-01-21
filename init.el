@@ -99,6 +99,7 @@ values."
      hb-cmake
      hb-lisp
      hb-org
+     hb-python
      hb-multiple-cursors
      hb-yasnippet
      hb-javascript

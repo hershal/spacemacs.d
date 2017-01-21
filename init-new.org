@@ -624,7 +624,18 @@ These are layers which tangle into the =layers= directory.
 :PROPERTIES:
 :header-args+: :tangle layers/hb-python/packages.el
 :END:
+#+BEGIN_SRC emacs-lisp
+  (setq hb-python-packages '(highlight-indentation python))
 
+  (defun hb-python/init-highlight-indentation ()
+    (use-package highlight-indentation))
+
+  (defun hb-python/post-init-highlight-indentation ()
+    (add-hook 'python-mode-hook 'highlight-indentation-mode))
+
+  (defun hb-python/post-init-python ()
+    (setq python-indent-offset 2))
+#+END_SRC
 ** smartparens
 :PROPERTIES:
 :header-args+: :tangle layers/hb-smartparens/packages.el
