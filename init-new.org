@@ -80,6 +80,7 @@ These are defaults which one must set before spacemacs initialization.
     (bind-key "C-c C-m" 'recompile)
     (evil-leader/set-key "bD" 'kill-buffer-and-window)
     (evil-leader/set-key "to" 'overwrite-mode)
+    (evil-leader/set-key "fp" 'find-file-at-point)
 
     (auto-insert-mode)
     (windmove-default-keybindings)
