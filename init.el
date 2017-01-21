@@ -79,7 +79,6 @@ values."
       c-c++-default-mode-for-headers 'c++-mode)
      emacs-lisp
      html
-     (go :variables go-tab-width 4)
      javascript
      latex
      markdown
