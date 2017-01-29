@@ -787,9 +787,7 @@ Scrolling in emacs corresponds to moving the document, not the viewport. Thus
   (defun hb/configure-clang-major-mode-hook ()
     (setq c-basic-offset 4
           comment-start "/*"
-          comment-end "*/"
-          company-clang-arguments "-std=c++14"
-          flycheck-clang-args "-std=c++14"))
+          comment-end "*/"))
 #+END_SRC
 
 ** compilation-mode
