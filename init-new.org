@@ -636,7 +636,7 @@ These are layers which tangle into the =layers= directory.
     (add-hook 'python-mode-hook 'highlight-indentation-mode))
 
   (defun hb-python/post-init-python ()
-    (setq python-indent-offset 2))
+    (setq python-indent-offset 4))
 #+END_SRC
 ** smartparens
 :PROPERTIES:
