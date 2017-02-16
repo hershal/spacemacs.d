@@ -101,6 +101,7 @@ values."
      hb-org
      hb-python
      hb-multiple-cursors
+     hb-magithub
      hb-yasnippet
      hb-javascript
      hb-expand-region

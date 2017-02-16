@@ -475,6 +475,20 @@ These are layers which tangle into the =layers= directory.
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
 #+END_SRC
+
+** magithub
+:PROPERTIES:
+:header-args+: :tangle layers/hb-magithub/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq hb-magithub-packages '(magithub))
+
+  (defun hb-magithub/init-magithub ()
+    (use-package magithub
+      :after magit
+      :config (magithub-feature-autoinject t)))
+#+END_SRC
 ** org
 :PROPERTIES:
 :header-args+: :tangle layers/hb-org/packages.el
