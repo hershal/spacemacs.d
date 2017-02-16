@@ -82,6 +82,11 @@ These are defaults which one must set before spacemacs initialization.
     (evil-leader/set-key "to" 'overwrite-mode)
     (evil-leader/set-key "fp" 'find-file-at-point)
 
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:foreground "red" :inherit aw-leading-char-face :height 3.0)))))
+    (setq aw-leading-char-style 'path)
+
     (auto-insert-mode)
     (windmove-default-keybindings)
     (add-hook 'before-save-hook 'whitespace-cleanup))
