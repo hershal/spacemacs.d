@@ -593,7 +593,8 @@ These are layers which tangle into the =layers= directory.
                                (org-agenda-files :maxlevel . 9)))
 
     (add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append)
-    (add-hook 'org-mode-hook 'turn-on-auto-fill))
+    (add-hook 'org-mode-hook 'turn-on-auto-fill)
+    (add-hook 'org-mode-hook 'turn-off-show-smartparens-mode))
 
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
