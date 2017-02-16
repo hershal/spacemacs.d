@@ -96,17 +96,17 @@ values."
 
      ;; hb layers
      hb-ag
-     hb-smartparens
      hb-cmake
+     hb-expand-region
+     hb-javascript
      hb-lisp
+     hb-magithub
+     hb-multiple-cursors
      hb-org
      hb-python
-     hb-multiple-cursors
-     hb-magithub
-     hb-yasnippet
-     hb-javascript
-     hb-expand-region
+     hb-smartparens
      hb-web
+     hb-yasnippet
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
