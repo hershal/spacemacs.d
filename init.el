@@ -95,6 +95,7 @@ values."
      version-control
 
      ;; hb layers
+     hb-ag
      hb-smartparens
      hb-cmake
      hb-lisp
