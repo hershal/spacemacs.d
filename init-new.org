@@ -276,10 +276,10 @@ These are layers which tangle into the =layers= directory.
 :header-args+: :tangle layers/hb-ag/packages.el
 :END:
 
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (setq hb-cmake-packages '(ag))
+#+BEGIN_SRC emacs-lisp
+  (setq hb-ag-packages '(ag))
 
-  (defun hb-cmake/init-ag ()
+  (defun hb-ag/init-ag ()
     (use-package ag))
 #+END_SRC
 
