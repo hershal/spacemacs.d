@@ -493,7 +493,7 @@ These are layers which tangle into the =layers= directory.
 :header-args+: :tangle layers/hb-magithub/packages.el
 :END:
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
   (setq hb-magithub-packages '(magithub))
 
   (defun hb-magithub/init-magithub ()
