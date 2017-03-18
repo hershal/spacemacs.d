@@ -765,10 +765,15 @@ spell-check.
 #+BEGIN_SRC emacs-lisp
   (setq hb-yasnippet-packages '(yasnippet))
 
+  (defun hb-yasnippet/expand ()
+    (interactive)
+    (indent-for-tab-command)
+    (yas-expand))
+
   (defun hb-yasnippet/post-init-yasnippet ()
     (with-eval-after-load 'yasnippet
       (add-hook 'prog-mode-hook 'yas-minor-mode-on)
-      (bind-key "TAB" 'yas-expand yas-minor-mode-map)))
+      (bind-key "TAB" 'hb-yasnippet/expand yas-minor-mode-map)))
 #+END_SRC
 
 * transient-states
