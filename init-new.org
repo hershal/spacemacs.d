@@ -294,10 +294,16 @@ These are layers which tangle into the =layers= directory.
     (use-package ag))
 #+END_SRC
 
-** cmake
+** TODO cmake
 :PROPERTIES:
 :header-args+: :tangle layers/hb-cmake/packages.el
 :END:
+
+=cmake-ide= is causing problems for me: It's giving me =Wrong type argument:
+stringp, nil= when I visit a file in a project which does not have a
+=CMakeLists.txt= file. It looks like =cmake-ide= is trying to expand the real path
+for a =CMakeLists.txt= file regardless of whether or not it finds the file. I
+should file a bug and a pull request when I get a chance.
 
 #+BEGIN_SRC emacs-lisp
   (setq hb-cmake-packages '(cmake-ide rtags))
@@ -307,7 +313,8 @@ These are layers which tangle into the =layers= directory.
 
   (defun hb-cmake/post-init-cmake-ide ()
     (setq cmake-ide-build-pool-use-persistent-naming t)
-    (cmake-ide-setup))
+    ;; (cmake-ide-setup)
+    )
 
   (defun hb-cmake/init-rtags ()
     (use-package rtags))
