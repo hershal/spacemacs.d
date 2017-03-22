@@ -322,6 +322,22 @@ should file a bug and a pull request when I get a chance.
   (defun hb-cmake/post-init-rtags ()
     (rtags-enable-standard-keybindings))
 #+END_SRC
+
+** embrace
+:PROPERTIES:
+:header-args+: :tangle layers/hb-cmake/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-embrace-packages '(embrace))
+
+  (defun hb-embrace/init-embrace ()
+    (use-package embrace))
+
+  (defun hb-embrace/post-init-embrace ()
+    (evil-leader/set-key "se" 'embrace-commander))
+#+END_SRC
+
 ** expand-region
 :PROPERTIES:
 :header-args+: :tangle layers/hb-expand-region/packages.el

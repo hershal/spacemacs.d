@@ -97,6 +97,7 @@ values."
      ;; hb layers
      hb-ag
      hb-cmake
+     hb-embrace
      hb-expand-region
      hb-javascript
      hb-lisp
