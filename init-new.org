@@ -738,6 +738,8 @@ spell-check.
 
 ** TODO visual-fill-colum-mode
 
+This looks cool, I need to investigate sometime.
+
 ** web
 :PROPERTIES:
 :header-args+: :tangle layers/hb-web/packages.el
