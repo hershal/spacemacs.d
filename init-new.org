@@ -323,7 +323,7 @@ should file a bug and a pull request when I get a chance.
 
 ** embrace
 :PROPERTIES:
-:header-args+: :tangle layers/hb-cmake/packages.el
+:header-args+: :tangle layers/hb-embrace/packages.el
 :END:
 
 #+BEGIN_SRC emacs-lisp
