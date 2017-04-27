@@ -96,6 +96,7 @@ values."
 
      ;; hb layers
      hb-ag
+     hb-c++
      hb-cmake
      hb-embrace
      hb-expand-region

@@ -292,6 +292,28 @@ These are layers which tangle into the =layers= directory.
     (use-package ag))
 #+END_SRC
 
+** c++
+:PROPERTIES:
+:header-args+: :tangle layers/hb-c++/packages.el
+:END:
+
+
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-c++-packages '(function-args))
+
+  (defun hb-c++/init-function-args ()
+    (use-package function-args))
+
+  (defun hb-c++/post-init-function-args ()
+    (fa-config-default)
+    (setq semantic-idle-scheduler-idle-time 300)
+    (setq semantic-idle-scheduler-work-idle-time 600)
+    (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)
+    )
+
+#+END_SRC
+
 ** TODO cmake
 :PROPERTIES:
 :header-args+: :tangle layers/hb-cmake/packages.el
