@@ -314,7 +314,10 @@ These are layers which tangle into the =layers= directory.
     (use-package rtags))
 
   (defun hb-c++/post-init-rtags ()
-    (rtags-enable-standard-keybindings))
+    (rtags-enable-standard-keybindings)
+    (with-eval-after-load 'cc-mode
+      (bind-key "M-." 'rtags-find-symbol-at-point)
+      (bind-key "M-," 'rtags-find-all-references-at-point)))
 
   (defun hb-c++/init-helm-rtags ()
     (use-package helm-rtags))
