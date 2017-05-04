@@ -298,7 +298,7 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-c++-packages '(function-args))
+  (setq hb-c++-packages '(function-args rtags helm-rtags))
 
   (defun hb-c++/init-function-args ()
     (use-package function-args))
@@ -310,6 +310,18 @@ These are layers which tangle into the =layers= directory.
     (with-eval-after-load 'cc-mode
       (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)))
 
+  (defun hb-c++/init-rtags ()
+    (use-package rtags))
+
+  (defun hb-c++/post-init-rtags ()
+    (rtags-enable-standard-keybindings))
+
+  (defun hb-c++/init-helm-rtags ()
+    (use-package helm-rtags))
+
+  (defun hb-c++/post-init-helm-rtags ()
+    (require 'rtags-helm)
+    (setq rtags-use-helm t))
 #+END_SRC
 
 ** TODO cmake
@@ -324,7 +336,7 @@ for a =CMakeLists.txt= file regardless of whether or not it finds the file. I
 should file a bug and a pull request when I get a chance.
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-cmake-packages '(cmake-ide rtags))
+  (setq hb-cmake-packages '(cmake-ide))
 
   (defun hb-cmake/init-cmake-ide ()
     (use-package cmake-ide))
@@ -333,12 +345,6 @@ should file a bug and a pull request when I get a chance.
     (setq cmake-ide-build-pool-use-persistent-naming t)
     ;; (cmake-ide-setup)
     )
-
-  (defun hb-cmake/init-rtags ()
-    (use-package rtags))
-
-  (defun hb-cmake/post-init-rtags ()
-    (rtags-enable-standard-keybindings))
 #+END_SRC
 
 ** embrace
