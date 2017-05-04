@@ -297,8 +297,6 @@ These are layers which tangle into the =layers= directory.
 :header-args+: :tangle layers/hb-c++/packages.el
 :END:
 
-
-
 #+BEGIN_SRC emacs-lisp
   (setq hb-c++-packages '(function-args))
 
@@ -309,8 +307,8 @@ These are layers which tangle into the =layers= directory.
     (fa-config-default)
     (setq semantic-idle-scheduler-idle-time 300)
     (setq semantic-idle-scheduler-work-idle-time 600)
-    (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)
-    )
+    (with-eval-after-load 'cc-mode
+      (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)))
 
 #+END_SRC
 
