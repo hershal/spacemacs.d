@@ -323,7 +323,7 @@ These are layers which tangle into the =layers= directory.
     (use-package helm-rtags))
 
   (defun hb-c++/post-init-helm-rtags ()
-    (require 'rtags-helm)
+    (require 'helm-rtags)
     (setq rtags-use-helm t))
 #+END_SRC
 
