@@ -568,7 +568,7 @@ should file a bug and a pull request when I get a chance.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-org-packages '(org writegood-mode smartparens ob-restclient))
+  (setq hb-org-packages '(org writegood-mode smartparens))
 #+END_SRC
 
 *** org
@@ -684,12 +684,6 @@ should file a bug and a pull request when I get a chance.
            "* %?\n%U\n")
           ("m" "Meeting" entry (file "~/repos/org/refile.org")
            "* MEETING with %? :meeting:\n%U")))
-#+END_SRC
-*** ob-restclient
-#+BEGIN_SRC emacs-lisp
-(defun hb-org/init-ob-restclient ()
-  (with-eval-after-load 'org
-    (use-package ob-restclient)))
 #+END_SRC
 
 *** writegood
