@@ -630,8 +630,6 @@ should file a bug and a pull request when I get a chance.
 
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
 
-    (load-library "ob-shell")
-
     (setq org-special-ctrl-a/e t
           org-goto-interface 'outline-path-completion
           org-goto-max-level 10
