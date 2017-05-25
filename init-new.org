@@ -324,7 +324,7 @@ These are layers which tangle into the =layers= directory.
 
   (defun hb-c++/post-init-helm-rtags ()
     (require 'helm-rtags)
-    (setq rtags-use-helm t))
+    (setq rtags-display-result-backend 'helm))
 #+END_SRC
 
 ** TODO cmake
