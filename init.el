@@ -82,6 +82,7 @@ values."
      javascript
      latex
      markdown
+     spacemacs-org
      (org :variables org-enable-bootstrap-support t)
      swift
      typescript
