@@ -661,7 +661,8 @@ should file a bug and a pull request when I get a chance.
                       "WAITING(w@)" "REVIEW(r@)" "|"
                       "DONE(d@)" "CANCELLED(c@)")
             (sequence "|" "PLAN(p!)" "MEETING(m!)")
-            (sequence "PROJECT(r!)" "|" "DONE(d@)" "CANCELLED(c@)")))
+            (sequence "PROJECT(r!)" "|" "DONE(d@)" "CANCELLED(c@)")
+            (sequence "OPEN(o!)" "|" "CLOSED(l!)")))
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "red" :weight bold)
             ("REVIEW" :foreground "orange" :weight bold)
@@ -673,7 +674,8 @@ should file a bug and a pull request when I get a chance.
             ("CANCELLED" org-done)
             ("PROJECT" :foreground "purple" :weight bold)
             ("PLAN" :foreground "purple" :weight bold)
-            ("MEETING" :foreground "blue" :weight bold))))
+            ("MEETING" :foreground "blue" :weight bold)
+            ("OPEN" :foreground "blue" :weight bold))))
 #+END_SRC
 **** capture
 #+BEGIN_SRC emacs-lisp
