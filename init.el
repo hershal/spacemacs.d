@@ -99,16 +99,13 @@ values."
      hb-ag
      hb-c++
      hb-cmake
-     hb-embrace
-     hb-expand-region
+     hb-editing
      hb-formatting
      hb-javascript
      hb-lisp
      hb-magithub
-     hb-multiple-cursors
      hb-org
      hb-python
-     hb-smartparens
      hb-web
      hb-yasnippet
      )

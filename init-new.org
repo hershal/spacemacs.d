@@ -350,33 +350,81 @@ should file a bug and a pull request when I get a chance.
     )
 #+END_SRC
 
-** embrace
+** editing
 :PROPERTIES:
-:header-args+: :tangle layers/hb-embrace/packages.el
+:header-args+: :tangle layers/hb-editing/packages.el
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-embrace-packages '(embrace))
+  (setq hb-editing-packages '(embrace expand-region smartparens aggressive-indent))
 
-  (defun hb-embrace/init-embrace ()
+  ;; Embrace
+  (defun hb-editing/init-embrace ()
     (use-package embrace))
 
-  (defun hb-embrace/post-init-embrace ()
+  (defun hb-editing/post-init-embrace ()
     (evil-leader/set-key "se" 'embrace-commander))
+
+  ;; Multiple-Cursors
+  (defun hb-multiple-cursors/init-multiple-cursors ()
+    (use-package multiple-cursors))
+
+  (defun hb-multiple-cursors/post-init-multiple-cursors ()
+    (hb/configure-mc))
+
+  (defun hb/configure-mc-isearch ()
+    (defvar jc/mc-search--last-term nil)
+    (defun jc/mc-search (search-command)
+      ;; Read new search term when not repeated command or applying to fake cursors
+      (when (and (not mc--executing-command-for-fake-cursor)
+                 (not (eq last-command 'jc/mc-search-forward))
+                 (not (eq last-command 'jc/mc-search-backward)))
+        (setq jc/mc-search--last-term (read-from-minibuffer "Search: ")))
+      (funcall search-command jc/mc-search--last-term))
+    (defun jc/mc-search-forward ()
+      "Simplified version of forward search that supports multiple cursors"
+      (interactive)
+      (jc/mc-search 'search-forward))
+    (defun jc/mc-search-backward ()
+      "Simplified version of backward search that supports multiple cursors"
+      (interactive)
+      (jc/mc-search 'search-backward)))
+
+  (defun hb/configure-mc-bindings ()
+    (bind-key "C-S-c C-S-c" 'mc/edit-lines)
+    (bind-key "C-S-SPC" 'set-rectangular-region-anchor)
+    (bind-key "C->" 'mc/mark-next-like-this)
+    (bind-key "C-<" 'mc/mark-previous-like-this)
+    (bind-key "C-c C-<" 'mc/mark-all-like-this)
+    (bind-key "C-c C->" 'mc/mark-all-like-this-dwim)
+    (bind-key "C-c ~" 'mc/insert-numbers)
+    (bind-key "M-~" 'mc/sort-regions)
+    (bind-key "C-~" 'mc/reverse-regions)
+    (bind-key "C-S-c C-e" 'mc/edit-ends-of-lines)
+    (bind-key "C-S-c C-a" 'mc/edit-beginnings-of-lines)
+    (bind-key "C-s" 'jc/mc-search-forward mc/keymap)
+    (bind-key "C-r" 'jc/mc-search-backward mc/keymap))
+
+  (defun hb/configure-mc-fixes ()
+    (bind-key "M-SPC" 'just-one-space mc/keymap))
+
+  (defun hb/configure-mc ()
+    (hb/configure-mc-isearch)
+    (hb/configure-mc-bindings)
+    (hb/configure-mc-fixes))
+
+  ;; Smartparens
+  (defun hb-org/post-init-smartparens ()
+    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
+
+  (defun hb-org/configure-smartparens ()
+    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
-** expand-region
-:PROPERTIES:
-:header-args+: :tangle layers/hb-expand-region/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (setq hb-expand-region-packages '(expand-region))
-
-  (defun hb-expand-region/post-init-expand-region ()
-    (bind-key "C-=" 'er/expand-region)
-    (bind-key "C-+" 'er/contract-region))
-#+END_SRC
 ** javascript
 :PROPERTIES:
 :header-args+: :tangle layers/hb-javascript/packages.el
@@ -493,61 +541,6 @@ should file a bug and a pull request when I get a chance.
     (hb-lisp/add-hook-to-lisp-modes 'aggressive-indent-mode))
 #+END_SRC
 
-** multiple-cursors
-:PROPERTIES:
-:header-args+: :tangle layers/hb-multiple-cursors/packages.el
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (setq hb-multiple-cursors-packages '(multiple-cursors))
-
-  (defun hb-multiple-cursors/init-multiple-cursors ()
-    (use-package multiple-cursors))
-
-  (defun hb-multiple-cursors/post-init-multiple-cursors ()
-    (hb/configure-mc))
-
-  (defun hb/configure-mc-isearch ()
-    (defvar jc/mc-search--last-term nil)
-    (defun jc/mc-search (search-command)
-      ;; Read new search term when not repeated command or applying to fake cursors
-      (when (and (not mc--executing-command-for-fake-cursor)
-                 (not (eq last-command 'jc/mc-search-forward))
-                 (not (eq last-command 'jc/mc-search-backward)))
-        (setq jc/mc-search--last-term (read-from-minibuffer "Search: ")))
-      (funcall search-command jc/mc-search--last-term))
-    (defun jc/mc-search-forward ()
-      "Simplified version of forward search that supports multiple cursors"
-      (interactive)
-      (jc/mc-search 'search-forward))
-    (defun jc/mc-search-backward ()
-      "Simplified version of backward search that supports multiple cursors"
-      (interactive)
-      (jc/mc-search 'search-backward)))
-
-  (defun hb/configure-mc-bindings ()
-    (bind-key "C-S-c C-S-c" 'mc/edit-lines)
-    (bind-key "C-S-SPC" 'set-rectangular-region-anchor)
-    (bind-key "C->" 'mc/mark-next-like-this)
-    (bind-key "C-<" 'mc/mark-previous-like-this)
-    (bind-key "C-c C-<" 'mc/mark-all-like-this)
-    (bind-key "C-c C->" 'mc/mark-all-like-this-dwim)
-    (bind-key "C-c ~" 'mc/insert-numbers)
-    (bind-key "M-~" 'mc/sort-regions)
-    (bind-key "C-~" 'mc/reverse-regions)
-    (bind-key "C-S-c C-e" 'mc/edit-ends-of-lines)
-    (bind-key "C-S-c C-a" 'mc/edit-beginnings-of-lines)
-    (bind-key "C-s" 'jc/mc-search-forward mc/keymap)
-    (bind-key "C-r" 'jc/mc-search-backward mc/keymap))
-
-  (defun hb/configure-mc-fixes ()
-    (bind-key "M-SPC" 'just-one-space mc/keymap))
-
-  (defun hb/configure-mc ()
-    (hb/configure-mc-isearch)
-    (hb/configure-mc-bindings)
-    (hb/configure-mc-fixes))
-#+END_SRC
 
 ** magithub
 :PROPERTIES:
@@ -699,15 +692,7 @@ should file a bug and a pull request when I get a chance.
 
 *** smartparens
 #+BEGIN_SRC emacs-lisp
-  (defun hb-org/post-init-smartparens ()
-    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
 
-  (defun hb-org/configure-smartparens ()
-    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** python
