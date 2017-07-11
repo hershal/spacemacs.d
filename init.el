@@ -101,6 +101,7 @@ values."
      hb-cmake
      hb-embrace
      hb-expand-region
+     hb-formatting
      hb-javascript
      hb-lisp
      hb-magithub

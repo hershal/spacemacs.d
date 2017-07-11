@@ -773,10 +773,17 @@ should file a bug and a pull request when I get a chance.
 ** TODO spell-checking
 I need to turn on spell checking for the major modes I would like to
 spell-check.
+** formatting
+:PROPERTIES:
+:header-args+: :tangle layers/hb-formatting/packages.el
+:END:
 
-** TODO visual-fill-colum-mode
+#+BEGIN_SRC emacs-lisp
+  (setq hb-formatting-packages '(visual-fill-column))
 
-This looks cool, I need to investigate sometime.
+  (defun hb-formatting/init-visual-fill-column ()
+    (use-package visual-fill-column))
+#+END_SRC
 
 ** web
 :PROPERTIES:
