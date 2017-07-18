@@ -365,6 +365,11 @@ should file a bug and a pull request when I get a chance.
   (defun hb-editing/post-init-embrace ()
     (evil-leader/set-key "se" 'embrace-commander))
 
+  ;; Expand-Region
+  (defun hb-editing/post-init-expand-region ()
+    (bind-key "C-=" 'er/expand-region)
+    (bind-key "C-+" 'er/contract-region))
+
   ;; Multiple-Cursors
   (defun hb-multiple-cursors/init-multiple-cursors ()
     (use-package multiple-cursors))
