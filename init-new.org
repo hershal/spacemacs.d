@@ -371,10 +371,10 @@ should file a bug and a pull request when I get a chance.
     (bind-key "C-+" 'er/contract-region))
 
   ;; Multiple-Cursors
-  (defun hb-multiple-cursors/init-multiple-cursors ()
+  (defun hb-editing/init-multiple-cursors ()
     (use-package multiple-cursors))
 
-  (defun hb-multiple-cursors/post-init-multiple-cursors ()
+  (defun hb-editing/post-init-multiple-cursors ()
     (hb/configure-mc))
 
   (defun hb/configure-mc-isearch ()
