@@ -356,7 +356,7 @@ should file a bug and a pull request when I get a chance.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-editing-packages '(embrace expand-region smartparens aggressive-indent))
+  (setq hb-editing-packages '(embrace expand-region multiple-cursors))
 
   ;; Embrace
   (defun hb-editing/init-embrace ()
@@ -417,17 +417,6 @@ should file a bug and a pull request when I get a chance.
     (hb/configure-mc-isearch)
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
-
-  ;; Smartparens
-  (defun hb-org/post-init-smartparens ()
-    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
-
-  (defun hb-org/configure-smartparens ()
-    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
-    (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** javascript
@@ -697,7 +686,15 @@ should file a bug and a pull request when I get a chance.
 
 *** smartparens
 #+BEGIN_SRC emacs-lisp
+  (defun hb-org/post-init-smartparens ()
+    (add-hook 'org-mode-hook 'hb-org/configure-smartparens))
 
+  (defun hb-org/configure-smartparens ()
+    (sp-local-pair 'org-mode "/" "/" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "_" "_" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "=" "=" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "'" "'" :unless '(sp-point-after-word-p))
+    (sp-local-pair 'org-mode "`" "`" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** python
