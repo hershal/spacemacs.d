@@ -613,7 +613,7 @@ should file a bug and a pull request when I get a chance.
 
   (defun hb-org/general-setup ()
     (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
-    (bind-key "C-c j" 'org-goto org-mode-map)
+    (bind-key "C-c i" 'org-goto org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
 
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
