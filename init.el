@@ -106,6 +106,7 @@ values."
      hb-magithub
      hb-org
      hb-python
+     hb-smartparens
      hb-web
      hb-yasnippet
      )
