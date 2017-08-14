@@ -723,9 +723,6 @@ should file a bug and a pull request when I get a chance.
   (setq hb-smartparens-packages '(smartparens))
 
   (defun hb-smartparens/post-init-smartparens ()
-    (hb-smartparens/configure))
-
-  (defun hb-smartparens/configure ()
     (smartparens-global-mode)
     (show-smartparens-global-mode)
     (hb-smartparens/configure-bindings)
@@ -735,6 +732,9 @@ should file a bug and a pull request when I get a chance.
     (evil-leader/set-key "jx" 'sp-join-sexp)
     (dolist (binding hb/smartparens-bindings)
       (bind-key (car binding) (cdr binding) smartparens-mode-map)))
+
+  (defun hb-smartparens/configure-specialcase ()
+    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 
   (defvar hb/smartparens-bindings
     '(("C-*" . sp-wrap-with-parens)
@@ -753,9 +753,6 @@ should file a bug and a pull request when I get a chance.
   (defun sp-wrap-with-parens (&optional arg)
     (interactive "P")
     (sp-wrap-with-pair "("))
-
-  (defun hb-smartparens/configure-specialcase ()
-    (sp-local-pair 'text-mode "'" "'" :unless '(sp-point-after-word-p)))
 #+END_SRC
 
 ** TODO spell-checking
