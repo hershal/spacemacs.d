@@ -62,7 +62,8 @@ These are defaults which one must set before spacemacs initialization.
           search-whitespace-regexp "[ \t\r\n\-\*]+"
           tab-always-indent t
           disabled-command-function nil
-          auto-insert-query nil)
+          auto-insert-query nil
+          revert-without-query '(".*"))
 
     (bind-key "C-x O" 'ace-window)
     (bind-key "C-h C-f" 'find-function)
@@ -80,6 +81,7 @@ These are defaults which one must set before spacemacs initialization.
     (evil-leader/set-key "bD" 'kill-buffer-and-window)
     (evil-leader/set-key "to" 'overwrite-mode)
     (evil-leader/set-key "fp" 'find-file-at-point)
+    (evil-leader/set-key "fr" 'revert-buffer)
 
     (custom-set-faces
      '(aw-leading-char-face
