@@ -301,7 +301,7 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-c++-packages '(function-args rtags helm-rtags irony))
+  (setq hb-c++-packages '(function-args rtags helm-rtags irony company-irony))
 
   (defun hb-c++/init-function-args ()
     (use-package ivy)
@@ -334,14 +334,15 @@ These are layers which tangle into the =layers= directory.
     (setq rtags-display-result-backend 'helm))
 
 
+  (defun hb-c++/init-company-irony ()
+    (use-package company-irony))
+
+
   (defun hb-c++/init-irony ()
     (use-package irony))
 
   (defun hb-c++/irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point-async)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
+    (add-to-list 'company-backends 'company-irony))
 
   (defun hb-c++/post-init-irony ()
     (add-hook 'c++-mode-hook 'irony-mode)
