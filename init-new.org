@@ -301,9 +301,11 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-c++-packages '(function-args rtags helm-rtags))
+  (setq hb-c++-packages '(function-args rtags helm-rtags irony))
 
   (defun hb-c++/init-function-args ()
+    (use-package ivy)
+    (require 'ivy)
     (use-package function-args))
 
   (defun hb-c++/post-init-function-args ()
@@ -312,6 +314,7 @@ These are layers which tangle into the =layers= directory.
     (setq semantic-idle-scheduler-work-idle-time 600)
     (with-eval-after-load 'cc-mode
       (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)))
+
 
   (defun hb-c++/init-rtags ()
     (use-package rtags))
@@ -322,12 +325,30 @@ These are layers which tangle into the =layers= directory.
       (bind-key "M-." 'rtags-find-symbol-at-point)
       (bind-key "M-," 'rtags-find-all-references-at-point)))
 
+
   (defun hb-c++/init-helm-rtags ()
     (use-package helm-rtags))
 
   (defun hb-c++/post-init-helm-rtags ()
     (require 'helm-rtags)
     (setq rtags-display-result-backend 'helm))
+
+
+  (defun hb-c++/init-irony ()
+    (use-package irony))
+
+  (defun hb-c++/irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+
+  (defun hb-c++/post-init-irony ()
+    (add-hook 'c++-mode-hook 'irony-mode)
+    (add-hook 'c-mode-hook 'irony-mode)
+    (add-hook 'objc-mode-hook 'irony-mode)
+    (add-hook 'irony-mode-hook 'hb-c++/irony-mode-hook)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 
 ** TODO cmake
