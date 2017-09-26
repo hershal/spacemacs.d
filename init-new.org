@@ -118,7 +118,6 @@ spacemacs.
     (bind-key "C-x b" 'helm-mini)
     (bind-key "C-'" 'helm-M-x)
     (bind-key "M-y" 'helm-show-kill-ring)
-    (bind-key "M-y" 'helm-show-kill-ring)
     (setq helm-ff-newfile-prompt-p nil
           helm-buffer-max-length nil
           helm-split-window-default-side 'below
