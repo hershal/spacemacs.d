@@ -686,7 +686,8 @@ should file a bug and a pull request when I get a chance.
             ("PROJECT" :foreground "purple" :weight bold)
             ("PLAN" :foreground "purple" :weight bold)
             ("MEETING" :foreground "blue" :weight bold)
-            ("OPEN" :foreground "blue" :weight bold))))
+            ("OPEN" :foreground "blue" :weight bold)))
+    (setq org-fontify-done-headline t))
 #+END_SRC
 **** capture
 #+BEGIN_SRC emacs-lisp
