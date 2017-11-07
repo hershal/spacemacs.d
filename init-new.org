@@ -63,7 +63,8 @@ These are defaults which one must set before spacemacs initialization.
           tab-always-indent t
           disabled-command-function nil
           auto-insert-query nil
-          revert-without-query '(".*"))
+          revert-without-query '(".*")
+          kill-ring-max 1000)
 
     (bind-key "C-x O" 'ace-window)
     (bind-key "C-h C-f" 'find-function)
