@@ -103,7 +103,6 @@ values."
      hb-formatting
      hb-javascript
      hb-lisp
-     hb-magithub
      hb-org
      hb-python
      hb-smartparens

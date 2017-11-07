@@ -560,7 +560,7 @@ should file a bug and a pull request when I get a chance.
 #+END_SRC
 
 
-** magithub
+** TODO magithub
 :PROPERTIES:
 :header-args+: :tangle layers/hb-magithub/packages.el
 :END:
