@@ -64,7 +64,8 @@ These are defaults which one must set before spacemacs initialization.
           disabled-command-function nil
           auto-insert-query nil
           revert-without-query '(".*")
-          kill-ring-max 1000)
+          kill-ring-max 1000
+          spacemacs-useless-buffers-regexp "**.+")
 
     (bind-key "C-x O" 'ace-window)
     (bind-key "C-h C-f" 'find-function)
