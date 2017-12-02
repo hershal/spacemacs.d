@@ -302,7 +302,7 @@ These are layers which tangle into the =layers= directory.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-c++-packages '(function-args rtags helm-rtags irony company-irony))
+  (setq hb-c++-packages '(function-args rtags helm-rtags company-irony irony irony-eldoc))
 
   (defun hb-c++/init-function-args ()
     (use-package ivy)
@@ -351,6 +351,13 @@ These are layers which tangle into the =layers= directory.
     (add-hook 'objc-mode-hook 'irony-mode)
     (add-hook 'irony-mode-hook 'hb-c++/irony-mode-hook)
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+
+  (defun hb-c++/init-irony-eldoc ()
+    (use-package irony-eldoc))
+
+  (defun hb-c++/post-init-irony-eldoc ()
+    (add-hook 'irony-mode-hook 'hb-c++/irony-mode-hook))
 #+END_SRC
 
 ** TODO cmake
