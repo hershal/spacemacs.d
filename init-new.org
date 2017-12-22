@@ -478,7 +478,8 @@ should file a bug and a pull request when I get a chance.
 
   (defun hb-javascript/configure-js-style ()
     (setq comment-start "/*")
-    (setq comment-end "*/"))
+    (setq comment-end "*/")
+    (bind-key "C-c i" 'helm-semantic-or-imenu))
 
   (defun hb-javascript/configure-node ()
     (with-eval-after-load 'js2-mode
