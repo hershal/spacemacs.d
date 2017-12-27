@@ -94,7 +94,10 @@ These are defaults which one must set before spacemacs initialization.
     (windmove-default-keybindings)
     (add-hook 'before-save-hook 'whitespace-cleanup))
 #+END_SRC
-
+** hack-local-variables
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (add-hook 'hack-local-variables-hook (lambda () (setq truncate-lines t)))
+#+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-company ()
@@ -530,6 +533,59 @@ should file a bug and a pull request when I get a chance.
     (let ((contents (hb-javascript/node-eval-helper)))
       (when prefix (kill-new contents))
       (message "%s" contents)))
+
+  (defun hb-run-interpreter-on-region-into-buffer (eval-program buffer-name)
+    "Evaluate the current buffer (or region if mark-active), and
+  return the result"
+    ;; delete the contents of the current node buffer
+    (when (get-buffer buffer-name)
+      (with-current-buffer buffer-name
+        (delete-region (point-min) (point-max))))
+
+    ;; Setup some variables
+    (let ((debug-on-error t) (start 1) (end 1))
+
+      ;; If the mark is active, set the point and mark to the selected region;
+      ;; else select the entire buffer.
+      (cond
+       (mark-active
+        (setq start (point))
+        (setq end (mark)))
+       (t
+        (setq start (point-min))
+        (setq end (point-max))))
+
+      ;; Send the input from `start` to `end` through stdin to the interpreter process.
+      ;; This will popluate the `buffer-name` with the results.
+      (call-process-region
+       start end     ; seems the order does not matter
+       eval-program  ; the interpreter
+       nil           ; don't delete region
+       buffer-name   ; output buffer
+       nil)          ; no redisply during output
+
+      (setq deactivate-mark t)
+      (with-current-buffer buffer-name
+        (buffer-string))))
+
+  (defun hb-run/typescript (&optional prefix)
+    "Evalute the current buffer (or region if mark-active), and
+  print the result in the message buffer. When given a prefix
+  argument, also push the results into the kill-ring."
+    (interactive "P")
+    (let ((contents (hb-run-interpreter-on-region-into-buffer "ts-node" "*typescript*")))
+      (when prefix (kill-new contents))
+      (message "%s" contents)))
+
+  (evil-leader/set-key "art" 'hb-run/typescript)
+
+
+  (defun pos-at-line-col (l c)
+    (save-excursion
+      (goto-char (point-min))
+      (forward-line l)
+      (move-to-column c)
+      (point)))
 #+END_SRC
 
 ** lisp
