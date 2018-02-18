@@ -754,6 +754,15 @@ should file a bug and a pull request when I get a chance.
             ("MEETING" :foreground "blue" :weight bold)
             ("OPEN" :foreground "blue" :weight bold)))
     (setq org-fontify-done-headline t))
+
+
+  (defun hb-org/agenda-setup ()
+    (setq org-agenda-prefix-format
+          ((agenda . " %i %-12:c%?-12t% s")
+           (todo . " %i %-12:c")
+           (tags . " %i %-12:c")
+           (search . " %i %-12:c")))
+    )
 #+END_SRC
 **** capture
 #+BEGIN_SRC emacs-lisp
