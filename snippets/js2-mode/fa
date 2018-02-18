@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fa
+# key: fa
+# --
+() => {
+    $0
+}
