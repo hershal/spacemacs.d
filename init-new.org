@@ -704,6 +704,9 @@ should file a bug and a pull request when I get a chance.
     (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
     (bind-key "C-c i" 'org-goto org-mode-map)
     (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
+    (bind-key "M-n" 'org-next-visible-heading org-mode-map)
+    (bind-key "M-p" 'org-previous-visible-heading org-mode-map)
+
 
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
 
