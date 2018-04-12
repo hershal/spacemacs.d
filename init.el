@@ -55,7 +55,9 @@ values."
      ;; ----------------------------------------------------------------
 
      ;; a package in a league of its own
-     helm
+     (ivy
+      :variables
+      ivy-enable-advanced-buffer-information t)
 
      ;; misc
      (auto-completion
@@ -101,6 +103,7 @@ values."
      hb-cmake
      hb-editing
      hb-formatting
+     hb-ivy
      hb-javascript
      hb-lisp
      hb-org
