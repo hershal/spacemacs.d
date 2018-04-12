@@ -128,12 +128,6 @@ spacemacs.
           helm-split-window-default-side 'below
           helm-always-two-windows t))
 #+END_SRC
-** ivy
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (defun hb/configure-ivy ()
-    (use-package ivy-rich))
-#+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-magit ()
@@ -466,7 +460,7 @@ should file a bug and a pull request when I get a chance.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-ivy-packages '(ivy-rich ivy))
+  (setq hb-ivy-packages '(ivy))
 
   (defun hb-ivy/post-init-ivy ()
     (setq ivy-height 50
