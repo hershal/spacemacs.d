@@ -460,7 +460,7 @@ should file a bug and a pull request when I get a chance.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq hb-ivy-packages '(ivy))
+  (setq hb-ivy-packages '(ivy swiper))
 
   (defun hb-ivy/post-init-ivy ()
     (setq ivy-height 50
@@ -475,6 +475,9 @@ should file a bug and a pull request when I get a chance.
     (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-switch-buffer-align-virtual-buffer t))
+
+  (defun hb-ivy/post-init-swiper ()
+    (setq swiper-include-line-number-in-search t))
 #+END_SRC
 ** javascript
 :PROPERTIES:
