@@ -132,7 +132,11 @@ spacemacs.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-magit ()
     (setq-default git-magit-status-fullscreen t)
-    (setq magit-repository-directories "~/repos/"))
+    (setq magit-repository-directories "~/repos/")
+    (add-hook 'magit-status-mode-hook 'yas-minor-mode-off))
+
+  (defun yas-minor-mode-off ()
+    (yas-minor-mode -1))
 #+END_SRC
 ** mode-line
 #+BEGIN_SRC emacs-lisp :tangle yes
