@@ -72,7 +72,9 @@ values."
      syntax-checking
      gtags
      spacemacs-editing
+     spacemacs-navigation
      spacemacs-ui-visual
+     spacemacs-visual
 
      ;; languages
      (c-c++
