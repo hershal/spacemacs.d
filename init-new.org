@@ -117,7 +117,9 @@ spacemacs.
         (bind-key "C-h" 'helm-find-files-up-one-level keymap)
         (bind-key "TAB" 'helm-execute-persistent-action keymap)
         (bind-key "C-l" 'helm-execute-persistent-action keymap)))
-    (bind-key "C-s" 'helm-ff-run-grep-ag helm-find-files-map)
+
+    (with-eval-after-load 'helm-files
+      (bind-key "C-s" 'helm-ff-run-grep-ag helm-find-files-map))
 
     (bind-key "C-x C-f" 'spacemacs/helm-find-files)
     (bind-key "C-x b" 'helm-mini)
