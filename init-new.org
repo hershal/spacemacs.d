@@ -49,7 +49,7 @@ These are defaults which one must set before spacemacs initialization.
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-general ()
-    (hb/load-configs '(company helm magit mode-line python macros))
+    (hb/load-configs '(company magit mode-line python macros helm))
 
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
     (setq vc-follow-symlinks t
@@ -117,7 +117,9 @@ spacemacs.
         (bind-key "C-h" 'helm-find-files-up-one-level keymap)
         (bind-key "TAB" 'helm-execute-persistent-action keymap)
         (bind-key "C-l" 'helm-execute-persistent-action keymap)))
-    (bind-key "C-s" 'helm-ff-run-grep-ag helm-find-files-map)
+
+    (with-eval-after-load 'helm-files
+      (bind-key "C-s" 'helm-ff-run-grep-ag helm-find-files-map))
 
     (bind-key "C-x C-f" 'spacemacs/helm-find-files)
     (bind-key "C-x b" 'helm-mini)
@@ -128,12 +130,15 @@ spacemacs.
           helm-split-window-default-side 'below
           helm-always-two-windows t))
 #+END_SRC
-
 ** magit
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-magit ()
     (setq-default git-magit-status-fullscreen t)
-    (setq magit-repository-directories "~/repos/"))
+    (setq magit-repository-directories "~/repos/")
+    (add-hook 'magit-status-mode-hook 'yas-minor-mode-off))
+
+  (defun yas-minor-mode-off ()
+    (yas-minor-mode -1))
 #+END_SRC
 ** mode-line
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -455,6 +460,31 @@ should file a bug and a pull request when I get a chance.
     (hb/configure-mc-fixes))
 #+END_SRC
 
+** ivy
+:PROPERTIES:
+:header-args+: :tangle layers/hb-ivy/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-ivy-packages '(ivy swiper))
+
+  (defun hb-ivy/post-init-ivy ()
+    (setq ivy-height 50
+          ivy-enable-advanced-buffer-information t))
+
+
+  (defun hb-ivy/init-ivy-rich ()
+    (use-package ivy-rich))
+
+
+  (defun hb-ivy/post-init-ivy-rich ()
+    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-switch-buffer-align-virtual-buffer t))
+
+  (defun hb-ivy/post-init-swiper ()
+    (setq swiper-include-line-number-in-search t))
+#+END_SRC
 ** javascript
 :PROPERTIES:
 :header-args+: :tangle layers/hb-javascript/packages.el

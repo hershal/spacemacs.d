@@ -55,6 +55,9 @@ values."
      ;; ----------------------------------------------------------------
 
      ;; a package in a league of its own
+     ;; (ivy
+     ;;  :variables
+     ;;  ivy-enable-advanced-buffer-information t)
      helm
 
      ;; misc
@@ -70,7 +73,9 @@ values."
      syntax-checking
      gtags
      spacemacs-editing
+     spacemacs-navigation
      spacemacs-ui-visual
+     spacemacs-visual
 
      ;; languages
      (c-c++
@@ -101,6 +106,7 @@ values."
      hb-cmake
      hb-editing
      hb-formatting
+     ;; hb-ivy
      hb-javascript
      hb-lisp
      hb-org
