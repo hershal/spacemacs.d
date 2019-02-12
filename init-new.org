@@ -180,11 +180,24 @@ https://github.com/syl20bnr/spacemacs/pull/5997
 *** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-macros ()
-    (hb/load-configs '(split-last-buffer
+    (hb/load-configs '(kill-current-buffer-delete-frame
+                       split-last-buffer
                        capitalize-line-dwim
                        eval-and-replace
                        comment-line-dwim)))
 #+END_SRC
+*** kill-current-buffer-delete-frame
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/configure-kill-current-buffer-delete-frame ()
+    (bind-key "C-x 5 5" 'kill-current-buffer-delete-frame))
+
+
+  (defun kill-current-buffer-delete-frame ()
+    (interactive)
+    (kill-current-buffer)
+    (delete-frame))
+#+END_SRC
+
 *** split-last-buffer
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-split-last-buffer ()
