@@ -472,6 +472,23 @@ should file a bug and a pull request when I get a chance.
     (hb/configure-mc-bindings)
     (hb/configure-mc-fixes))
 #+END_SRC
+** folding
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq hb-folding-packages '(evil-vimish-fold))
+
+  (defun hb-folding/post-init-evil-vimish-fold ()
+    (evil-vimish-fold-mode 1)
+    (evil-leader/set-key "cfc" 'evil-vimish-fold/create)
+    (evil-leader/set-key "cfl" 'evil-vimish-fold/create-line)
+    (evil-leader/set-key "cfd" 'evil-vimish-fold/delete)
+    (evil-leader/set-key "cfD" 'evil-vimish-fold/delete-all)
+    (evil-leader/set-key "cfn" 'evil-vimish-fold/next-fold)
+    (evil-leader/set-key "cfp" 'evil-vimish-fold/previous-fold))
+
+
+  (defun hb-folding/init-evil-vimish-fold ()
+    (use-package evil-vimish-fold))
+#+END_SRC
 
 ** ivy
 :PROPERTIES:
