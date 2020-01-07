@@ -107,6 +107,7 @@ values."
      hb-editing
      hb-formatting
      ;; hb-ivy
+     hb-folding
      hb-javascript
      hb-lisp
      hb-org

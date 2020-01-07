@@ -473,6 +473,10 @@ should file a bug and a pull request when I get a chance.
     (hb/configure-mc-fixes))
 #+END_SRC
 ** folding
+:PROPERTIES:
+:header-args+: :tangle layers/hb-folding/packages.el
+:END:
+
 #+BEGIN_SRC emacs-lisp :tangle yes
   (setq hb-folding-packages '(evil-vimish-fold))
 
