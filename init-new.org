@@ -482,7 +482,7 @@ should file a bug and a pull request when I get a chance.
 
   (defun hb-folding/post-init-evil-vimish-fold ()
     (evil-vimish-fold-mode 1)
-    (evil-leader/set-key "cfc" 'evil-vimish-fold/create)
+    (evil-leader/set-key "cfc" 'hb-folding/create-fold-at-this-defun)
     (evil-leader/set-key "cfl" 'evil-vimish-fold/create-line)
     (evil-leader/set-key "cfd" 'evil-vimish-fold/delete)
     (evil-leader/set-key "cfD" 'evil-vimish-fold/delete-all)
@@ -492,6 +492,13 @@ should file a bug and a pull request when I get a chance.
 
   (defun hb-folding/init-evil-vimish-fold ()
     (use-package evil-vimish-fold))
+
+
+  (defun hb-folding/create-fold-at-this-defun ()
+    (interactive)
+    (end-of-line)
+    (er--expand-region-1)
+    (evil-vimish-fold/create (point) (mark)))
 #+END_SRC
 
 ** ivy
