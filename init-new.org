@@ -477,7 +477,7 @@ should file a bug and a pull request when I get a chance.
 :header-args+: :tangle layers/hb-folding/packages.el
 :END:
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
   (setq hb-folding-packages '(evil-vimish-fold))
 
   (defun hb-folding/post-init-evil-vimish-fold ()
