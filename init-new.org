@@ -483,6 +483,7 @@ should file a bug and a pull request when I get a chance.
   (defun hb-folding/post-init-evil-vimish-fold ()
     (evil-vimish-fold-mode 1)
     (evil-leader/set-key "cfc" 'hb-folding/create-fold-at-this-defun)
+    (evil-leader/set-key "cfC" 'evil-vimish-fold/create)
     (evil-leader/set-key "cfl" 'evil-vimish-fold/create-line)
     (evil-leader/set-key "cfd" 'evil-vimish-fold/delete)
     (evil-leader/set-key "cfD" 'evil-vimish-fold/delete-all)
