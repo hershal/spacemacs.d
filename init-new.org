@@ -487,6 +487,7 @@ should file a bug and a pull request when I get a chance.
     (evil-leader/set-key "cfl" 'evil-vimish-fold/create-line)
     (evil-leader/set-key "cfd" 'evil-vimish-fold/delete)
     (evil-leader/set-key "cfD" 'evil-vimish-fold/delete-all)
+    (evil-leader/set-key "cft" 'vimish-fold-toggle)
     (evil-leader/set-key "cfn" 'evil-vimish-fold/next-fold)
     (evil-leader/set-key "cfp" 'evil-vimish-fold/previous-fold))
 
