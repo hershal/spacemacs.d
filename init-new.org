@@ -91,8 +91,7 @@ These are defaults which one must set before spacemacs initialization.
     (setq aw-leading-char-style 'path)
 
     (auto-insert-mode)
-    (windmove-default-keybindings)
-    (add-hook 'before-save-hook 'whitespace-cleanup))
+    (windmove-default-keybindings))
 #+END_SRC
 ** hack-local-variables
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -971,6 +970,17 @@ spell-check.
     (bind-key "C-c t" 'web-mode-element-rename web-mode-map))
 #+END_SRC
 
+** whitespace-cleanup
+:PROPERTIES:
+:header-args+: :tangle layers/hb-whitespace-cleanup/packages.el
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq hb-whitespace-cleanup-packages '(whitespace-cleanup-mode))
+
+  (defun hb-whitespace-cleanup/post-init-whitespace-cleanup-mode ()
+    (global-whitespace-cleanup-mode))
+#+END_SRC
 ** yasnippet
 :PROPERTIES:
 :header-args+: :tangle layers/hb-yasnippet/packages.el

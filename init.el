@@ -114,6 +114,7 @@ values."
      hb-python
      hb-smartparens
      hb-web
+     hb-whitespace-cleanup
      hb-yasnippet
      )
    ;; List of additional packages that will be installed without being
