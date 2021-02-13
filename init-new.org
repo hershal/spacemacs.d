@@ -726,8 +726,9 @@ should file a bug and a pull request when I get a chance.
   (defun hb-org/post-init-org ()
     (with-eval-after-load 'org
       (hb-org/general-setup)
-      (hb-org/template-setup)
-      (hb-org/gtd-setup))
+      (hb-org/gtd-setup)
+      (hb-org/tangle-setup)
+      (hb-org/multi-tangle-setup))
     (with-eval-after-load 'ob-tangle
       (remove-hook 'org-babel-pre-tangle-hook 'save-buffer)))
 
@@ -736,49 +737,16 @@ should file a bug and a pull request when I get a chance.
       (org-up-element)
       (org-show-subtree)))
 
-  (defun hb-org/tangle-if-modified ()
-    (interactive)
-    (let ((modified (buffer-modified-p)))
-      (save-buffer)
-      (if modified (org-babel-tangle))))
-
-  (defun hb-org/tangle-parent-buffer ()
-    (interactive)
-    (let ((modified (buffer-modified-p)))
-      (org-edit-src-save)
-      (if modified
-          (with-current-buffer (org-src--source-buffer)
-            (org-babel-tangle)))))
-
   (defun hb-org/remove-empty-drawer-on-clock-out ()
     (interactive)
     (save-excursion
       (beginning-of-line 0)
       (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
-
-  (defun hb-org/template-for-lang (key lang &optional options)
-    (list key (concat "#+BEGIN_SRC " lang " "
-                      (when (plist-get options :tangle) ":tangle yes")
-                      "\n?\n#+END_SRC")))
-
-  (defun hb-org/template-setup ()
-    (mapc (lambda (template)
-            (add-to-list 'org-structure-template-alist
-                         (hb-org/template-for-lang
-                          (car template) (cadr template) (cddr template))))
-          '(("st" "emacs-lisp" :tangle t)
-            ("se" "emacs-lisp")
-            ("sh" "sh")
-            ("sf" "fundamental"))))
-
   (defun hb-org/general-setup ()
-    (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
     (bind-key "C-c i" 'org-goto org-mode-map)
-    (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map)
     (bind-key "M-n" 'org-next-visible-heading org-mode-map)
     (bind-key "M-p" 'org-previous-visible-heading org-mode-map)
-
 
     (advice-add 'org-goto :after 'hb-org/show-subtree-with-context)
 
@@ -807,6 +775,9 @@ should file a bug and a pull request when I get a chance.
     (add-hook 'org-mode-hook 'turn-on-auto-fill)
     (add-hook 'org-mode-hook 'turn-off-show-smartparens-mode))
 
+#+END_SRC
+**** gtd
+#+BEGIN_SRC emacs-lisp 
   (defun hb-org/gtd-setup ()
     (setq org-todo-keywords
           '((sequence "TODO(t!/@)" "HOLD(h@)" "NEXT(n!)" "INPROG(i!)"
@@ -828,16 +799,12 @@ should file a bug and a pull request when I get a chance.
             ("PLAN" :foreground "purple" :weight bold)
             ("MEETING" :foreground "blue" :weight bold)
             ("OPEN" :foreground "blue" :weight bold)))
-    (setq org-fontify-done-headline t))
-
-
-  (defun hb-org/agenda-setup ()
+    (setq org-fontify-done-headline t)
     (setq org-agenda-prefix-format
-          ((agenda . " %i %-12:c%?-12t% s")
-           (todo . " %i %-12:c")
-           (tags . " %i %-12:c")
-           (search . " %i %-12:c")))
-    )
+          '((agenda . " %i %-12:c%?-12t% s")
+            (todo . " %i %-12:c")
+            (tags . " %i %-12:c")
+            (search . " %i %-12:c"))))
 #+END_SRC
 **** capture
 #+BEGIN_SRC emacs-lisp
@@ -848,6 +815,107 @@ should file a bug and a pull request when I get a chance.
            "* %?\n%U\n")
           ("m" "Meeting" entry (file "~/repos/org/refile.org")
            "* MEETING with %? :meeting:\n%U")))
+#+END_SRC
+**** tangle
+#+BEGIN_SRC emacs-lisp
+  (defun hb-org/tangle-setup ()
+    (hb-org/tangle-template-setup)
+    (bind-key "C-x C-s" 'hb-org/tangle-if-modified org-mode-map)
+    (bind-key "C-x C-s" 'hb-org/tangle-parent-buffer org-src-mode-map))
+
+  (defun hb-org/tangle-if-modified ()
+    (interactive)
+    (let ((modified (buffer-modified-p)))
+      (save-buffer)
+      (if modified (org-babel-tangle))))
+
+  (defun hb-org/tangle-parent-buffer ()
+    (interactive)
+    (let ((modified (buffer-modified-p)))
+      (org-edit-src-save)
+      (if modified
+          (with-current-buffer (org-src--source-buffer)
+            (org-babel-tangle)))))
+
+  (defun hb-org/tangle-template-for-lang (key lang &optional options)
+    (list key (concat "#+BEGIN_SRC " lang " "
+                      (when (plist-get options :tangle) ":tangle yes")
+                      "\n?\n#+END_SRC")))
+
+  (defun hb-org/tangle-template-setup ()
+    (mapc (lambda (template)
+            (add-to-list 'org-structure-template-alist
+                         (hb-org/tangle-template-for-lang
+                          (car template) (cadr template) (cddr template))))
+          '(("st" "emacs-lisp" :tangle t)
+            ("se" "emacs-lisp")
+            ("sh" "sh")
+            ("sf" "fundamental"))))
+#+END_SRC
+**** multi-tangle
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb-org/multi-tangle-setup ()
+    (advice-add 'org-babel-tangle-collect-blocks :override #'hb-org/multi-tangle/collect-blocks-handle-tangle-list)
+    (advice-add 'org-babel-tangle-single-block :around #'hb-org/multi-tangle/single-block-handle-tangle-list))
+
+
+  (defun hb-org/multi-tangle/collect-blocks-handle-tangle-list (&optional language tangle-file)
+    "Can be used as :override advice for `org-babel-tangle-collect-blocks'.
+  Handles lists of :tangle files."
+    (let ((counter 0) last-heading-pos blocks)
+      (org-babel-map-src-blocks (buffer-file-name)
+        (let ((current-heading-pos
+               (org-with-wide-buffer
+                (org-with-limited-levels (outline-previous-heading)))))
+          (if (eq last-heading-pos current-heading-pos) (cl-incf counter)
+            (setq counter 1)
+            (setq last-heading-pos current-heading-pos)))
+        (unless (org-in-commented-heading-p)
+          (let* ((info (org-babel-get-src-block-info 'light))
+                 (src-lang (nth 0 info))
+                 (src-tfiles (cdr (assq :tangle (nth 2 info))))) ; Tobias: accept list for :tangle
+            (unless (consp src-tfiles) ; Tobias: unify handling of strings and lists for :tangle
+              (setq src-tfiles (list src-tfiles))) ; Tobias: unify handling
+            (dolist (src-tfile src-tfiles) ; Tobias: iterate over list
+              (unless (or (string= src-tfile "no")
+                          (and tangle-file (not (equal tangle-file src-tfile)))
+                          (and language (not (string= language src-lang))))
+                ;; Add the spec for this block to blocks under its
+                ;; language.
+                (let ((by-lang (assoc src-lang blocks))
+                      (block (org-babel-tangle-single-block counter)))
+                  (setcdr (assoc :tangle (nth 4 block)) src-tfile) ; Tobias: 
+                  (if by-lang (setcdr by-lang (cons block (cdr by-lang)))
+                    (push (cons src-lang (list block)) blocks)))))))) ; Tobias: just ()
+      ;; Ensure blocks are in the correct order.
+      (mapcar (lambda (b) (cons (car b) (nreverse (cdr b)))) blocks)))
+
+  (defun hb-org/multi-tangle/single-block-handle-tangle-list (oldfun block-counter &optional only-this-block)
+    "Can be used as :around advice for `org-babel-tangle-single-block'.
+  If the :tangle header arg is a list of files. Handle all files"
+    (let* ((info (org-babel-get-src-block-info))
+           (params (nth 2 info))
+           (tfiles (cdr (assoc :tangle params))))
+      (if (null (and only-this-block (consp tfiles)))
+          (funcall oldfun block-counter only-this-block)
+        (cl-assert (listp tfiles) nil
+                   ":tangle only allows a tangle file name or a list of tangle file names")
+        (let ((ret (mapcar
+                    (lambda (tfile)
+                      (let (old-get-info)
+                        (cl-letf* (((symbol-function 'old-get-info) (symbol-function 'org-babel-get-src-block-info))
+                                   ((symbol-function 'org-babel-get-src-block-info)
+                                    `(lambda (&rest get-info-args)
+                                       (let* ((info (apply 'old-get-info get-info-args))
+                                              (params (nth 2 info))
+                                              (tfile-cons (assoc :tangle params)))
+                                         (setcdr tfile-cons ,tfile)
+                                         info))))
+                          (funcall oldfun block-counter only-this-block))))
+                    tfiles)))
+          (if only-this-block
+              (list (cons (cl-caaar ret) (mapcar #'cadar ret)))
+            ret)))))
 #+END_SRC
 
 *** writegood
