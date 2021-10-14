@@ -49,7 +49,7 @@ These are defaults which one must set before spacemacs initialization.
 ** configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defun hb/configure-general ()
-    (hb/load-configs '(company magit mode-line python macros helm))
+    (hb/load-configs '(company diff magit mode-line python macros helm))
 
     (bind-key "C-x C-b" 'spacemacs/alternate-buffer)
     (setq vc-follow-symlinks t
@@ -105,6 +105,20 @@ These are defaults which one must set before spacemacs initialization.
         (mapc (lambda (key) (bind-key key nil company-active-map)) disabled-keys))))
 #+END_SRC
 
+** diff
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun hb/copy-diff-region-without-markers ()
+    "Copy diff region without + or - markers."
+    (interactive)
+    (deactivate-mark)
+    (let ((text (buffer-substring-no-properties
+                 (region-beginning) (region-end))))
+      (kill-new (replace-regexp-in-string "^[\\+\\-]" "" text))))
+
+  (defun hb/configure-diff ()
+    (with-eval-after-load 'diff-mode
+      (bind-key "M-w" 'hb/copy-diff-region-without-markers diff-mode-map)))
+#+END_SRC
 ** helm
 These are bindings that brings the evil-equivalent helm functionality in
 spacemacs.
