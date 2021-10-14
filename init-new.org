@@ -117,7 +117,9 @@ These are defaults which one must set before spacemacs initialization.
 
   (defun hb/configure-diff ()
     (with-eval-after-load 'diff-mode
-      (bind-key "M-w" 'hb/copy-diff-region-without-markers diff-mode-map)))
+      (bind-key "M-w" 'hb/copy-diff-region-without-markers diff-mode-map)
+      (remove-hook 'diff-mode-hook 'spacemacs//set-whitespace-style-for-diff)
+      (remove-hook 'diff-mode-hook 'whitespace-mode)))
 #+END_SRC
 ** helm
 These are bindings that brings the evil-equivalent helm functionality in
