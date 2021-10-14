@@ -549,7 +549,7 @@ should file a bug and a pull request when I get a chance.
     (add-hook 'typescript-mode-hook 'hb-javascript/configure-js-style))
 
   (defun hb-javascript/configure-skeleton ()
-    (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict';" \n \n -)
+    (define-skeleton js-skeleton "Javascript skeleton" nil "'use strict'" \n \n -)
     (define-auto-insert '("\\.js" . "Javascript skeleton")
       'js-skeleton))
 
