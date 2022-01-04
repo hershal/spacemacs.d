@@ -350,7 +350,8 @@ These are layers which tangle into the =layers= directory.
     (setq semantic-idle-scheduler-idle-time 300)
     (setq semantic-idle-scheduler-work-idle-time 600)
     (with-eval-after-load 'cc-mode
-      (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)))
+      (bind-key "C-c i" 'helm-semantic-or-imenu c++-mode-map)
+      (bind-key "C-S-k" 'sp-kill-hybrid-sexp)))
 
 
   (defun hb-c++/init-rtags ()
